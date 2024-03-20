@@ -2,11 +2,11 @@
 function renderInputNumber($name, $value, $min = 0, $max = 9999)
 {
     echo '<div class="custom-number-input flex flex-row rounded-lg relative bg-transparent mt-1 ">
-        <button data-action="decrement" class="bg-gray-light4/60 text-primary/90 hover:bg-gray-light w-20 rounded-l cursor-pointer outline-none rounded-bl-full rounded-tl-full">
+        <button data-action="decrement" class="bg-gray-light4/60 text-primary/90 hover:bg-gray-light w-20 rounded-l-lg cursor-pointer outline-none">
             <span class="m-auto text-2xl font-thin">−</span>
         </button>
         <input type="number" name="' . $name . '" min="' . $min . '" max="' . $max . '" readonly class="outline-none focus:outline-none bg-gray-light4/60 border-none py-2 w-full font-numbers font-medium text-center text-primary/90 text-sm placeholder-gray-400 flex" value="' . $value . '"/>
-        <button data-action="increment" class="bg-gray-light4/60 text-primary/90 hover:bg-gray-light w-20 rounded-r cursor-pointer rounded-br-full rounded-tr-full">
+        <button data-action="increment" class="bg-gray-light4/60 text-primary/90 hover:bg-gray-light w-20 rounded-r-lg cursor-pointer">
             <span class="m-auto text-2xl font-thin">+</span>
         </button>
     </div>';

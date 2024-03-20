@@ -99,6 +99,14 @@ function enx_get_page_content($data)
                                 <div class="step-counter"></div>
                                 <div class="step-name">Payments</div>
                             </div>
+                            <div class="stepper-item">
+                                <div class="step-counter"></div>
+                                <div class="step-name">Payment Info</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter"></div>
+                                <div class="step-name">Upload Doc</div>
+                            </div>
                         </div>
 
                         <div class="xl:grid grid-cols-12 gap-x-16 pt-16 pb-5 xl:py-20">
@@ -357,13 +365,13 @@ function enx_get_page_content($data)
                                     <?php } ?>
                                 </div>
 
-                                <h2 class="font-heading font-bold text-primary text-transform-unset mt-14 text-2xl">
+                                <!-- <h2 class="font-heading font-bold text-primary text-transform-unset mt-14 text-2xl">
                                     Payment Method
                                 </h2>
                                 <div class="mt-5">
                                     <div class="payment-type">
-                                        <div class="<?php echo $error->payment_method ? 'is-invalid' : '' ?> grid grid-cols-4 types gap-12 types">
-                                            <input type="radio" name="payment_method" id="payment-method-cc" value="CC" class="input-payment-method hidden" <?php echo $old->payment_method == 'CC' ? 'checked' : '' ?>>
+                                        <div class="<?php // echo $error->payment_method ? 'is-invalid' : '' ?> grid grid-cols-4 types gap-12 types">
+                                            <input type="radio" name="payment_method" id="payment-method-cc" value="CC" class="input-payment-method hidden" <?php // echo $old->payment_method == 'CC' ? 'checked' : '' ?> >
                                             <label for="payment-method-cc" class="type">
                                                 <div class="logo">
                                                     <i class="far fa-credit-card"></i>
@@ -372,21 +380,21 @@ function enx_get_page_content($data)
                                                     <p>Pay with Credit Card</p>
                                                 </div>
                                             </label>
-                                            <?php
-                                            // <input type="radio" name="payment_method" id="payment-method-paypal" value="PayPal" class="input-payment-method hidden" <?php echo $old->payment_method == 'PayPal' ? 'checked' : '' tandatanya>>
-                                            // <label for="payment-method-paypal" class="type">
-                                            //     <div class="logo">
-                                            //         <i class="fab fa-paypal"></i>
-                                            //     </div>
-                                            //     <div class="text">
-                                            //         <p>Pay with PayPal</p>
-                                            //     </div>
-                                            // </label>
-                                            ?>
+                                            
+                                            <input type="radio" name="payment_method" id="payment-method-paypal" value="PayPal" class="input-payment-method hidden" <?php // echo $old->payment_method == 'PayPal' ? 'checked' : '' ?> >
+                                            <label for="payment-method-paypal" class="type">
+                                                <div class="logo">
+                                                    <i class="fab fa-paypal"></i>
+                                                </div>
+                                                <div class="text">
+                                                    <p>Pay with PayPal</p>
+                                                </div>
+                                            </label>
+                                            
                                         </div>
-                                        <div class="invalid-feedback text-sm"><?php echo $error->payment_method[0] ?></div>
+                                        <div class="invalid-feedback text-sm"><?php // echo $error->payment_method[0] ?></div>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="mt-5">
                                     <div>
@@ -398,17 +406,21 @@ function enx_get_page_content($data)
                                     <div class="mt-8">
                                         <label class="text-primary font-semibold block" for="iagree">
                                             <input type="checkbox" class="mr-1" id="iagree" name="iagree" iAgree>
-                                            I agree to the terms and conditions
+                                            I agree to the 
+                                            <a href="https://tripgo.id/term-and-conditions" target="_blank" rel="noopener noreferrer">
+                                                terms and conditions
+                                            </a>
                                         </label>
                                     </div>
 
                                 </div>
 
-                                <div class="my-4 flex justify-end mt-7 mb-5">
+                                <div class="my-4 flex flex-col items-end ml-auto mt-7 mb-5" style="max-width: 292px">
                                     <input type="hidden" name="surl" value="<?php echo get_bloginfo('url') . '/' . AIRPORT_SERVICE_LINK . '/payment/success' ?>">
                                     <input type="hidden" name="furl" value="<?php echo get_bloginfo('url') . '/' . AIRPORT_SERVICE_LINK . '/payment/fail' ?>">
                                     <input type="hidden" name="select_currency" value="<?php echo !isset($_COOKIE[CURRENCY_COOKIE]) ? '' : $_COOKIE[CURRENCY_COOKIE] ?>">
-                                    <button class="btn btn-primary btn-disable" button-next-step iAgree-button disabled>Continue To Payment</button>
+                                    <button class="btn btn-primary btn-disable w-full" button-next-step iAgree-button disabled>Continue To Payment</button>
+                                    <p class="text-xs mt-4">Click 'Continue to Payment' to securely proceed to Tondest.com, our trusted payment partner, for a seamless checkout experience.</p>
                                 </div>
                             </form>
 

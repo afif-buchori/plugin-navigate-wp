@@ -424,6 +424,7 @@ function initialize_654_select2()
         console.log();
         if($('#phone_code_label').html() !== "-Code-") return;
         $('#phone_code_label').html(codephone);
+        $('#phone_code_select2').val(code);
       });
 
       $('label[for="phone_code_select2"]').on('click', function() {

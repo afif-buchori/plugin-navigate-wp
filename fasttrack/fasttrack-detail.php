@@ -89,7 +89,7 @@ function enx_get_page_content($data)
                                                 <span class="iconify inline-block text-primary" data-icon="carbon:calendar" data-width="20" data-height="20"></span>
                                                 <span class="text-gray-700 font-medium">Flight Date:</span>
                                             </label>
-                                            <input type="datetime-local" name="date" min="<?php echo date('Y-m-d\TH:i') ?>" data-action-ft="onchange-calculate" class="form-input bg-gray-light4/60 border-none rounded-full py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm" />
+                                            <input type="datetime-local" name="date" min="<?php echo date('Y-m-d\TH:i') ?>" data-action-ft="onchange-calculate" class="form-input bg-gray-light4/60 border-none rounded-lg py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm" />
                                         </div>
                                         <?php if ($item->sub_type == 'FAST TRACK TRANSFER' || $item->sub_type == 'MEET AND GREET TRANSFER') { ?>
                                             <div class="flex justify-between my-5">
@@ -97,7 +97,7 @@ function enx_get_page_content($data)
                                                     <span class="iconify inline-block text-primary" data-icon="carbon:calendar" data-width="20" data-height="20"></span>
                                                     <span class="text-gray-700 font-medium">Location:</span>
                                                 </label>
-                                                <select name="location" data-action-ft="onchange-calculate" class="form-select bg-gray-light4/60 border-none rounded-full py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm w-full" style="max-width: 266px">
+                                                <select name="location" data-action-ft="onchange-calculate" class="form-select bg-gray-light4/60 border-none rounded-lg py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm w-full" style="max-width: 266px">
                                                     <option value="">--select location--</option>
                                                     <?php foreach ($locations as $location) { ?>
                                                         <option value="<?php echo $location->value ?>"><?php echo $location->label ?></option>

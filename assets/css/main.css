@@ -2284,6 +2284,16 @@ Add the correct display in Chrome and Safari.
   border-bottom-right-radius: 0.75rem !important;
 }
 
+.enx-container .rounded-l-lg {
+  border-top-left-radius: 0.5rem !important;
+  border-bottom-left-radius: 0.5rem !important;
+}
+
+.enx-container .rounded-r-lg {
+  border-top-right-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important;
+}
+
 .enx-container .rounded-tl-full {
   border-top-left-radius: 9999px !important;
 }
@@ -4524,7 +4534,9 @@ Add the correct display in Chrome and Safari.
   display: flex;
   justify-content: space-between;
   margin: 20px auto;
-  max-width: 420px;
+  max-width: 580px;
+  @media screen {
+  }
 }
 .enx-container .stepper-item {
   position: relative;
@@ -4545,7 +4557,7 @@ Add the correct display in Chrome and Safari.
   background-color: #ccc;
   width: 100%;
   height: 6px;
-  top: 14px;
+  top: 12px;
   left: -50%;
   z-index: 2;
 }
@@ -4568,8 +4580,8 @@ Add the correct display in Chrome and Safari.
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: #ccc;
   margin-bottom: 6px;
@@ -4578,32 +4590,38 @@ Add the correct display in Chrome and Safari.
 .enx-container .stepper-item.active {
   font-weight: bold;
 }
+.enx-container .step-name {
+  text-align: center;
+}
 
 .enx-container .stepper-item.completed .step-counter {
-  background-color: var(--wp-admin-theme-color);
+  background-color: #2563eb !important;
+  /* background-color: var(--color-primary) !important; */
   padding: 2px;
 }
 .enx-container .step-counter p,
 .enx-container .step-counter h5 {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   display: block;
 }
 .enx-container .step-counter h5 {
-  background-color: var(--wp-admin-theme-color);
+  background-color: #2563eb !important;
 }
 .enx-container .step-counter p {
-  background-color: var(--wp-admin-theme-color-darker-10);
+  background-color: #0050fc !important;
+  /* background-color: var(--color-secondary) !important; */
 }
 .enx-container .stepper-item.completed::after {
   position: absolute;
   content: "" !important;
   display: block !important;
-  background-color: var(--wp-admin-theme-color-darker-10);
+  background-color: #2563eb !important;
+  /* background-color: var(--color-secondary) !important; */
   width: 100%;
   height: 6px;
-  top: 14px;
+  top: 12px;
   left: 50%;
   z-index: 3;
 }

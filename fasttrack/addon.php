@@ -20,18 +20,26 @@ function enx_get_page_content($data)
                     <div class="container">
                         
                         <div class="stepper-wrapper">
-                        <div class="stepper-item active">
-                            <div class="step-counter"><h5></h5></div>
-                            <div class="step-name">Addon Service</div>
-                        </div>
-                        <div class="stepper-item">
-                            <div class="step-counter"></div>
-                            <div class="step-name">Form Booking</div>
-                        </div>
-                        <div class="stepper-item">
-                            <div class="step-counter"></div>
-                            <div class="step-name">Payments</div>
-                        </div>
+                            <div class="stepper-item active">
+                                <div class="step-counter"><h5></h5></div>
+                                <div class="step-name">Addon Service</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter"></div>
+                                <div class="step-name">Form Booking</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter"></div>
+                                <div class="step-name">Payments</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter"></div>
+                                <div class="step-name">Payment Info</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter"></div>
+                                <div class="step-name">Upload Doc</div>
+                            </div>
                         </div>
 
                         <div class="xl:grid grid-cols-12 gap-x-16 pt-5 pb-5">
