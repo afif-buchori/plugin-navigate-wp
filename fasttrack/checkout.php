@@ -318,7 +318,16 @@ function enx_get_page_content($data)
 
                                     </div>
                                     <div class="my-4" id="contact-form-status"></div>
-
+                                    <!-- <div class="flex gap-4">
+                                        <label for="the-guest-book" class="flex items-center gap-2 px-2">
+                                            <input type="radio" name="guest-book" id="the-guest-book" checked>
+                                            <p>I am The Guest</p>
+                                        </label>
+                                        <label for="the-another-book" class="flex items-center gap-2 px-2">
+                                            <input type="radio" name="guest-book" id="the-another-book">
+                                            <p>I'm Booking Another Person</p>
+                                        </label>
+                                    </div> -->
                                 </div>
 
                                 <h2 class="font-heading font-bold text-primary text-transform-unset mt-14 text-2xl">
@@ -329,8 +338,19 @@ function enx_get_page_content($data)
                                     <div class="md:grid grid-cols-2 gap-4">
                                         <?php for ($a = 0; $a < $cart->adult; $a++) { ?>
                                             <div>
-                                                <label class="self-center text-primary font-semibold block mb-3">Full name #<?php echo ($a + 1) ?>:</label>
-                                                <input name="adult_name_<?php echo $a ?>" value="<?php echo $old->{'adult_name_' . $a} ?>" class="<?php echo $error->{'adult_name_' . $a} ? 'is-invalid' : '' ?> transition w-full form-input bg-gray-light4/60 py-2 px-3 w-auto font-numbers font-medium text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm" type="text" placeholder="Full name">
+                                                <div class="flex justify-between">
+                                                    <label class="self-center text-primary font-semibold block mb-3">Full name #<?php echo ($a + 1) ?>:</label>
+                                                    <?php echo ($a == 0) ? '<label class="text-sm flex items-center gap-2"><input type="checkbox" id="the-guest-book" checked /> I am The Guest</label>' : ''; ?>
+                                                </div>
+                                                <input 
+                                                    name="adult_name_<?php echo $a ?>" 
+                                                    id="adult_name_<?php echo $a ?>" 
+                                                    value="<?php echo $old->{'adult_name_' . $a} ?>" 
+                                                    type="text"
+                                                    <?php echo $a == 0 ? "readonly" : "" ?>
+                                                    class="<?php echo $error->{'adult_name_' . $a} ? 'is-invalid' : '' ?> transition w-full form-input bg-gray-light4/60 py-2 px-3 w-auto font-numbers font-medium text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm" 
+                                                    placeholder="Full name"
+                                                >
                                                 <div class="invalid-feedback text-sm"><?php echo $error->{'adult_name_' . $a}[0] ?></div>
                                             </div>
                                         <?php } ?>
@@ -357,7 +377,12 @@ function enx_get_page_content($data)
                                             <?php for ($i = 0; $i < $cart->infant; $i++) { ?>
                                                 <div>
                                                     <label class="self-center text-primary font-semibold block mb-3">Full name #<?php echo ($i + 1) ?>:</label>
-                                                    <input name="infant_name_<?php echo $i ?>" value="<?php echo $old->{'infant_name_' . $i} ?>" class="<?php echo $error->{'infant_name_' . $i} ? 'is-invalid' : '' ?> transition w-full form-input bg-gray-light4/60 py-2 px-3 w-auto font-numbers font-medium text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm" type="text" placeholder="Full name">
+                                                    <input 
+                                                        name="infant_name_<?php echo $i ?>" 
+                                                        value="<?php echo $old->{'infant_name_' . $i} ?>" 
+                                                        class="<?php echo $error->{'infant_name_' . $i} ? 'is-invalid' : '' ?> transition w-full form-input bg-gray-light4/60 py-2 px-3 w-auto font-numbers font-medium text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm" 
+                                                        type="text" 
+                                                        placeholder="Full name">
                                                     <div class="invalid-feedback text-sm"><?php echo $error->{'infant_name_' . $i}[0] ?></div>
                                                 </div>
                                             <?php } ?>
@@ -419,7 +444,7 @@ function enx_get_page_content($data)
                                     <input type="hidden" name="surl" value="<?php echo get_bloginfo('url') . '/' . AIRPORT_SERVICE_LINK . '/payment/success' ?>">
                                     <input type="hidden" name="furl" value="<?php echo get_bloginfo('url') . '/' . AIRPORT_SERVICE_LINK . '/payment/fail' ?>">
                                     <input type="hidden" name="select_currency" value="<?php echo !isset($_COOKIE[CURRENCY_COOKIE]) ? '' : $_COOKIE[CURRENCY_COOKIE] ?>">
-                                    <button class="btn btn-primary btn-disable w-full" button-next-step iAgree-button disabled>Continue To Payment</button>
+                                    <button class="btn btn-primary btn-disable w-full" id="submit-booking" button-next-step iAgree-button disabled>Continue To Payment</button>
                                     <p class="text-xs mt-4">Click 'Continue to Payment' to securely proceed to Tondest.com, our trusted payment partner, for a seamless checkout experience.</p>
                                 </div>
                             </form>
@@ -429,6 +454,13 @@ function enx_get_page_content($data)
                 </section>
 
             </div>
+        </div>
+        <div class="wrapper-loader-654 backdrop-blur-sm" id="loading-654">
+        <div class="loading-654">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
         </div>
     </div>
 <?php

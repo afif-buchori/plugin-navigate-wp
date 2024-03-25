@@ -401,18 +401,23 @@ function initialize_654_select2()
       $('#phone_code_select2').select2();
 
       $('#airline_arrival').select2();
+      var codeAirlineArrival = $('#airline_arrival').find('option:selected').data('code');
+      $('#label-arrival-for-code').html(codeAirlineArrival || "---");
       $('#airline_arrival').on('change', function() {
         const selectedOption = $(this).find('option:selected');
+        console.log(selectedOption);
         const code = selectedOption.data('code');
-        const val = code !== undefined ? code : "---";
+        const val = code || "---";
         $('#label-arrival-for-code').html(val);
       });
 
       $('#airline_departure_select2').select2();
+      var codeAirlineDeparture = $('#airline_departure_select2').find('option:selected').data('code');
+        $('#label-departure-for-code').html(codeAirlineDeparture || "---");
       $('#airline_departure_select2').on('change', function() {
         const selectedOption = $(this).find('option:selected');
         const code = selectedOption.data('code');
-        const val = code !== undefined ? code : "---";
+        const val = code || "---";
         $('#label-departure-for-code').html(val);
       })
 
@@ -421,7 +426,6 @@ function initialize_654_select2()
         const selectedOption = $(this).find('option:selected');
         const code = selectedOption.data('code');
         const codephone = "+" + code;
-        console.log();
         if($('#phone_code_label').html() !== "-Code-") return;
         $('#phone_code_label').html(codephone);
         $('#phone_code_select2').val(code);
@@ -435,6 +439,34 @@ function initialize_654_select2()
         const val = e.target.value === "" ? "--Code--" : "+" + e.target.value;
         $('#phone_code_label').html(val);
       })
+
+      var lastName = $('#firstname').val();
+      var firstName = $('#lastname').val();
+      $('#firstname').on('keyup', function () {
+        firstName = $('#firstname').val();
+        var fullName = firstName + ' ' + lastName;
+        $('#adult_name_0').val(fullName);
+      })
+      $('#lastname').on('keyup', function () {
+        lastName = $('#lastname').val();
+        var fullName = firstName + ' ' + lastName;
+        $('#adult_name_0').val(fullName);
+      })
+      
+      $('#the-guest-book').change(function() {
+          if ($('#the-guest-book').is(':checked')) {
+              $('#adult_name_0').prop('readonly', true);
+              var fullName = firstName + ' ' + lastName;
+              $('#adult_name_0').val(fullName);
+            } else {
+              $('#adult_name_0').prop('readonly', false);
+              $('#adult_name_0').val("");
+          }
+      });
+
+      $('#submit-booking').on('click', function() {
+        $('#loading-654').css("display", "flex");
+      });
     });
   </script>
 <?php

@@ -2159,6 +2159,10 @@ Add the correct display in Chrome and Safari.
   gap: 6rem !important;
 }
 
+.enx-container .gap-2 {
+  gap: 0.5rem !important;
+}
+
 .enx-container .gap-4 {
   gap: 1rem !important;
 }
@@ -4644,6 +4648,62 @@ span[data-select2-id] {
   border: solid 2px #111827;
   padding: 0.25rem 0.5rem;
   font-size: 14px;
+}
+
+/* .enx-container .mt-5 .grid-cols-2 .disabled\:border-b-2:disabled {
+  border-top: 4px !important;
+  border-left: 4px !important;
+  border-right: 4px !important;
+  border-bottom-width: 2px !important;
+} */
+.enx-container .wrapper-loader-654 {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background-color: #11182770;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999999999999;
+}
+.enx-container .wrapper-loader-654 > .loading-654 {
+  display: flex !important;
+  gap: 24px !important;
+}
+.enx-container .wrapper-loader-654 > .loading-654 > span {
+  content: "" !important;
+  display: block !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 9999999px !important;
+  background-color: #5fc4ff !important;
+  border: solid 4px #f2f4f7 !important;
+  /* @apply w-8 h-8 rounded-full bg-primary border-4 border-secondary !important; */
+  animation: loaders-654 1.5s ease-in-out infinite !important;
+}
+@keyframes loaders-654 {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  35%,
+  65% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.enx-container .wrapper-loader-654 > .loading-654 > span:last-child {
+  animation-delay: 0.6s !important;
+}
+.enx-container .wrapper-loader-654 > .loading-654 > span:nth-child(2) {
+  animation-delay: 0.4s !important;
+}
+.enx-container .wrapper-loader-654 > .loading-654 > span:first-child {
+  animation-delay: 0.2s !important;
 }
 /* END */
 

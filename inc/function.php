@@ -96,6 +96,7 @@ function parseHeaders($headers)
 function fetchGet($url)
 {
     $response = file_get_contents($url);
+
     $header = parseHeaders($http_response_header);
     if ($header->response_code != 200) {
         return ['error' => true];

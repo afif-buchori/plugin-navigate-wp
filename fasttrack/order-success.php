@@ -3,6 +3,7 @@ function enx_get_page_content($data)
 {
     $url = API_FASTTRACK_URL . "/get/order?order=" . $_GET['order'];
     $order = fetchGet($url);
+    var_dump($order);
     ob_start();
 ?>
     <div class="enx-container site-wrapper" id="page-addon">
