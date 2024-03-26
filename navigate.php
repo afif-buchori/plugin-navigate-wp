@@ -467,8 +467,79 @@ function initialize_654_select2()
       $('#submit-booking').on('click', function() {
         $('#loading-654').css("display", "flex");
       });
+
+
+      const infoOrder = $('#info-orders');
+      console.log(infoOrder.data('status'));
+
+      if (infoOrder.data('status').includes("Process")) {
+      const url = infoOrder.data('url');
+      if (url) {
+          const fetchData = function() {
+              $.ajax({
+                  url: url,
+                  type: 'GET',
+                  success: function(response) {
+                      // console.log(response);
+                      if (response.status === "Process") {
+                          setTimeout(fetchData, 3000);
+                      } 
+                      // else console.log(response.status);
+                  },
+                  error: function(xhr, status, error) {
+                      console.error(error);
+                  }
+              });
+          };
+
+          fetchData();
+      } else {
+          console.error("URL tidak tersedia dalam atribut data-url");
+      }
+}
+
+
     });
+
   </script>
 <?php
 }
 add_action('wp_footer', 'initialize_654_select2');
+
+// function enqueue_poll_order_status_script() {
+//   
+//   <script>
+//     function pollOrderStatus() {
+//     // Buat fungsi untuk melakukan fetch data
+//     function fetchData() {
+//         fetch('https://example.com/get/order?order=< ? p hp echo $_GET['order']; ? >')
+//             .then(response => response.json())
+//             .then(data => {
+//                 // Periksa status respons
+//                 if (data.status === 'Process') {
+//                     // Jika status masih 'Process', panggil fungsi polling lagi setelah 2 detik
+//                     setTimeout(pollOrderStatus, 2000);
+//                 } else if (data.status === 'paid') {
+//                     // Jika status menjadi 'paid', lakukan tindakan sesuai kebutuhan
+//                     console.log('Order paid!');
+//                 } else {
+//                     // Jika status tidak 'Process' atau 'paid', berhenti polling
+//                     console.log('Order status:', data.status);
+//                 }
+//             })
+//             .catch(error => {
+//                 console.error('Error fetching order status:', error);
+//             });
+//     }
+
+//     // Panggil fungsi fetchData untuk memulai polling
+//     fetchData();
+// }
+
+// // Panggil fungsi pollOrderStatus untuk memulai polling saat halaman dimuat
+// pollOrderStatus();
+
+//   </script>
+//   
+// }
+// add_action('wp_enqueue_scripts', 'enqueue_poll_order_status_script');

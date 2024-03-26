@@ -3,7 +3,6 @@ function enx_get_page_content($data)
 {
     $url = API_FASTTRACK_URL . "/get/order?order=" . $_GET['order'];
     $order = fetchGet($url);
-    var_dump($order);
     ob_start();
 ?>
     <div class="enx-container site-wrapper" id="page-addon">
@@ -21,9 +20,13 @@ function enx_get_page_content($data)
                                         </h5>
                                         <div class="py-5 px-7">
                                             <div class="mb-4">
-                                                <span class="text-primary font-semibold block" for="email">
-                                                    Status:
-                                                    <span class="font-numbers font-medium text-primary/90 text-sm"><?php echo $order->status ?></span>
+                                                <span class="text-primary font-semibold flex gap-2 items-center" for="email">
+                                                    <p 
+                                                        id="<?php echo $order->status == "Process" ? 'info-orders' : '' ?>" 
+                                                        data-status="<?php echo $order->status ?>"
+                                                        data-url="<?php echo $url ?>"
+                                                    >Status:</p>
+                                                    <span class="font-numbers font-bold text-primary/90 text-sm" id="<?php echo $order->status == "Process" ? 'animate-pulse' : '' ?>"><?php echo $order->status ?></span>
                                                     <?php if ($order->status == 'Unpaid') { ?>
                                                         <a href="#" class="btn btn-link">Refresh</a>
                                                     <?php } ?>

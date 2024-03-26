@@ -4650,6 +4650,24 @@ span[data-select2-id] {
   font-size: 14px;
 }
 
+.enx-container #animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+  position: relative !important;
+}
+.enx-container #animate-pulse::after {
+  content: "...";
+  position: absolute !important;
+  bottom: 6px !important;
+  right: -28px !important;
+  font-size: 32px;
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
 /* .enx-container .mt-5 .grid-cols-2 .disabled\:border-b-2:disabled {
   border-top: 4px !important;
   border-left: 4px !important;
