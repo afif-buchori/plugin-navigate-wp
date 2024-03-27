@@ -4,9 +4,10 @@ function enx_get_page_content($data)
     $cartdata = json_decode(json_encode($_SESSION[NAVIGATE_CART]));
     $cart = $cartdata->main_service;
     $addons = json_decode($data->response->addons);
-
+    
     $url = API_FASTTRACK_URL . "/get/order?order=" . $_GET['order'];
     $order = fetchGet($url);
+    var_dump(json_encode($order));
     ob_start();
 ?>
     <div class="enx-container site-wrapper">

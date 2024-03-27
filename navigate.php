@@ -397,149 +397,79 @@ function initialize_654_select2()
 {
 ?>
   <script>
-    jQuery(document).ready(function($) {
-      $('#phone_code_select2').select2();
+    // jQuery(document).ready(function($) {
+    //   $('#phone_code_select2').select2();
 
-      $('#airline_arrival').select2();
-      var codeAirlineArrival = $('#airline_arrival').find('option:selected').data('code');
-      $('#label-arrival-for-code').html(codeAirlineArrival || "---");
-      $('#airline_arrival').on('change', function() {
-        const selectedOption = $(this).find('option:selected');
-        console.log(selectedOption);
-        const code = selectedOption.data('code');
-        const val = code || "---";
-        $('#label-arrival-for-code').html(val);
-      });
+    //   $('#airline_arrival').select2();
+    //   var codeAirlineArrival = $('#airline_arrival').find('option:selected').data('code');
+    //   $('#label-arrival-for-code').html(codeAirlineArrival || "---");
+    //   $('#airline_arrival').on('change', function() {
+    //     const selectedOption = $(this).find('option:selected');
+    //     console.log(selectedOption);
+    //     const code = selectedOption.data('code');
+    //     const val = code || "---";
+    //     $('#label-arrival-for-code').html(val);
+    //   });
 
-      $('#airline_departure_select2').select2();
-      var codeAirlineDeparture = $('#airline_departure_select2').find('option:selected').data('code');
-        $('#label-departure-for-code').html(codeAirlineDeparture || "---");
-      $('#airline_departure_select2').on('change', function() {
-        const selectedOption = $(this).find('option:selected');
-        const code = selectedOption.data('code');
-        const val = code || "---";
-        $('#label-departure-for-code').html(val);
-      })
+    //   $('#airline_departure_select2').select2();
+    //   var codeAirlineDeparture = $('#airline_departure_select2').find('option:selected').data('code');
+    //     $('#label-departure-for-code').html(codeAirlineDeparture || "---");
+    //   $('#airline_departure_select2').on('change', function() {
+    //     const selectedOption = $(this).find('option:selected');
+    //     const code = selectedOption.data('code');
+    //     const val = code || "---";
+    //     $('#label-departure-for-code').html(val);
+    //   })
 
-      $('#country_select2').select2();
-      $('#country_select2').on('change', function() {
-        const selectedOption = $(this).find('option:selected');
-        const code = selectedOption.data('code');
-        const codephone = "+" + code;
-        if($('#phone_code_label').html() !== "-Code-") return;
-        $('#phone_code_label').html(codephone);
-        $('#phone_code_select2').val(code);
-      });
+    //   $('#country_select2').select2();
+    //   $('#country_select2').on('change', function() {
+    //     const selectedOption = $(this).find('option:selected');
+    //     const code = selectedOption.data('code');
+    //     const codephone = "+" + code;
+    //     if($('#phone_code_label').html() !== "-Code-") return;
+    //     $('#phone_code_label').html(codephone);
+    //     $('#phone_code_select2').val(code);
+    //   });
 
-      $('label[for="phone_code_select2"]').on('click', function() {
-        $('#phone_code_select2').select2('open');
-      });
+    //   $('label[for="phone_code_select2"]').on('click', function() {
+    //     $('#phone_code_select2').select2('open');
+    //   });
 
-      $("#phone_code_select2").on('change', function(e) {
-        const val = e.target.value === "" ? "--Code--" : "+" + e.target.value;
-        $('#phone_code_label').html(val);
-      })
+    //   $("#phone_code_select2").on('change', function(e) {
+    //     const val = e.target.value === "" ? "--Code--" : "+" + e.target.value;
+    //     $('#phone_code_label').html(val);
+    //   })
 
-      var lastName = $('#firstname').val();
-      var firstName = $('#lastname').val();
-      $('#firstname').on('keyup', function () {
-        firstName = $('#firstname').val();
-        var fullName = firstName + ' ' + lastName;
-        $('#adult_name_0').val(fullName);
-      })
-      $('#lastname').on('keyup', function () {
-        lastName = $('#lastname').val();
-        var fullName = firstName + ' ' + lastName;
-        $('#adult_name_0').val(fullName);
-      })
+    //   var lastName = $('#firstname').val();
+    //   var firstName = $('#lastname').val();
+    //   $('#firstname').on('keyup', function () {
+    //     firstName = $('#firstname').val();
+    //     var fullName = firstName + ' ' + lastName;
+    //     $('#adult_name_0').val(fullName);
+    //   })
+    //   $('#lastname').on('keyup', function () {
+    //     lastName = $('#lastname').val();
+    //     var fullName = firstName + ' ' + lastName;
+    //     $('#adult_name_0').val(fullName);
+    //   })
       
-      $('#the-guest-book').change(function() {
-          if ($('#the-guest-book').is(':checked')) {
-              $('#adult_name_0').prop('readonly', true);
-              var fullName = firstName + ' ' + lastName;
-              $('#adult_name_0').val(fullName);
-            } else {
-              $('#adult_name_0').prop('readonly', false);
-              $('#adult_name_0').val("");
-          }
-      });
+    //   $('#the-guest-book').change(function() {
+    //       if ($('#the-guest-book').is(':checked')) {
+    //           $('#adult_name_0').prop('readonly', true);
+    //           var fullName = firstName + ' ' + lastName;
+    //           $('#adult_name_0').val(fullName);
+    //         } else {
+    //           $('#adult_name_0').prop('readonly', false);
+    //           $('#adult_name_0').val("");
+    //       }
+    //   });
 
-      $('#submit-booking').on('click', function() {
-        $('#loading-654').css("display", "flex");
-      });
+    //   $('#submit-booking').on('click', function() {
+    //     $('#loading-654').css("display", "flex");
+    //   });
 
-
-      const infoOrder = $('#info-orders');
-      console.log(infoOrder.data('status'));
-
-      if (infoOrder.data('status').includes("Process")) {
-      const url = infoOrder.data('url');
-      if (url) {
-          const fetchData = function() {
-              $.ajax({
-                  url: url,
-                  type: 'GET',
-                  success: function(response) {
-                      // console.log(response);
-                      if (response.status === "Process") {
-                          setTimeout(fetchData, 3000);
-                      } 
-                      // else console.log(response.status);
-                  },
-                  error: function(xhr, status, error) {
-                      console.error(error);
-                  }
-              });
-          };
-
-          fetchData();
-      } else {
-          console.error("URL tidak tersedia dalam atribut data-url");
-      }
-}
-
-
-    });
-
+    // });
   </script>
 <?php
 }
 add_action('wp_footer', 'initialize_654_select2');
-
-// function enqueue_poll_order_status_script() {
-//   
-//   <script>
-//     function pollOrderStatus() {
-//     // Buat fungsi untuk melakukan fetch data
-//     function fetchData() {
-//         fetch('https://example.com/get/order?order=< ? p hp echo $_GET['order']; ? >')
-//             .then(response => response.json())
-//             .then(data => {
-//                 // Periksa status respons
-//                 if (data.status === 'Process') {
-//                     // Jika status masih 'Process', panggil fungsi polling lagi setelah 2 detik
-//                     setTimeout(pollOrderStatus, 2000);
-//                 } else if (data.status === 'paid') {
-//                     // Jika status menjadi 'paid', lakukan tindakan sesuai kebutuhan
-//                     console.log('Order paid!');
-//                 } else {
-//                     // Jika status tidak 'Process' atau 'paid', berhenti polling
-//                     console.log('Order status:', data.status);
-//                 }
-//             })
-//             .catch(error => {
-//                 console.error('Error fetching order status:', error);
-//             });
-//     }
-
-//     // Panggil fungsi fetchData untuk memulai polling
-//     fetchData();
-// }
-
-// // Panggil fungsi pollOrderStatus untuk memulai polling saat halaman dimuat
-// pollOrderStatus();
-
-//   </script>
-//   
-// }
-// add_action('wp_enqueue_scripts', 'enqueue_poll_order_status_script');

@@ -22,7 +22,7 @@ function enx_get_page_content($data)
                                             <div class="mb-4">
                                                 <span class="text-primary font-semibold flex gap-2 items-center" for="email">
                                                     <p 
-                                                        id="<?php echo $order->status == "Process" ? 'info-orders' : '' ?>" 
+                                                        id="info-orders" 
                                                         data-status="<?php echo $order->status ?>"
                                                         data-url="<?php echo $url ?>"
                                                     >Status:</p>

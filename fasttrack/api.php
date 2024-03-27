@@ -24,11 +24,22 @@ function enx_get_data_api_post()
         $data = enx_get_rate_addon_data_api();
     } else if ($url[2] == "upload-documents") {
         $data = enx_upload_data_api();
+    } else if ($url[2] == "get-status") {
+        $data = enx_get_booking_status_api();
     }
+    
     return $data;
 }
 
 //POST data =========
+function enx_get_booking_status_api()
+{
+    $url = API_FASTTRACK_URL . "/get/bookingstatus" . createParamsFromGet();
+    $req = json_decode(file_get_contents("php://input"));
+    $data = fetchPost($url, $req);
+    return $data;
+}
+
 function enx_get_rate_data_api()
 {
     $url = API_FASTTRACK_URL . "/get/rate" . createParamsFromGet();

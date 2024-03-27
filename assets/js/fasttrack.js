@@ -684,3 +684,109 @@ function uploadNotLoading(button, browser, error = false) {
   browser.disabled = false;
   if (error) button.nextElementSibling.classList.remove("hidden");
 }
+
+jQuery(document).ready(function ($) {
+  $("#phone_code_select2").select2();
+
+  $("#airline_arrival").select2();
+  var codeAirlineArrival = $("#airline_arrival")
+    .find("option:selected")
+    .data("code");
+  $("#label-arrival-for-code").html(codeAirlineArrival || "---");
+  $("#airline_arrival").on("change", function () {
+    const selectedOption = $(this).find("option:selected");
+    const code = selectedOption.data("code");
+    const val = code || "---";
+    $("#label-arrival-for-code").html(val);
+  });
+
+  $("#airline_departure_select2").select2();
+  var codeAirlineDeparture = $("#airline_departure_select2")
+    .find("option:selected")
+    .data("code");
+  $("#label-departure-for-code").html(codeAirlineDeparture || "---");
+  $("#airline_departure_select2").on("change", function () {
+    const selectedOption = $(this).find("option:selected");
+    const code = selectedOption.data("code");
+    const val = code || "---";
+    $("#label-departure-for-code").html(val);
+  });
+
+  $("#country_select2").select2();
+  $("#country_select2").on("change", function () {
+    const selectedOption = $(this).find("option:selected");
+    const code = selectedOption.data("code");
+    const codephone = "+" + code;
+    if ($("#phone_code_label").html() !== "-Code-") return;
+    $("#phone_code_label").html(codephone);
+    $("#phone_code_select2").val(code);
+  });
+
+  $('label[for="phone_code_select2"]').on("click", function () {
+    $("#phone_code_select2").select2("open");
+  });
+
+  $("#phone_code_select2").on("change", function (e) {
+    const val = e.target.value === "" ? "--Code--" : "+" + e.target.value;
+    $("#phone_code_label").html(val);
+  });
+
+  var lastName = $("#firstname").val();
+  var firstName = $("#lastname").val();
+  $("#firstname").on("keyup", function () {
+    firstName = $("#firstname").val();
+    var fullName = firstName + " " + lastName;
+    $("#adult_name_0").val(fullName);
+  });
+  $("#lastname").on("keyup", function () {
+    lastName = $("#lastname").val();
+    var fullName = firstName + " " + lastName;
+    $("#adult_name_0").val(fullName);
+  });
+
+  $("#the-guest-book").change(function () {
+    if ($("#the-guest-book").is(":checked")) {
+      $("#adult_name_0").prop("readonly", true);
+      var fullName = firstName + " " + lastName;
+      $("#adult_name_0").val(fullName);
+    } else {
+      $("#adult_name_0").prop("readonly", false);
+      $("#adult_name_0").val("");
+    }
+  });
+
+  $("#submit-booking").on("click", function () {
+    $("#loading-654").css("display", "flex");
+  });
+});
+
+// GET ORDER
+const getStatusOrder = async (url) => {
+  const [link, id] = url.split("order=");
+  try {
+    const result = await fetch(API_URL + "/get-status", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ order: id }),
+    });
+    const res = await result.json();
+    if (res.status === "PROCESS") {
+      setTimeout(() => getStatusOrder(url), 3000);
+    } else {
+      const animatePulse = document.getElementById("animate-pulse");
+      animatePulse.innerHTML = res.status;
+      animatePulse.style.animation = "none";
+      animatePulse.classList.add("doted-process");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const infoOrder = document.getElementById("info-orders");
+if (infoOrder && infoOrder.dataset.status === "Process") {
+  getStatusOrder(infoOrder.dataset.url);
+}
