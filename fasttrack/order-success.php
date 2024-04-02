@@ -3,6 +3,7 @@ function enx_get_page_content($data)
 {
     $url = API_FASTTRACK_URL . "/get/order?order=" . $_GET['order'];
     $order = fetchGet($url);
+    // var_dump(json_encode($order));
     ob_start();
 ?>
     <div class="enx-container site-wrapper" id="page-addon">
@@ -24,7 +25,7 @@ function enx_get_page_content($data)
                                                     <p 
                                                         id="info-orders" 
                                                         data-status="<?php echo $order->status ?>"
-                                                        data-url="<?php echo $url ?>"
+                                                        data-order="<?php echo $order->transaction_id ?>"
                                                     >Status:</p>
                                                     <span class="font-numbers font-bold text-primary/90 text-sm" id="<?php echo $order->status == "Process" ? 'animate-pulse' : '' ?>"><?php echo $order->status ?></span>
                                                     <?php if ($order->status == 'Unpaid') { ?>

@@ -761,8 +761,7 @@ jQuery(document).ready(function ($) {
 });
 
 // GET ORDER
-const getStatusOrder = async (url) => {
-  const [link, id] = url.split("order=");
+const getStatusOrder = async (id, count = 0) => {
   try {
     const result = await fetch(API_URL + "/get-status", {
       method: "POST",
@@ -773,20 +772,24 @@ const getStatusOrder = async (url) => {
       body: JSON.stringify({ order: id }),
     });
     const res = await result.json();
-    if (res.status === "PROCESS") {
-      setTimeout(() => getStatusOrder(url), 3000);
+    console.log(res);
+    if (res.status === "UNPAID" && count < 3) {
+      setTimeout(() => getStatusOrder(id, count + 1), 2000);
+    } else if (res.status === "PROCESS") {
+      setTimeout(() => getStatusOrder(id), 3000);
     } else {
       const animatePulse = document.getElementById("animate-pulse");
       animatePulse.innerHTML = res.status;
-      animatePulse.style.animation = "none";
-      animatePulse.classList.add("doted-process");
+      animatePulse.id = null;
     }
   } catch (error) {
-    console.log(error);
+    location.reload(true);
   }
 };
 
 const infoOrder = document.getElementById("info-orders");
 if (infoOrder && infoOrder.dataset.status === "Process") {
-  getStatusOrder(infoOrder.dataset.url);
+  getStatusOrder(infoOrder.dataset.order);
+} else if (infoOrder && infoOrder.dataset.status === "Unpaid") {
+  getStatusOrder(infoOrder.dataset.order);
 }
