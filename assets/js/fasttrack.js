@@ -793,3 +793,26 @@ if (infoOrder && infoOrder.dataset.status === "Process") {
 } else if (infoOrder && infoOrder.dataset.status === "Unpaid") {
   getStatusOrder(infoOrder.dataset.order);
 }
+
+const btnTC = document.getElementById("btn-TC") || "";
+const modalComp = document.getElementById("modal-tc") || "";
+if (btnTC) {
+  btnTC.addEventListener("click", function () {
+    modalComp.style.display = "grid";
+  });
+  modalComp.addEventListener("click", function () {
+    modalComp.style.display = "none";
+  });
+}
+const btnCloseModal = document.getElementById("close-modal") || "";
+if (btnCloseModal) {
+  btnCloseModal.addEventListener("click", function () {
+    modalComp.style.display = "none";
+  });
+}
+const containerModal = document.getElementById("enxcontainer-modal") || "";
+if (containerModal !== "") {
+  containerModal.addEventListener("click", function (e) {
+    e.stopPropagation();
+  });
+}

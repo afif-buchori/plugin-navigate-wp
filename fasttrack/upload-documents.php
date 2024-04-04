@@ -8,12 +8,13 @@ function enx_get_page_content($data)
     $url = API_FASTTRACK_URL . "/get/order?order=" . $_GET['order'];
     $order = fetchGet($url);
 
-    var_dump(json_encode($order));
+    // var_dump(json_encode(strpos($order->order_type, "VISA")));
     
-    $isVoa = false;
-    foreach ($order->details as $detail) {
-        if (strpos($detail->title, "VOA") !== false) $isVoa = true;
-    }
+    $isVoa = strpos($order->order_type, "VISA");
+    // $isVoa = false;
+    // foreach ($order->details as $detail) {
+    //     if (strpos($detail->title, "VOA") !== false) $isVoa = true;
+    // }
 
     ob_start();
 ?>
@@ -26,11 +27,19 @@ function enx_get_page_content($data)
                         <div class="xl:grid grid-cols-12 gap-x-16 pt-16 pb-5 xl:py-20">
                             <div class="col-span-12">
                                 <div class="mb-10 top-10">
-                                    <div class="widget shadow-lg rounded-xl mb-10 bg-white">
-                                        <h5 class="font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
-                                            Service Details
-                                            <input type="hidden" name="sid" id="sid" value="<?php echo $_GET['order'] ?>">
-                                        </h5>
+                                    <div class="widget shadow-lg rounded-xl mb-10 bg-white relative">
+                                        <div class="flex justify-between border-b-2 border-primary border-opacity-10 pl-7 pr-4 py-4">
+                                            <h5 class="font-heading text-xl text-primary font-bold">
+                                                Service Details
+                                                <input type="hidden" name="sid" id="sid" value="<?php echo $_GET['order'] ?>">
+                                            </h5>
+                                            <div id="btn-TC" class="btn btn-primary flex gap-2">
+                                                <p class="ring-654 text-white">!</p>
+                                                Term and Conditions Upload
+                                                <p class="ring-654 text-white">!</p>
+                                            </div>
+                                        </div>
+                                        <?php include 'contents/rulesUpload.php' ?>
                                         <div class="grid grid-cols-12">
                                             <div class="py-5 px-7 col-span-6">
                                                 <div class="mb-4">
@@ -67,7 +76,7 @@ function enx_get_page_content($data)
                                             <hr />
                                             <div class=" py-5 px-7 col-span-6">
                                                 <label class="text-primary font-semibold block" for="email"><?php echo $item->full_name ?></label>
-                                                <div class="grid grid-cols-12 gap-2">
+                                                <div class="grid grid-cols-4 sm:grid-cols-8 md:grid-cols-12 gap-2">
                                                     <div class="py-5 px-7 col-span-4">
                                                         <label class="text-primary font-semibold block" for="email">Passport</label>
                                                         <div>
@@ -124,7 +133,7 @@ function enx_get_page_content($data)
                                                             <div>
                                                                 <?php if (!$item->selfie) { ?>
                                                                     <div image-preview style="width: 100%; height:200px; background-image: url(<?php echo plugins_url('../assets/images/select-image.jpg', __FILE__) ?>); background-repeat: no-repeat;background-position: left center;background-size: contain; background-position: center" class="border-2"></div>
-                                                                    <input class="hidden" accept=".jpg,.jpeg,.png,.bmp,.pdf" type='file' 
+                                                                    <input class="hidden" accept=".jpg,.jpeg,.png,.bmp" type='file' 
                                                                     data-type="selfie"
                                                                     data-uid="<?php echo $item->id ?>" image-browser />
                                                                     <button type="button" class="btn-primary my-5 hidden" image-upload><i class="fa-solid fa-circle-notch fa-spin hidden"></i> Upload</button>
@@ -184,7 +193,7 @@ function enx_get_page_content($data)
                                                             <div>
                                                                 <?php if (!$item->selfie) { ?>
                                                                     <div image-preview style="width: 100%; height:200px; background-image: url(<?php echo plugins_url('../assets/images/select-image.jpg', __FILE__) ?>); background-repeat: no-repeat;background-position: left center;background-size: contain; background-position: center" class="border-2"></div>
-                                                                    <input class="hidden" accept=".jpg,.jpeg,.png,.bmp,.pdf" type='file' 
+                                                                    <input class="hidden" accept=".jpg,.jpeg,.png,.bmp" type='file' 
                                                                     data-type="selfie"
                                                                     data-uid="<?php echo $item->id ?>" image-browser />
                                                                     <button type="button" class="btn-primary my-5 hidden" image-upload><i class="fa-solid fa-circle-notch fa-spin hidden"></i> Upload</button>
@@ -244,7 +253,7 @@ function enx_get_page_content($data)
                                                             <div>
                                                                 <?php if (!$item->selfie) { ?>
                                                                     <div image-preview style="width: 100%; height:200px; background-image: url(<?php echo plugins_url('../assets/images/select-image.jpg', __FILE__) ?>); background-repeat: no-repeat;background-position: left center;background-size: contain; background-position: center" class="border-2"></div>
-                                                                    <input class="hidden" accept=".jpg,.jpeg,.png,.bmp,.pdf" type='file' 
+                                                                    <input class="hidden" accept=".jpg,.jpeg,.png,.bmp" type='file' 
                                                                     data-type="selfie"
                                                                     data-uid="<?php echo $item->id ?>" image-browser />
                                                                     <button type="button" class="btn-primary my-5 hidden" image-upload><i class="fa-solid fa-circle-notch fa-spin hidden"></i> Upload</button>

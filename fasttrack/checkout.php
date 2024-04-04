@@ -428,14 +428,13 @@ function enx_get_page_content($data)
                                         <div class="invalid-feedback text-sm"><?php echo $error->note[0] ?></div>
                                     </div>
 
-                                    <div class="mt-8">
+                                    <div class="mt-8 flex items-center">
+                                        <input type="checkbox" class="mr-1" id="iagree" name="iagree" iAgree>
                                         <label class="text-primary font-semibold block" for="iagree">
-                                            <input type="checkbox" class="mr-1" id="iagree" name="iagree" iAgree>
                                             I agree to the 
-                                            <a href="https://tripgo.id/term-and-conditions" target="_blank" rel="noopener noreferrer">
-                                                terms and conditions
-                                            </a>
                                         </label>
+                                        <span id="btn-TC" class="ml-2 text-link font-semibold block cursor-pointer underline">terms and conditions</span>
+                                        <?php include 'contents/cancelation.php' ?>
                                     </div>
 
                                 </div>
