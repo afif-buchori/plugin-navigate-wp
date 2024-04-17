@@ -5,6 +5,7 @@ define("TRIPGO_LINK", "tripgo");
 define("AIRPORT_SERVICE_LINK", "airport-service");
 // define("API_URL", "https://portal.navigate.com");
 
+// define("API_URL", "https://1942-202-58-193-186.ngrok-free.app");
 define("API_URL", "https://snowy-desert-qioyjsoygqwg.vapor-farm-g1.com");
 // define("API_URL", "https://indigo-fern-3sxv44dajhcf.vapor-farm-f1.com");
 

@@ -81,6 +81,11 @@ function enx_upload_data_api()
 
     $content .= "--" . $multipart_boundary . "\r\n" .
         "Content-Disposition: form-data; name=\"sid\"\r\n\r\n" . $_POST['sid'] . "\r\n";
+    
+        if ($_POST['type'] == 'imei') {
+            $content .= "--" . $multipart_boundary . "\r\n" .
+                "Content-Disposition: form-data; name=\"imei_name\"\r\n\r\n" . $_POST['name'] . "\r\n";
+        }
 
     // signal end of request (note the trailing "--")
     $content .= "--" . $multipart_boundary . "--\r\n";
@@ -102,6 +107,7 @@ function enx_upload_data_api()
     }
     $data = json_decode($response);
 
-    if ($data->error) return ['status' => 'error'];
+    if ($data->error || !$data) return ['status' => 'error'];
     return ['status' => 'success'];
+    // return ['status' => $data];
 }

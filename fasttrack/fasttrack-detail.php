@@ -84,7 +84,7 @@ function enx_get_page_content($data)
                                     <form id="formbooks1" class="py-5 px-7" method="POST" action="/<?php echo AIRPORT_SERVICE_LINK . '/postdata/fd' ?>" data-id="<?php echo $item->id ?>">
                                         <input type="hidden" name="sid" value="<?php echo $item->id ?>">
                                         <input type="hidden" name="total" value="0">
-                                        <div class="flex justify-between my-5">
+                                        <div class="flex flex-col sm:flex-row justify-between my-5">
                                             <label class="flex items-center space-x-3" for="from">
                                                 <span class="iconify inline-block text-primary" data-icon="carbon:calendar" data-width="20" data-height="20"></span>
                                                 <span class="text-gray-700 font-medium">Flight Date:</span>

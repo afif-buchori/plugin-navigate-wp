@@ -626,10 +626,13 @@ function documentUpload(e) {
   const uid = elementBrowser.getAttribute("data-uid");
   const type = elementBrowser.getAttribute("data-type");
   const sid = document.getElementById("sid").value;
+  const num = elementBrowser.getAttribute("data-num") || "";
   data.append("file", elementBrowser.files[0]);
   data.append("type", type);
   data.append("uid", uid);
   data.append("sid", sid);
+  if (num !== "") data.append("name", num);
+  // return console.log({ num });
 
   uploadIsLoading(e.target, elementBrowser);
   fetch(API_URL + "/upload-documents?service=" + sid, {

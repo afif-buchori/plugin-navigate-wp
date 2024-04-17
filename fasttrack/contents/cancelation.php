@@ -11,7 +11,7 @@
     padding: 0 44px;
 ">
     <div id="enxcontainer-modal" style="
-        max-width: 600px;
+        max-width: 880px;
         max-height: 70vh;
         padding: 20px 0 20px 20px;
         background-color: white;
@@ -43,7 +43,274 @@
             overflow-y: auto;
             padding-right: 16px;
         ">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam consequuntur ut, quidem omnis quos labore expedita deleniti impedit necessitatibus nemo libero blanditiis porro autem, eligendi aut a explicabo ex odit corrupti dolorem soluta officia facere eveniet. Aperiam voluptate rem saepe excepturi omnis dolores numquam ratione ipsam possimus sit accusamus praesentium, esse eaque delectus earum, repellendus deleniti, error commodi tempore aliquid non provident molestias sint? Officia molestias porro tempore necessitatibus laboriosam unde quia enim quaerat ullam. Quod consequuntur vitae, ipsum natus id accusamus esse cumque facere molestiae repellendus laudantium saepe atque, inventore eos ipsam beatae sint minus, odit sunt tempora aperiam nisi dolorum numquam? Inventore eligendi consectetur saepe repellendus, ipsa quis, nisi odit explicabo recusandae veritatis amet debitis? Animi ratione, nam corrupti ipsa ipsam recusandae beatae, autem velit vero deserunt aliquam quidem. Soluta, sit eveniet esse hic eos tempore iusto maiores numquam minima ad cumque non eaque, ex deserunt tenetur dolore cupiditate accusamus cum asperiores saepe accusantium error. Facilis nihil, illum adipisci accusamus aliquid dolor cupiditate assumenda, facere nostrum quas corrupti ipsa. Natus architecto expedita libero eum sequi cupiditate iste pariatur dolorum molestiae sunt, perferendis placeat quibusdam non iusto earum? Aut ipsam enim cum quis perspiciatis sapiente ullam laudantium ut impedit reprehenderit? Tenetur assumenda quaerat eos cumque doloremque corporis eligendi ipsum autem optio voluptatibus ratione, alias exercitationem temporibus et voluptas eum distinctio libero eaque, eveniet harum! Eligendi, neque dolorem. Adipisci repellendus architecto praesentium! Dignissimos blanditiis quos nesciunt necessitatibus dolores, cupiditate porro repellendus possimus corrupti vitae. Laborum fugiat, quia quas reprehenderit repellat ipsa temporibus in sunt vel sint cum incidunt ducimus molestiae voluptates facere ex qui aspernatur inventore blanditiis iusto ea quae fugit assumenda libero. Magnam accusamus iusto minima consequuntur maxime vero nam deserunt quod tempora nisi odit rerum voluptatem pariatur commodi fugit impedit, molestiae veniam adipisci ullam incidunt. Eos expedita eum voluptatum error, distinctio, officia animi, alias odio temporibus veritatis omnis consequuntur aperiam saepe quos! Fuga at deleniti ipsum facilis praesentium, a minima laborum sint eaque, ad dolores culpa temporibus hic magni saepe quas itaque cumque porro adipisci? Ipsam repellat autem asperiores odio sit eveniet vel dolores non, quisquam quaerat quam qui vero sapiente officiis est neque architecto alias ipsum facere ratione perspiciatis blanditiis explicabo quas illum. Maiores mollitia, asperiores aut saepe facere voluptatibus architecto perspiciatis quidem ut sequi dolorum hic reprehenderit vitae eum iste quae suscipit. Aliquid adipisci enim et quae sunt officiis cum labore placeat dolorem, necessitatibus illum cupiditate odio impedit, ratione, obcaecati rerum commodi possimus dignissimos esse! Consequuntur iste minima magnam, aperiam tenetur ut cum perspiciatis incidunt quasi fugit beatae a enim odit eveniet, nisi sequi aliquid! Vel molestias quos voluptates laborum odit iure incidunt veniam reprehenderit nobis ullam blanditiis eligendi neque id odio nihil laudantium iusto ut expedita, accusamus fugit illum. Nobis exercitationem quibusdam veniam ipsa, necessitatibus nisi quam non sapiente perferendis quod sit recusandae qui. Impedit commodi architecto unde enim delectus deserunt voluptates dolorem ducimus magnam fuga labore qui ea officia culpa vero, iste sequi, minima dolor quam! Eveniet quod voluptatum ad in quasi rerum animi nam quis ipsum, dolorem rem nemo itaque fugiat nisi harum natus deserunt culpa fuga dignissimos et, ea quam at vero laboriosam. Sint sapiente distinctio odio inventore iure, atque laudantium qui quaerat! Deleniti doloremque asperiores error soluta numquam possimus sapiente cum voluptatibus expedita quaerat voluptatum ex maxime libero, officiis iste, aut nulla reiciendis facilis laudantium debitis optio laboriosam tempora. Odio perspiciatis consequuntur non repellendus quibusdam molestias accusamus voluptatem aliquid optio sequi. Consequatur reprehenderit et eligendi quibusdam omnis, excepturi officiis animi ab molestias fuga deserunt perferendis numquam sint possimus labore dolore quas repellat reiciendis quis obcaecati illum! Dolores voluptatum unde expedita illum, quidem distinctio? Vero minus, dolorum laborum iure, velit error sunt molestias, exercitationem expedita laboriosam praesentium necessitatibus quisquam ducimus obcaecati assumenda est possimus nam temporibus sequi ipsum voluptatibus deleniti debitis. Impedit quis animi non, facere esse delectus officiis, quasi provident quo quibusdam beatae fugit labore reiciendis dolorem! Accusantium labore non magni voluptatibus natus! Similique nisi, suscipit in ipsa fuga illum dolor voluptatibus nemo ad alias? Numquam error sint laborum sed saepe commodi, obcaecati a, culpa accusamus rem labore neque ab nisi deleniti natus libero fuga voluptatibus rerum. A nisi temporibus quibusdam. Nam temporibus expedita cupiditate ut ad provident consequuntur omnis officiis, alias libero rerum delectus. Ex accusantium laudantium autem tenetur libero itaque quas cum sequi repudiandae fugiat. Laborum magnam, et molestias dolorem neque quos! Eaque fuga, sed fugit aspernatur quidem eum quasi. Excepturi dignissimos ut assumenda doloremque architecto expedita inventore saepe possimus nam, fugit laboriosam quam quod omnis voluptas? Sequi quae dolorum libero delectus quis quo cumque alias maiores sint ab dolore doloribus earum esse porro quasi, minima aliquid commodi illo nostrum, ratione exercitationem velit quos nihil. Modi sapiente, beatae sit blanditiis placeat tenetur recusandae, hic veniam quas iusto at quae deserunt aspernatur nihil ipsa animi quam sunt id dolore eos! Obcaecati illo, deserunt dicta eius et dolore vero eveniet harum, quos velit quam cum quia ea distinctio facere iste. Officia culpa nihil nam, voluptatem necessitatibus quae, dolorum enim similique inventore at, nesciunt rem vel esse sit. Commodi error adipisci amet dicta eos optio maiores, blanditiis eveniet natus harum nesciunt dignissimos officiis facilis explicabo quas expedita, perspiciatis delectus nam consectetur omnis recusandae aliquid? Sed animi mollitia dolor repellat quae veniam corporis ab, odit porro eligendi repudiandae exercitationem fugiat aperiam sapiente ducimus ipsa, commodi hic sit minima blanditiis molestias sunt nemo? Laudantium ipsum quisquam maxime. Minima quisquam perspiciatis vero aut reprehenderit eveniet sint, exercitationem aliquam accusantium! Natus impedit dolorum eum. Fuga in optio laboriosam! Dolorum maiores nesciunt facilis accusantium omnis dolor quod sapiente nihil exercitationem, architecto libero repudiandae ab ipsum rerum dignissimos modi voluptates asperiores voluptas assumenda neque odit voluptatum. Veritatis eaque natus saepe accusamus, aliquid architecto fugit tenetur sint cumque cupiditate in a suscipit esse provident harum dignissimos iusto! Obcaecati omnis perspiciatis, ratione similique doloribus eos fugit officia hic. Quam, tenetur ex eaque maiores eius minima consectetur minus dolore asperiores voluptatum quae repellendus, voluptates ipsum quo sunt unde. Fugiat veritatis suscipit officia ut qui aut enim fugit illo nam explicabo quam porro fuga natus, sunt molestias est maxime? Repellat consequatur minus quam totam ratione et sed aperiam omnis sapiente officia. Repudiandae rerum ducimus reprehenderit, facere, debitis sit incidunt tempore quas deserunt similique recusandae, magnam quisquam delectus numquam aliquam consequuntur. Impedit asperiores reiciendis praesentium nemo aut officia ex quasi sed quis incidunt animi esse amet optio nostrum consequatur velit dignissimos, atque eveniet, architecto facere! Dolorum exercitationem cum nobis? Commodi delectus ut ex, ea, natus esse quam voluptas saepe quo ipsum, recusandae nihil porro consectetur autem in eum nesciunt deserunt rerum. Cupiditate ab excepturi atque adipisci? Consectetur perferendis quae maiores saepe ipsum cumque sit odio rerum et earum mollitia ducimus ad vero labore veritatis, doloremque voluptatum nemo culpa aliquid neque commodi. Suscipit saepe optio ex iste nulla explicabo necessitatibus libero molestiae provident inventore aperiam autem, beatae, iure aspernatur dolor accusamus. Aut nostrum blanditiis pariatur odio cum vero velit accusantium minus aliquid, excepturi quod, tempore molestias sit numquam ipsa? Accusantium nostrum provident veritatis harum est sunt facilis repellendus. Cum inventore, ullam similique cupiditate porro explicabo at deserunt soluta repellat modi a placeat ut omnis id consequuntur dolor. Quibusdam sint laudantium neque nemo, incidunt consectetur quod quos! Numquam delectus distinctio possimus id esse iure nesciunt soluta repudiandae laborum, illum voluptate, quibusdam facere illo, natus nobis similique deleniti ad. Eligendi, harum a blanditiis dolorum atque sit non voluptatibus. Neque quibusdam illum laboriosam expedita velit quas impedit perferendis laudantium. Deserunt, molestiae!</p>
+        
+        <p class="font-medium opacity-75 mb-4">
+                By making a booking with us, The customer agrees on behalf
+                of all persons detailed on the booking that he/she:
+            </p>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    Read these Agency Terms & Conditions and agree to be
+                    bound by them.
+                </p>
+                <p>
+                    Consents to our use of personal data in accordance with
+                    our Privacy Policy and is authorised on behalf of all
+                    persons named on the booking to disclose their personal
+                    details to us, including where applicable, special
+                    categories of data (such as information on health
+                    conditions or disabilities).
+                </p>
+                <p>Is over 18 years of age.</p>
+                <p>
+                    Accepts financial responsibility for payment of the
+                    booking on behalf of all persons detailed on the
+                    booking.
+                </p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">
+                Main Terms And Definitions
+            </h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>Transfer is a service that includes:</p>
+                <ul class="flex flex-col pl-6 list-outside list-disc">
+                    <li>
+                        Waiting for the passengers by the transporter's
+                        representative at the agreed place until their
+                        arrival or expiry of the agreed waiting time,
+                        meeting the passengers,
+                    </li>
+                    <li>
+                        Escorting the passengers to the vehicle,
+                        accommodating of luggage in the vehicle,
+                    </li>
+                    <li>
+                        taking passengers by vehicle to the determined point
+                        of destination.
+                    </li>
+                </ul>
+                <p>
+                    Voucher means a document containing all the essential
+                    terms and conditions of our service and confirming
+                    payment for the service or specifying the payment
+                    procedure.
+                </p>
+                <p>Order shall mean a request confirmed by both parties</p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">
+                Request Execution Terms
+            </h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    When executing a request via Our Service, you specify
+                    all necessary details assuming full liability for their
+                    correctness and authenticity. You shall also bear risks
+                    of non-receipt of the service under this offer (and/or
+                    receipt of an improper service) related to incomplete
+                    and incorrect information provided during the booking.
+                </p>
+                <p>
+                    After processing your request, we may request to clarify
+                    some data. After receiving and clarifying data, we
+                    transfer the information to our team who takes the
+                    decision to perform the transfer under the specified
+                    conditions. A booking request shall be deemed to be an
+                    order after its acceptance by our team.
+                </p>
+                <p>
+                    We accept the booking requests (taking into account any
+                    possible clarifications) at least:
+                </p>
+                <ul class="flex flex-col pl-6 list-outside list-disc">
+                    <li>
+                        12 hours prior the transfer for the group 1 vehicles
+                        (Micro, Economy, Comfort, Minivan 4 pax, Minibus 7
+                        pax),
+                    </li>
+                    <li>
+                        24 hours prior the transfer for the group 2 vehicles
+                        (Business, Premium, Premium Minibus 6 pax, Minibus
+                        10+ pax,).
+                    </li>
+                    <li>
+                        We are entitled to decline a request received at a
+                        later date.
+                    </li>
+                </ul>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">
+                Meeting Place and Time
+            </h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    The guest will meet on gate arrival , our driver will
+                    bring sign board under your name.
+                </p>
+                <p>
+                    The period after the transfer start during which the
+                    transporter waits for the passengers at the meeting
+                    place without changes in the transfer cost (free waiting
+                    time) shall amount to 120 minutes for airports, more for
+                    time decided must be additional extra time.
+                </p>
+                <p>
+                    If any Delay flight or change time must be info to our
+                    admin, if the time is different from booking , should be
+                    an extra charge pay to direct driver taking passengers
+                    by vehicle to the determined point of destination.
+                </p>
+                <p>
+                    When executing a request for a transfer to an airport,
+                    we recommend to specify the starting time of the
+                    transfer taking into account the duration of the trip
+                    and a cushion time not less than 3 hours for the flight
+                    check-in.
+                </p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">Passenger No-Show</h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    The phone of the passenger stated in the booking request
+                    must be switched on and available for incoming calls at
+                    the moment of the transfer start, during the waiting
+                    time and until the meeting of the passenger with the
+                    transporter's representative
+                </p>
+                <p>
+                    If the free waiting time lapsed and the passenger failed
+                    to appear at the meeting place stated in the voucher and
+                    failed to answer the incoming telephone call from us or
+                    from the transporter, the latter shall be entitled to
+                    refuse from the performance of the transfer and to leave
+                    the meeting place.
+                </p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">Transporter No-Show</h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    If the transporter fails to be present at the meeting
+                    place within the agreed time, you need to make a
+                    telephone call to the our Customer service
+                </p>
+                <p>
+                    If the transporter's no-show is established, we shall
+                    refund for the money
+                </p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">Cancellation Policy</h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    Our service base non refundable, after booked can not to
+                    be cancel.
+                </p>
+                <p>For amend 2 days before arrival.</p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">Booking</h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    You must check all of the information which you provide
+                    us with at the time of booking to ensure it is correct,
+                    including the pick-up information.
+                </p>
+                <p>
+                    Once you have confirmed these details we will proceed to
+                    confirm the booking Please check that all names, dates
+                    and timings are correct on receipt of all documents and
+                    advise us of any errors immediately.
+                </p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">Payment</h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    When you book transfer , the payment will collected in
+                    full at the time of booking, If full payment is not
+                    received when required, we will notify the cancel your
+                    booking.
+                </p>
+                <p>
+                    Please note that credit/debit card processing fees 5%
+                    charged by our payment processing partner and any tax,
+                    are non-refundable when you cancel your reservation.
+                </p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">Prices</h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    We offering best price value, We reserve the right to
+                    amend advertised prices at any time. We also reserve the
+                    right to correct errors in both advertised and confirmed
+                    prices. Special note: changes and errors sometimes
+                    occur. You must check the price of your chosen Transport
+                    Arrangements at the time of booking.
+                </p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">Special Requests</h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    If you have any special requests, please let us know at
+                    the time of booking. but we can't guarantee that they
+                    will be met and we will have no liability to you if they
+                    are not.
+                </p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">Complaints</h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    If any case , you can contact us by email to
+                    info@tondest.com, If you wish to complain about any
+                    service we have provided to you (i.e. our booking
+                    service) then please contact us directly.
+                </p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">
+                Vehicle Descriptions and Standards
+            </h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    All descriptions are as provided by the our company.
+                    These are intended to give a guide to the facilities you
+                    should expect from your transport. The images of the
+                    vehicle make and model shown on the quotation page are
+                    for illustration purpose only.
+                </p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">Journey Times</h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    The distance and trip time provided are for planning
+                    purposes only. You may find that construction projects,
+                    traffic, weather, or other events may cause conditions
+                    to differ from the information published and you should
+                    plan your trip accordingly.
+                </p>
+            </div>
+
+            <h4 class="font-bold mt-4 mb-2">
+                Documentation & Information
+            </h4>
+            <div class="flex flex-col pl-2 gap-2">
+                <p>
+                    All descriptions and content on our website or otherwise
+                    issued by us, details of the relevant services can be
+                    included on our website. All services shown are subject
+                    to availability. If you require any further details, in
+                    respect of any Transport Arrangements or any other
+                    services please contact us.
+                </p>
+            </div>
         </div>
     </div>
 </div>
