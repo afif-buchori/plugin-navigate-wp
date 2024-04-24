@@ -155,7 +155,7 @@ function enx_get_page_content($data)
                                                                             </div>
                                                                         </div>
                                                                         <?php if ($item->qty_type == 'FIXED') { ?>
-                                                                            <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                            <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                 <div>
                                                                                     Qty
                                                                                 </div>
@@ -167,7 +167,7 @@ function enx_get_page_content($data)
 
                                                                             <div class="md:grid" <?php echo 'data-addon-select="' . $item->id . '" data-type="same_as_primary"' ?> data-adult="<?php echo  $cart->adult ?>" data-child="<?php echo  $cart->child ?? 0 ?>" data-infant="<?php echo  $cart->infant ?? 0 ?>">
 
-                                                                                <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                                <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                     <div class="mb-4">
                                                                                         Adult
                                                                                     </div>
@@ -175,7 +175,7 @@ function enx_get_page_content($data)
                                                                                         <?php renderInputReadonly("adult", $cart->adult) ?>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                                <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                     <div class="mb-4">
                                                                                         Child
                                                                                     </div>
@@ -183,7 +183,7 @@ function enx_get_page_content($data)
                                                                                         <?php renderInputReadonly("child", $cart->child ?? 0) ?>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                                <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                     <div class="mb-4">
                                                                                         Infant
                                                                                     </div>
@@ -194,7 +194,7 @@ function enx_get_page_content($data)
                                                                             </div>
                                                                         <?php } else { ?>
                                                                             <?php if ($item->rate_type == 'FIXED' || $item->service_type == "MOBILE") { ?>
-                                                                                <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                                <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                     <div>
                                                                                         Qty
                                                                                     </div>
@@ -203,7 +203,7 @@ function enx_get_page_content($data)
                                                                                     </div>
                                                                                 </div>
                                                                             <?php } else { ?>
-                                                                                <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                                <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                     <div class="mb-4">
                                                                                         Adult
                                                                                     </div>
@@ -211,7 +211,7 @@ function enx_get_page_content($data)
                                                                                         <?php renderSelect("adult_$item->id", 0, $item->qty, $item->qty_max, false, 'data-addon-select="' . $item->id . '" data-type="adult"') ?>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                                <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                     <div class="mb-4">
                                                                                         Child
                                                                                     </div>
@@ -219,7 +219,7 @@ function enx_get_page_content($data)
                                                                                         <?php renderSelect("child_$item->id", 0, 0, $item->qty_max, true, 'data-addon-select="' . $item->id . '" data-type="child"') ?>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                                <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                     <div class="mb-4">
                                                                                         Infant
                                                                                     </div>
@@ -232,7 +232,7 @@ function enx_get_page_content($data)
                                                                     </div>
                                                                 <?php } else { ?>
                                                                     <?php if ($item->qty_type == 'FIXED') { ?>
-                                                                        <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                        <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                             <div>
                                                                                 Qty
                                                                             </div>
@@ -253,7 +253,7 @@ function enx_get_page_content($data)
                                                                                     <button type="button" class="btn btn-danger" select-multiple data-remove-key="<?php echo $item->id ?>">remove</button>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                            <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                 <div class="mb-4">
                                                                                     Adult
                                                                                 </div>
@@ -261,7 +261,7 @@ function enx_get_page_content($data)
                                                                                     <?php renderInputReadonly("adult", $cart->adult) ?>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                            <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                 <div class="mb-4">
                                                                                     Child
                                                                                 </div>
@@ -269,7 +269,7 @@ function enx_get_page_content($data)
                                                                                     <?php renderInputReadonly("child", $cart->child ?? 0) ?>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                            <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                 <div class="mb-4">
                                                                                     Infant
                                                                                 </div>
@@ -280,7 +280,7 @@ function enx_get_page_content($data)
                                                                         </div>
                                                                     <?php } else { ?>
                                                                         <?php if ($item->rate_type == 'FIXED' || $item->service_type == "MOBILE") { ?>
-                                                                            <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                            <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                 <div>
                                                                                     Qty
                                                                                 </div>
@@ -289,7 +289,7 @@ function enx_get_page_content($data)
                                                                                 </div>
                                                                             </div>
                                                                         <?php } else { ?>
-                                                                            <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                            <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                 <div class="mb-4">
                                                                                     Adult
                                                                                 </div>
@@ -297,7 +297,7 @@ function enx_get_page_content($data)
                                                                                     <?php renderSelect("adult_$item->id", 0, $item->qty, $item->qty_max, true, 'data-addon-select="' . $item->id . '" data-type="adult"') ?>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                            <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                 <div class="mb-4">
                                                                                     Child
                                                                                 </div>
@@ -305,7 +305,7 @@ function enx_get_page_content($data)
                                                                                     <?php renderSelect("child_$item->id", 0, 0, $item->qty_max, true, 'data-addon-select="' . $item->id . '" data-type="child"') ?>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="md:grid grid-cols-2 md:space-x-4">
+                                                                            <div class="flex justify-between md:grid grid-cols-2 md:space-x-4">
                                                                                 <div class="mb-4">
                                                                                     Infant
                                                                                 </div>
