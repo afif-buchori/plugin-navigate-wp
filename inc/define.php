@@ -3,6 +3,7 @@ define("VERSION", "0.0.5");
 define("NAVIGATE_LINK", "navigateid");
 define("TRIPGO_LINK", "tripgo");
 define("AIRPORT_SERVICE_LINK", "airport-service");
+define("ACTIVITY_LINK", "activity");
 // define("API_URL", "https://portal.navigate.com");
 
 // define("API_URL", "https://1942-202-58-193-186.ngrok-free.app");

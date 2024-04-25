@@ -91,7 +91,7 @@ function  admin_tripgo_init()
 function generate_404_tripgo_somehow()
 {
   $url = explode("/", substr(explode("?", $_SERVER['REQUEST_URI'])[0], 1));
-  if ($url[0] === NAVIGATE_LINK || $url[0] === TRIPGO_LINK || $url[0] === AIRPORT_SERVICE_LINK) {
+  if ($url[0] === NAVIGATE_LINK || $url[0] === TRIPGO_LINK || $url[0] === AIRPORT_SERVICE_LINK || $url[0] === ACTIVITY_LINK) {
     global $wp_query;
     $wp_query->is_404 = false;
     $wp_query->is_page = true;
@@ -117,7 +117,7 @@ function change_template_tripgo($original_template)
         header('Location: /');
     }
     exit();
-  } else if ($url[0] === TRIPGO_LINK || $url[0] === AIRPORT_SERVICE_LINK) {
+  } else if ($url[0] === TRIPGO_LINK || $url[0] === AIRPORT_SERVICE_LINK || $url[0] === ACTIVITY_LINK) {
 
     add_filter('wp_enqueue_scripts', 'enx_load_style_and_script', 99);
 

@@ -1470,6 +1470,10 @@ Add the correct display in Chrome and Safari.
   top: -7rem !important;
 }
 
+.enx-container .top-28 {
+  top: 7rem !important;
+}
+
 .enx-container .left-1\/2 {
   left: 50% !important;
 }
@@ -2521,6 +2525,14 @@ Add the correct display in Chrome and Safari.
   object-fit: cover !important;
 }
 
+.enx-container .p-4 {
+  padding: 1rem !important;
+}
+
+.enx-container .p-5 {
+  padding: 1.25rem !important;
+}
+
 .enx-container .px-7 {
   padding-left: 1.75rem !important;
   padding-right: 1.75rem !important;
@@ -3521,11 +3533,11 @@ Add the correct display in Chrome and Safari.
   }
 
   .enx-container .md\:flex {
-    display: flex;
+    display: flex !important;
   }
 
   .enx-container .md\:grid {
-    display: grid;
+    display: grid !important;
   }
 
   .enx-container .md\:h-\[700px\] {
@@ -3610,6 +3622,14 @@ Add the correct display in Chrome and Safari.
 
   .enx-container .md\:pl-5 {
     padding-left: 1.25rem !important;
+  }
+
+  .enx-container .md\:p-4 {
+    padding: 1rem !important;
+  }
+
+  .enx-container .md\:p-5 {
+    padding: 1.25rem !important;
   }
 
   .enx-container .md\:px-8 {
