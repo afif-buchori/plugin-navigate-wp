@@ -20,7 +20,8 @@ function CreateParams()
     $param = '';
     $currency = checkCurrency();
     $param .= $currency;
-    if ($param != '') $param = '?' . $param;
+    if ($param != '')
+        $param = '?' . $param;
     return $param;
 }
 
@@ -30,7 +31,8 @@ function createParamsFromGet()
     foreach ($_GET as $key => $get) {
         $param .= $key . '=' . $get;
     }
-    if ($param != '') $param = '?' . $param;
+    if ($param != '')
+        $param = '?' . $param;
     return $param;
 }
 
@@ -40,7 +42,7 @@ function checkCurrency()
     $currency = "";
     if (!isset($_COOKIE[CURRENCY_COOKIE])) {
         setcookie(CURRENCY_COOKIE, $default, time() + (86400 * 365), "/"); // 86400 = 1 day
-        return 'currency='.$default;
+        return 'currency=' . $default;
     }
     $currency = 'currency=' . $_COOKIE[CURRENCY_COOKIE];
     return $currency;
@@ -92,43 +94,77 @@ function parseHeaders($headers)
     }
     return ConvertToObject($head);
 }
-
 function fetchGet($url)
 {
-    $response = file_get_contents($url);
+    $context = stream_context_create(array('http' => array('ignore_errors' => true)));
+    $response = json_decode(file_get_contents($url, false, $context), true);
+    $response_code = substr($http_response_header[0], 9, 3);
 
-    $header = parseHeaders($http_response_header);
-    if ($header->response_code != 200) {
-        return ['error' => true];
+    if ($response_code != 200) {
+        return json_decode(json_encode(['error' => true, 'code' => $response_code, ...$response]));
     }
-    $res = json_decode($response);
-    return $res;
+    return json_decode(json_encode($response));
 }
-
 function fetchPost($url, $body)
 {
     $data = $body;
 
-    // use key 'http' even if you send the request to https://...
     $options = [
         'http' => [
             'header' => "Content-type: application/x-www-form-urlencoded\r\n",
             'method' => 'POST',
             'content' => http_build_query($data),
+            'ignore_errors' => true
         ],
     ];
 
     $context = stream_context_create($options);
-    $response = file_get_contents($url, false, $context);
-    $header = parseHeaders($http_response_header);
-    if ($header->response_code != 200) {
-        print_r($header);
-        return ['error' => true];
-    }
-    $res = json_decode($response);
+    $response = json_decode(file_get_contents($url, false, $context), true);
+    $response_code = substr($http_response_header[0], 9, 3);
 
-    return $res;
+    if ($response_code != 200) {
+        return json_decode(json_encode(['error' => true, 'code' => $response_code, ...$response]));
+    }
+    return json_decode(json_encode($response));
 }
+// KITA
+// function fetchGet($url)
+// {
+//     $response = file_get_contents($url);
+
+//     $header = parseHeaders($http_response_header);
+//     if ($header->response_code != 200) {
+//         return ['error' => true];
+//     }
+//     $res = json_decode($response);
+//     return $res;
+// }
+
+// function fetchPost($url, $body)
+// {
+//     $data = $body;
+
+//     // use key 'http' even if you send the request to https://...
+//     $options = [
+//         'http' => [
+//             'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+//             'method' => 'POST',
+//             'content' => http_build_query($data),
+//         ],
+//     ];
+
+//     $context = stream_context_create($options);
+//     $response = file_get_contents($url, false, $context);
+//     $header = parseHeaders($http_response_header);
+//     if ($header->response_code != 200) {
+//         print_r($header);
+//         return ['error' => true];
+//     }
+//     $res = json_decode($response);
+
+//     return $res;
+// }
+// END KITA
 
 // function fetchGet($url)
 // {

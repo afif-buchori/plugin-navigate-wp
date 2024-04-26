@@ -8,11 +8,13 @@ define("ACTIVITY_LINK", "activity");
 
 // define("API_URL", "https://1942-202-58-193-186.ngrok-free.app");
 define("API_URL", "https://snowy-desert-qioyjsoygqwg.vapor-farm-g1.com");
+define("API_URL_ACTIVITY", "https://3d21-202-58-193-186.ngrok-free.app");
 // define("API_URL", "https://indigo-fern-3sxv44dajhcf.vapor-farm-f1.com");
 
 // define("API_URL", "https://apiclient.enixindo.com");
 // define("API_URL", "https://5ce4-103-89-78-133.ngrok-free.app");
 define("API_FASTTRACK_URL", API_URL . "/api/fasttrack");
+define("API_ACTIVITY_URL", API_URL_ACTIVITY . "/api/activity");
 define("NAVIGATE_CART", "navigate-cart");
 define("CURRENCY_COOKIE", "currency-navigate");
 define("DEFAULT_CURRENCY", "USD");

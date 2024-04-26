@@ -117,11 +117,13 @@ function enx_get_global_page()
             $data = enx_get_detail_data();
             $data_meta = $data->meta;
         }
-    } elseif ($url[0] == "activity") {
+    } elseif ($url[0] == ACTIVITY_LINK) {
+        require_once (dirname(__FILE__) . '/../activity/get-data.php');
         if ($url[1] == null) {
             require_once (dirname(__FILE__) . '/../activity/activity-list.php');
-            // $data = enx_get_list_data_activity();
-            $head_title = "Activity";
+            $data = enx_get_list_data_activity();
+            // var_dump(json_encode($data));
+            $head_title = $data->meta->title;
         } else {
             require_once (dirname(__FILE__) . '/../activity/activity-detail.php');
             $data = [];

@@ -1578,6 +1578,10 @@ Add the correct display in Chrome and Safari.
   margin-bottom: 0.75rem !important;
 }
 
+.enx-container .mt-auto {
+  margin-top: auto !important;
+}
+
 .enx-container .mx-auto {
   margin-left: auto !important;
   margin-right: auto !important;
@@ -2180,6 +2184,10 @@ Add the correct display in Chrome and Safari.
   gap: 6rem !important;
 }
 
+.enx-container .gap-1 {
+  gap: 0.25rem !important;
+}
+
 .enx-container .gap-2 {
   gap: 0.5rem !important;
 }
@@ -2193,6 +2201,10 @@ Add the correct display in Chrome and Safari.
 
 .enx-container .gap-12 {
   gap: 3rem !important;
+}
+
+.enx-container .gap-y-4 {
+  row-gap: 1rem !important;
 }
 
 .enx-container .gap-y-8 {

@@ -2,7 +2,7 @@
 function enx_get_page_content($data)
 {
     // $data = enx_get_list_data_activity();
-    $items = $data->items;
+    $items = $data->data;
     ob_start();
     ?>
     <div class="enx-container site-wrapper">
@@ -34,9 +34,9 @@ function enx_get_page_content($data)
                 <div class="col-span-12">
                     <div class="flex justify-between items-center border-b border-primary border-opacity-20 mb-10 py-5">
                         <p class="text-primary text-sm text-opacity-70 font-medium font-numbers">
-                            <span class="font-semibold">20</span> Tours
+                            <span class="font-semibold"><?php echo $data->page->totalData ?></span> Activities
                         </p>
-                        <div>
+                        <!-- <div>
                             <label class="text-primary text-sm text-opacity-70 mr-3 font-medium" for="sortBy">Sort
                                 by</label>
                             <select
@@ -45,26 +45,23 @@ function enx_get_page_content($data)
                                 <option value="title">Price</option>
                                 <option value="price">Title</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
-                    <!-- <div class="md:grid items-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 gap-x-10 gap-y-0 mb-10"> -->
-                    <!-- <div class="md:grid items-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-x-10 gap-y-0 mb-10"> -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7 gap-y-0">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7 gap-y-2">
 
                         <?php
                         if (!$items) {
                             echo 'Please refresh this page!';
                         } else {
-                            enx_create_list_activity($items);
+                            enx_create_list_activity($items, $data->imageUrl, $data->currency);
                         } ?>
                     </div>
-                    <!-- <div class="flex justify-center space-x-3 mb-24">
-                        <a href="#" class="inline-flex transition justify-center w-6 h-6 text-lg font-heading font-medium leading-none text-primary bg-secondary rounded-full hover:bg-primary hover:text-white">1</a>
-                        <a href="#" class="inline-flex transition justify-center w-6 h-6 text-lg font-heading font-medium leading-none text-primary bg-secondary rounded-full hover:bg-primary hover:text-white">2</a>
-                        <a href="#" class="inline-flex transition justify-center w-6 h-6 text-lg font-heading font-medium leading-none text-primary bg-secondary rounded-full hover:bg-primary hover:text-white">3</a>
-                        <a href="#" class="inline-flex transition justify-center w-6 h-6 text-lg font-heading font-medium leading-none text-primary bg-secondary rounded-full hover:bg-primary hover:text-white">4</a>
-                        <a href="#" class="inline-flex transition justify-center w-6 h-6 text-lg font-heading font-medium leading-none text-primary bg-secondary rounded-full hover:bg-primary hover:text-white">5</a>
-                    </div> -->
+                    <div class="flex justify-center space-x-3 my-10">
+                        <?php for ($i = 1; $i <= $data->page->total; $i++) { ?>
+                            <a href="#" style="width: 2.5rem; aspect-ratio: 1/1; place-content: center;"
+                                class="inline-flex grid transition justify-center text-lg font-heading font-medium leading-none <?php echo $i == $data->page->current ? "text-white bg-primary" : "text-primary bg-secondary" ?> hover:bg-primary hover:text-white"><?php echo $i ?></a>
+                        <?php } ?>
+                    </div>
                 </div>
             </div>
         </div>

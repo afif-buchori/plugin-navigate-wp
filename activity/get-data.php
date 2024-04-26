@@ -2,7 +2,8 @@
 
 function enx_get_list_data_activity()
 {
-    $url = API_FASTTRACK_URL . CreateParams();
+    $url = API_ACTIVITY_URL . "/get/data-activitys" . CreateParams() . "&country=singapore&page=1";
+    // $url = API_ACTIVITY_URL . "/get/data-activitys" . CreateParams();
     return fetchGet($url);
 }
 
@@ -26,41 +27,56 @@ function enx_get_list_data_activity()
 //     return fetchGet($url);
 // }
 
-function enx_create_list_activity($items)
+function enx_create_list_activity($items, $imgUrl, $currency)
 {
     foreach ($items as $item) {
         ?>
         <div data-x-data data-x-ref="losAngeles"
             data-x-intersect="anime({ targets: $refs.losAngeles, translateY: [100, 0], opacity: [0, 1], duration: 500 ,easing: 'easeOutQuad' })"
             style="flex: 1 1 0">
-            <a href="<?php echo "/" . AIRPORT_SERVICE_LINK . "/" . $item->slug ?>"
-                class="group flex-1 block relative bg-cover rounded-2xl xl:my-0 overflow-hidden w-full"
-                style="min-height: 480px">
-                <div class="absolute bg-cover bg-center origin-top w-full rounded-2xl transition duration-500 transform translate-y-[-10px] group-hover:scale-110"
-                    style="background-image: url(<?php echo $item->image_url ?>); height: 80%">
+            <a href="<?php echo "/" . ACTIVITY_LINK . "/" . $item->slug ?>"
+                class="group flex-1 flex flex-col block relative bg-cover rounded-2xl xl:my-0 overflow-hidden w-full"
+                style="min-height: 410px">
+                <div class="bg-cover bg-center origin-top w-full rounded-2xl transition duration-500 transform translate-y-[-10px] group-hover:scale-110"
+                    style="background-image: url(<?php echo $imgUrl . $item->image ?>); aspect-ratio: 16/10">
                 </div>
-                <!-- <div class="bg-primary absolute origin-top-right right-5 top-5 rounded text-secondary uppercase px-5 py-1 font-numbers text-xs tracking-wider">
-                    4 tours
-                </div> -->
-                <div
-                    class="absolute bottom-10 w-full bg-secondary transition duration-500 group-hover:bg-primary py-5 px-4 rounded-2xl">
+                <div class="flex-1 flex flex-col h-full w-full bg-secondary transition duration-500 group-hover:bg-primary py-5 px-4 rounded-2xl"
+                    style="z-index: 1; margin-top: -32px;">
                     <h3
-                        class="font-heading text-xl text-transform-unset font-light text-primary transition duration-500 group-hover:text-white">
-                        <?php echo $item->title ?>
+                        class="font-heading text-xl text-transform-unset font-medium text-primary transition duration-500 group-hover:text-white">
+                        <?php echo ucwords(strtolower($item->name)) ?>
                     </h3>
-                    <div
-                        class="w-full border-t border-primary border-opacity-40 my-6 transition duration-500 group-hover:border-white/30">
+                    <div class="w-full flex justify-between">
+                        <p class="text-sm text-primary transition duration-500 group-hover:text-white" style="opacity: 0.7;">
+                            <?php echo $item->city . ", " . $item->country ?>
+                        </p>
+                        <p class="text-xs text-primary transition duration-500 group-hover:text-white"
+                            style="padding: 2px 8px 4px 8px; border-radius: 9999px; border: solid 1px turquoise !important; background-color: #7fffd440">
+                            <?php echo $item->category ?>
+                        </p>
                     </div>
-                    <div class="flex justify-between items-center">
-                        <span
-                            class="btn btn-primary hover:bg-green-light hover:text-primary py-3 transition duration-500 text-sm group-hover:bg-secondary group-hover:text-primary">
-                            Explore
-                        </span>
+                    <div
+                        class="w-full border-t border-primary border-opacity-40 my-3 transition duration-500 group-hover:border-white/30">
+                    </div>
+                    <div class="flex justify-between mt-auto">
+                        <div class="flex items-end">
+                            <?php if ($item->is_instant_confirmation) { ?>
+                                <div class="flex items-center gap-1 mt-auto">
+                                    <svg style="width: 15px; height: 15px;" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                        <path fill="#74c0fc"
+                                            d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z" />
+                                    </svg>
+                                    <p class="text-xs" style="line-height: 11px !important; color: #74c0fc;">instant <br />
+                                        confirmation</p>
+                                </div>
+                            <?php } ?>
+                        </div>
                         <div class="text-right text-primary transition duration-500 group-hover:text-white">
                             <span class="block text-sm font-numbers">From</span>
                             <span class="block text-lg font-numbers font-bold">
-                                <?php echo $item->currency->symbol ?>
-                                <?php echo number_format($item->rate, $item->currency->digit) ?>
+                                <?php echo $currency->symbol ?>
+                                <?php echo number_format($item->original_price, $currency->digit) ?>
                             </span>
                         </div>
                     </div>
@@ -68,33 +84,6 @@ function enx_create_list_activity($items)
             </a>
         </div>
 
-
-        <!-- <div data-x-data data-x-ref="losAngeles" data-x-intersect="anime({ targets: $refs.losAngeles, translateY: [100, 0], opacity: [0, 1], duration: 500 ,easing: 'easeOutQuad' })">
-            <a href="<?php // echo "/" . AIRPORT_SERVICE_LINK . "/" . $item->slug ?>" class="group flex-1 block relative bg-cover rounded-2xl xl:my-0 overflow-hidden w-full h-tour xl:w-[400px] 2xl:w-[300px] h-[490px]">
-                <div class="absolute bg-cover bg-center origin-top w-full h-5/6 rounded-2xl transition duration-500 transform translate-y-[-10px] group-hover:scale-110" style="background-image: url(<?php // echo $item->image_url ?>);">
-                </div>
-                <!-- <div class="bg-primary absolute origin-top-right right-5 top-5 rounded text-secondary uppercase px-5 py-1 font-numbers text-xs tracking-wider">
-                    4 tours
-                </div> -->
-        <!-- <div class="absolute bottom-10 w-full bg-secondary transition duration-500 group-hover:bg-primary py-8 px-5 rounded-2xl">
-                    <h3 class="font-heading text-xl text-transform-unset font-light text-primary transition duration-500 group-hover:text-white">
-                        <?php // echo $item->title ?>
-                    </h3>
-                    <div class="w-full border-t border-primary border-opacity-40 my-6 transition duration-500 group-hover:border-white/30"></div>
-                    <div class="flex justify-between items-center">
-                        <span class="btn btn-primary hover:bg-green-light hover:text-primary py-3 transition duration-500 text-sm group-hover:bg-secondary group-hover:text-primary">
-                            Explore
-                        </span>
-                        <div class="text-right text-primary transition duration-500 group-hover:text-white">
-                            <span class="block text-sm font-numbers">From</span>
-                            <span class="block text-lg font-numbers font-bold">
-                                <?php // echo $item->currency->symbol ?><?php // echo number_format($item->rate, $item->currency->digit) ?>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div> -->
         <?php
     }
 }
