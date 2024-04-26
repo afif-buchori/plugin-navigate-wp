@@ -18,3 +18,4 @@ define("API_ACTIVITY_URL", API_URL_ACTIVITY . "/api/activity");
 define("NAVIGATE_CART", "navigate-cart");
 define("CURRENCY_COOKIE", "currency-navigate");
 define("DEFAULT_CURRENCY", "USD");
+define("COUNTRY_ACTIVITY", "indonesia");
