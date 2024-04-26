@@ -4,6 +4,7 @@ define("NAVIGATE_LINK", "navigateid");
 define("TRIPGO_LINK", "tripgo");
 define("AIRPORT_SERVICE_LINK", "airport-service");
 define("ACTIVITY_LINK", "activity");
+define("COUNTRY_ACTIVITY", "indonesia");
 // define("API_URL", "https://portal.navigate.com");
 
 // define("API_URL", "https://1942-202-58-193-186.ngrok-free.app");
@@ -18,4 +19,3 @@ define("API_ACTIVITY_URL", API_URL_ACTIVITY . "/api/activity");
 define("NAVIGATE_CART", "navigate-cart");
 define("CURRENCY_COOKIE", "currency-navigate");
 define("DEFAULT_CURRENCY", "USD");
-define("COUNTRY_ACTIVITY", "indonesia");

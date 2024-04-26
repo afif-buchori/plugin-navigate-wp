@@ -126,8 +126,9 @@ function enx_get_global_page()
             $head_title = $data->meta->title;
         } else {
             require_once (dirname(__FILE__) . '/../activity/activity-detail.php');
-            $data = [];
-            // $data_meta = $data->meta;
+            $data = enx_get_detail_data_activity();
+            // var_dump(json_encode($data));
+            $data_meta = $data->meta;
         }
     }
     $content = enx_get_page_content($data ?? null);

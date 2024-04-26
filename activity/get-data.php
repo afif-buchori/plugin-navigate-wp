@@ -2,18 +2,20 @@
 
 function enx_get_list_data_activity()
 {
-    $url = API_ACTIVITY_URL . "/get/data-activitys" . CreateParams() . "&country=singapore&page=1";
+    $country = $_GET['country'] ?? COUNTRY_ACTIVITY;
+    $page = $_GET['page'] ?? '';
+    $paramsPage = $page != '' ? "&page=$page" : '';
+    $url = API_ACTIVITY_URL . "/get/data-activitys" . CreateParams() . "&country=$country$paramsPage";
     // $url = API_ACTIVITY_URL . "/get/data-activitys" . CreateParams();
     return fetchGet($url);
 }
 
-// function enx_get_detail_data()
-// {
-
-//     $query = explode("/", $_SERVER['REQUEST_URI']);
-//     $url = API_FASTTRACK_URL . "/" . $query[2] . CreateParams();
-//     return fetchGet($url);
-// }
+function enx_get_detail_data_activity()
+{
+    $query = explode("/", $_SERVER['REQUEST_URI']);
+    $url = API_ACTIVITY_URL . "/get/detail-data-activity/" . $query[2] . CreateParams() . "&lang=en";
+    return fetchGet($url);
+}
 
 // function enx_service_have_addon($id)
 // {
