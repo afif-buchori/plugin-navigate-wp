@@ -56,7 +56,7 @@ function enx_get_page_content($data)
                             enx_create_list_activity($items, $data->imageUrl, $data->currency);
                         } ?>
                     </div>
-                    <div class="flex justify-center space-x-3 my-10">
+                    <div class="flex flex-wrap justify-center gap-4 my-10">
                         <?php for ($i = 1; $i <= $data->page->total; $i++) { ?>
                             <a href="#" style="width: 2.5rem; aspect-ratio: 1/1; place-content: center;"
                                 class="inline-flex grid transition justify-center text-lg font-heading font-medium leading-none <?php echo $i == $data->page->current ? "text-white bg-primary" : "text-primary bg-secondary" ?> hover:bg-primary hover:text-white"><?php echo $i ?></a>
