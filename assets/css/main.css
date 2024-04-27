@@ -1264,6 +1264,16 @@ Add the correct display in Chrome and Safari.
   color: rgb(var(--color-primary)) !important;
 }
 
+.enx-container .btn-circle-primary {
+  width: 20px;
+  height: 20px;
+  display: grid !important;
+  place-content: center !important;
+  border-radius: 9999px !important;
+  background-color: rgb(var(--color-primary)) !important;
+  color: white !important;
+}
+
 .enx-container .btn {
   display: inline-block !important;
   border-radius: 8px !important;
@@ -3487,6 +3497,14 @@ Add the correct display in Chrome and Safari.
 @media (min-width: 768px) {
   .enx-container .md\:absolute {
     position: absolute !important;
+  }
+
+  .enx-container .md\:block {
+    display: block !important;
+  }
+
+  .enx-container .md\:hidden {
+    display: none !important;
   }
 
   .enx-container .md\:left-5 {
