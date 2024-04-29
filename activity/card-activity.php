@@ -86,7 +86,8 @@ function enx_mapping_card($data, $data_res, $currency)
                         <div class="flex items-center justify-between w-full rounded-full px-4 py-2 gap-4"
                             style="background-color: #dadada;">
                             <input type="date" name="" id="date-package-act<?php echo $idx ?>" min="<?php echo date("Y-m-d") ?>"
-                                data-id-ticket="<?php echo $ticket->id ?>" class="w-full" style="background-color: transparent;">
+                                data-id-ticket="<?php echo $ticket->ticketType[0]->id ?>" class="w-full"
+                                style="background-color: transparent;">
                         </div>
                     <?php } ?>
                 </div>

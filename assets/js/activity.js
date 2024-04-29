@@ -68,53 +68,22 @@ if (btnFindPakcage) {
   });
 }
 
-function getAvailDate(data) {
+async function getAvailDate(data) {
   console.log(data);
-  var timeCalculate;
-  // var isGetData = 0;
 
-  // addonSetLoading(true);
-  // clearTimeout(timeCalculate);
-  // timeCalculate = setTimeout(
-
-  async () => {
-    console.log("STEP - 1");
-    try {
-      console.log("STEP - 2");
-      const url = API_ACT_URL + "/check-block-date";
-      console.log(url);
-      const result = await fetch(url, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: "9125", date: "2024-05-13" }),
-      });
-      console.log("STEP - 3");
-      console.log(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  try {
+    const url = API_ACT_URL + "/check-block-date";
+    console.log(url);
+    const result = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
 }
-
-// async () => {
-//   console.log("STEP - 1");
-//   try {
-//     console.log("STEP - 2");
-//     const url = API_ACT_URL + "/check-block-date";
-//     const result = await fetch(url, {
-//       method: "POST",
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({ id: "9125", date: "2024-05-13" }),
-//     });
-//     console.log("STEP - 3");
-//     console.log(result);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
