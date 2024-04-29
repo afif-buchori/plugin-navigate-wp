@@ -1,3 +1,5 @@
+const API_ACT_URL = "/api/activity";
+
 const packageOptActivity =
   document.getElementById("package-opt-activity") || "";
 if (packageOptActivity !== "") {
@@ -25,12 +27,16 @@ if (packageOptActivity !== "") {
     const dateSelected = document.getElementById("date-package-act" + i) || "";
     console.log(dateSelected);
     dateSelected.addEventListener("change", function (e) {
-      console.log(e.target.value);
+      const idTicket = dateSelected.getAttribute("data-id-ticket");
+      getAvailDate({
+        id: idTicket,
+        date: e.target.value,
+      });
+      console.log(e.target.value, idTicket);
     });
 
-    const btnSubmitPackage = document.getElementById("submit-package1") || "";
-    btnSubmitPackage.setAttribute("disabled", "false");
-    console.log(btnSubmitPackage);
+    const btnSubmitPackage =
+      document.getElementById("submit-package" + i) || "";
 
     const newTicketTypeAct = document.querySelectorAll("#new-ticket-type-act");
     newTicketTypeAct.forEach(function (element) {
@@ -41,16 +47,74 @@ if (packageOptActivity !== "") {
       console.log("TESTING");
       document.getElementById(btnDecrement).onclick = function () {
         if (parseInt(qty.innerText) <= 0)
-          return btnSubmitPackage.setAttribute("disabled", "true");
+          return (btnSubmitPackage.disabled = true);
         qty.innerText = parseInt(qty.innerText) - 1;
-        btnSubmitPackage.setAttribute("disabled", "false");
+        btnSubmitPackage.disabled = false;
       };
 
       var btnIncrement = element.getAttribute("data-qty-act-inc");
       document.getElementById(btnIncrement).onclick = function () {
         qty.innerText = parseInt(qty.innerText) + 1;
-        btnSubmitPackage.setAttribute("disabled", "true");
+        btnSubmitPackage.disabled = true;
       };
     });
   }
 }
+
+const btnFindPakcage = document.getElementById("find-package-act") || "";
+if (btnFindPakcage) {
+  btnFindPakcage.addEventListener("click", function () {
+    packageOptActivity.scrollIntoView({ behavior: "smooth" });
+  });
+}
+
+function getAvailDate(data) {
+  console.log(data);
+  var timeCalculate;
+  // var isGetData = 0;
+
+  // addonSetLoading(true);
+  // clearTimeout(timeCalculate);
+  // timeCalculate = setTimeout(
+
+  async () => {
+    console.log("STEP - 1");
+    try {
+      console.log("STEP - 2");
+      const url = API_ACT_URL + "/check-block-date";
+      console.log(url);
+      const result = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: "9125", date: "2024-05-13" }),
+      });
+      console.log("STEP - 3");
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+// async () => {
+//   console.log("STEP - 1");
+//   try {
+//     console.log("STEP - 2");
+//     const url = API_ACT_URL + "/check-block-date";
+//     const result = await fetch(url, {
+//       method: "POST",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ id: "9125", date: "2024-05-13" }),
+//     });
+//     console.log("STEP - 3");
+//     console.log(result);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

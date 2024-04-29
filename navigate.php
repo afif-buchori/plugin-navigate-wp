@@ -10,7 +10,7 @@ Author URI: https://navigate.id
 
 // This code is executed when the plugin is activated.
 
-require_once(dirname(__FILE__) . '/inc/define.php');
+require_once (dirname(__FILE__) . '/inc/define.php');
 
 function my_api_plugin_activate()
 {
@@ -83,7 +83,7 @@ function admin_tripgo_init()
     enx_update_tripgo_api_settings($_POST['api_key'], $_POST['secret_key']);
   }
   $setting = enx_get_tripgo_api_settings();
-  require_once(dirname(__FILE__) . '/inc/dashboard.php');
+  require_once (dirname(__FILE__) . '/inc/dashboard.php');
   enx_admin_dashboard($setting);
 }
 
@@ -127,8 +127,8 @@ function change_template_tripgo($original_template)
     $wp_query->is_page = true;
     status_header(200);
 
-    require_once(dirname(__FILE__) . '/inc/function.php');
-    require_once(dirname(__FILE__) . '/fasttrack/api.php');
+    require_once (dirname(__FILE__) . '/inc/function.php');
+    require_once (dirname(__FILE__) . '/fasttrack/api.php');
     $data = enx_get_data_api();
 
     header("Content-Type: application/json");
@@ -139,9 +139,10 @@ function change_template_tripgo($original_template)
     $wp_query->is_page = true;
     status_header(200);
 
-    require_once(dirname(__FILE__) . '/inc/function.php');
-    require_once(dirname(__FILE__) . '/activity/api.php');
+    require_once (dirname(__FILE__) . '/inc/function.php');
+    require_once (dirname(__FILE__) . '/activity/api.php');
     $data = enx_get_data_api();
+    // var_dump("TESDS");
 
     header("Content-Type: application/json");
     echo json_encode($data);
@@ -173,7 +174,7 @@ function enx_load_style_and_script()
 
 function myplugin_add_css_to_head()
 {
-?>
+  ?>
   <style type="text/css" media="screen">
     :root {
       --color-text-primary: 52, 78, 65 !important;
@@ -402,13 +403,13 @@ function myplugin_add_css_to_head()
       border: 2px solid rgb(var(--color-primary)) !important;
     }
   </style>
-<?php
+  <?php
 }
 add_action('wp_head', 'myplugin_add_css_to_head');
 
 function initialize_654_select2()
 {
-?>
+  ?>
   <script>
     // jQuery(document).ready(function($) {
     //   $('#phone_code_select2').select2();
@@ -483,6 +484,6 @@ function initialize_654_select2()
 
     // });
   </script>
-<?php
+  <?php
 }
 add_action('wp_footer', 'initialize_654_select2');

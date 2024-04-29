@@ -89,7 +89,8 @@ function enx_get_page_content($data)
                                                 <?php echo $currency->symbol ?>
                                                 <?php echo number_format($res_activity->original_price, $currency->digit) ?></span>
                                         </p>
-                                        <button class="w-full btn-primary">Find Package</button>
+                                        <button id="find-package-act" type="button" class="w-full btn-primary">Find
+                                            Package</button>
                                     </div>
                                 </div>
                             </div>
