@@ -77,33 +77,35 @@ function enx_mapping_card($data, $data_res, $currency)
             </div>
             <?php include 'contents/details-package.php' ?>
 
-            <div class="text-center">
+            <div class="text-center pt-2">
                 <p class="font-bold">Package Options</p>
             </div>
             <div class="w-full flex flex-col md:flex-row gap-4 p-4">
                 <div class="flex-1">
                     <?php if ($ticket->visitDate->request) { ?>
                         <div class="flex items-center justify-between w-full rounded-full px-4 py-2 gap-4"
-                            style="background-color: dadada;">
+                            style="background-color: #dadada;">
                             <input type="date" name="" id="" class="w-full" style="background-color: transparent;">
                         </div>
                     <?php } ?>
                 </div>
-                <div class="flex-1 flex flex-col gap-1">
+                <div id="ticket-type-act" class="flex-1 flex flex-col gap-1"
+                    data-ticket="<?php echo count($ticket->ticketType) ?>">
                     <?php foreach ($ticket->ticketType as $key_tick => $tick_type) { ?>
                         <div class="flex items-center justify-between w-full rounded-full px-4 py-2 gap-4"
-                            style="background-color: dadada;">
+                            style="background-color: #dadada;">
                             <p class="font-bold"><?php echo $tick_type->name ?></p>
                             <p class="text-xs md:text-sm ml-auto" style="opacity: 0.7;">
                                 <?php $currency->symbol ?>
                                 <?php echo number_format($tick_type->price, $currency->digit) ?>
                             </p>
                             <div class="flex items-center gap-2">
-                                <button class="btn-circle-primary">
+                                <button id="<?php echo $idx . "qty-act-dec" . $key_tick ?>" class="btn-circle-primary">
                                     <p class="text-lg font-bold" style="margin-top: -3px !important;">-</p>
                                 </button>
-                                <p class="font-bold">1</p>
-                                <button class="btn-circle-primary">
+                                <p id="<?php echo $idx . "qty-type-act" . $key_tick ?>" class="font-bold">
+                                    <?php echo $idx . $key_tick ?></p>
+                                <button id="<?php echo $idx . "qty-act-inc" . $key_tick ?>" class="btn-circle-primary">
                                     <p class="text-lg" style="margin-top: -3px !important;">+</p>
                                 </button>
                             </div>

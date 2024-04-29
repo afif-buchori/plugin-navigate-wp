@@ -21,5 +21,23 @@ if (packageOptActivity !== "") {
         modalComp.style.display = "none";
       });
     }
+
+    const ticketTypeAct = document.getElementById("ticket-type-act") || "";
+    if (ticketTypeAct !== "") {
+      const countType = ticketTypeAct.getAttribute("data-ticket");
+      for (let j = 0; j < parseInt(countType); j++) {
+        const btnDecrement =
+          document.getElementById(i + "qty-act-dec" + j) || "";
+        const btnIncrement =
+          document.getElementById(i + "qty-act-inc" + j) || "";
+        const qtyType = document.getElementById(i + "qty-type-act" + j) | "";
+
+        console.log(i + "qty-act-dec" + j);
+        // btnDecrement.addEventListener("click", function () {
+        //   console.log(qtyType);
+        //   // qtyType.innerHTML = parseInt(qtyType) - 1;
+        // });
+      }
+    }
   }
 }

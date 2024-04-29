@@ -128,7 +128,7 @@ function enx_get_global_page()
             require_once (dirname(__FILE__) . '/../activity/activity-detail.php');
             require_once (dirname(__FILE__) . '/../activity/card-activity.php');
             $data = enx_get_detail_data_activity();
-            var_dump(json_encode($data));
+            // var_dump(json_encode($data));
             $data_meta = $data->meta;
         }
     }
