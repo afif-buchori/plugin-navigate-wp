@@ -106,7 +106,7 @@ if (packageOptActivity !== "") {
 }
 
 function updatePrice(initialPrice, price, method, btn, dateVal) {
-  // console.log(dateVal);
+  console.log(dateVal);
   // console.log(initialPrice, price, method, btn);
   const digitCurr = parseInt(initialPrice.getAttribute("data-digit"));
   var prevPrice = parseFloat(initialPrice.innerText);
