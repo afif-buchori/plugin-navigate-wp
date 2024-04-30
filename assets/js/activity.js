@@ -29,15 +29,18 @@ if (packageOptActivity !== "") {
       dateSelected.addEventListener("change", function (e) {
         const idTicket = dateSelected.getAttribute("data-id-ticket");
         const msgCheckDate = document.getElementById("msg-error" + i);
-        getAvailDate(
+        const elementQtyPackages = document.getElementById("total-qty-package" + i);
+        const btnSubmitPackage = document.getElementById("submit-package" + i) || "";
+
+        const result = getAvailDate(
           {
             id: idTicket,
             date: e.target.value,
           },
           msgCheckDate
         );
-        dateVal = e.target.value;
-        console.log(e.target.value, idTicket);
+        if (parseInt(elementQtyPackages) > 0 && result != 'no') return btnSubmitPackage.disabled = false;
+        return btnSubmitPackage.disabled = true;
       });
     }
 
@@ -50,14 +53,19 @@ if (packageOptActivity !== "") {
       const totalPrice = element.getAttribute("data-total-price");
       const qty = document.getElementById(qtyType);
 
-      const datePackageAct = element.getAttribute("date-package-act");
+      const datePackageAct = element.getAttribute("data-date-package-act");
       const elementDatePackageAct = document.getElementById(datePackageAct);
+      
+      const qtyPackage = element.getAttribute("data-qty-package-act");
+      const elementQtyPackage = document.getElementById(qtyPackage);
 
       const btnDecrement = element.getAttribute("data-qty-act-dec");
       console.log("APA AJAH DEH");
       document.getElementById(btnDecrement).onclick = function () {
         if (parseInt(qty.innerText) <= 0) return;
-        qty.innerText = parseInt(qty.innerText) - 1;
+        const qtyNewDec = parseInt(qty.innerText) - 1;
+        elementQtyPackage.value = parseInt(elementQtyPackage.value) - qtyNewDec;
+        qty.innerText = qtyNewDec;
         updatePrice(
           document.getElementById(totalPrice),
           priceType,
@@ -69,7 +77,9 @@ if (packageOptActivity !== "") {
 
       const btnIncrement = element.getAttribute("data-qty-act-inc");
       document.getElementById(btnIncrement).onclick = function () {
-        qty.innerText = parseInt(qty.innerText) + 1;
+        const qtyNewInc = parseInt(qty.innerText) + 1;
+        elementQtyPackage.value = parseInt(elementQtyPackage.value) + qtyNewDec;
+        qty.innerText = qtyNewInc;
         updatePrice(
           document.getElementById(totalPrice),
           priceType,
@@ -134,7 +144,9 @@ async function getAvailDate(data, elMsg) {
     const res = await result.json();
     console.log(res);
     if (res.result === "no") elMsg.innerText = res.message;
+    return res.result;
   } catch (error) {
     console.log(error);
+    return 'no';
   }
 }
