@@ -57,6 +57,9 @@ if (packageOptActivity !== "") {
       const datePackageAct = element.getAttribute("data-date-package-act");
       let elementDatePackageAct = document.getElementById(datePackageAct);
       
+      const msgError = element.getAttribute("data-msg-error");
+      let elementMsgError = document.getElementById(msgError);
+      
       const qtyPackage = element.getAttribute("data-qty-package-act");
       const elementQtyPackage = document.getElementById(qtyPackage);
 
@@ -72,7 +75,8 @@ if (packageOptActivity !== "") {
           priceType,
           "dec",
           btnSubmitPackage,
-          elementDatePackageAct ? elementDatePackageAct.value : '-'
+          elementDatePackageAct ? elementDatePackageAct.value : '-',
+          elementMsgError.innerText
         );
       };
 
@@ -87,7 +91,8 @@ if (packageOptActivity !== "") {
           priceType,
           "increment",
           btnSubmitPackage,
-          elementDatePackageAct ? elementDatePackageAct.value : '-'
+          elementDatePackageAct ? elementDatePackageAct.value : '-',
+          elementMsgError.innerText
         );
       };
 
@@ -107,7 +112,7 @@ if (packageOptActivity !== "") {
   }
 }
 
-function updatePrice(initialPrice, price, method, btn, dateVal) {
+function updatePrice(initialPrice, price, method, btn, dateVal, msg) {
   console.log(dateVal);
   // console.log(initialPrice, price, method, btn);
   const digitCurr = parseInt(initialPrice.getAttribute("data-digit"));
@@ -119,7 +124,7 @@ function updatePrice(initialPrice, price, method, btn, dateVal) {
     prevPrice = prevPrice - priceType;
   }
   initialPrice.innerText = prevPrice.toFixed(digitCurr);
-  if (prevPrice <= 0 || !dateVal) return (btn.disabled = true);
+  if (prevPrice <= 0 || !dateVal || msg) return (btn.disabled = true);
   return (btn.disabled = false);
 }
 
@@ -145,8 +150,13 @@ async function getAvailDate(data, elMsg) {
     });
     const res = await result.json();
     console.log(res);
-    if (res.result === "no") elMsg.innerText = res.message;
-    return res.result;
+    if (res.result === "no") {
+      elMsg.innerText = res.message;
+    }else {
+      elMsg.innerText = "";
+    }
+    
+    return await res.result;
   } catch (error) {
     console.log(error);
     return 'no';
