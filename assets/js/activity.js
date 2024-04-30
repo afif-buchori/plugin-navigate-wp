@@ -39,7 +39,6 @@ if (packageOptActivity !== "") {
           },
           msgCheckDate
         );
-        console.log(result);
         if (parseInt(elementQtyPackages) > 0 || msgCheckDate.innerText) return btnSubmitPackage.disabled = false;
         return btnSubmitPackage.disabled = true;
       });
