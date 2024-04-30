@@ -26,7 +26,6 @@ if (packageOptActivity !== "") {
 
     const dateSelected = document.getElementById("date-package-act" + i) || "";
     // console.log(dateSelected);
-    let dateVal = "";
     if (dateSelected) {
       dateSelected.addEventListener("change", function (e) {
         const idTicket = dateSelected.getAttribute("data-id-ticket");
@@ -62,19 +61,18 @@ if (packageOptActivity !== "") {
           priceType,
           "dec",
           btnSubmitPackage,
-          dateVal
         );
       };
 
       const btnIncrement = element.getAttribute("data-qty-act-inc");
       document.getElementById(btnIncrement).onclick = function () {
         qty.innerText = parseInt(qty.innerText) + 1;
+        console.log(dateSelected, document.getElementById("date-package-act" + i));
         updatePrice(
           document.getElementById(totalPrice),
           priceType,
           "increment",
           btnSubmitPackage,
-          dateVal
         );
       };
 
@@ -95,7 +93,7 @@ if (packageOptActivity !== "") {
 }
 
 function updatePrice(initialPrice, price, method, btn, dateVal) {
-  console.log(dateVal);
+  // console.log(dateVal);
   // console.log(initialPrice, price, method, btn);
   const digitCurr = parseInt(initialPrice.getAttribute("data-digit"));
   var prevPrice = parseFloat(initialPrice.innerText);
