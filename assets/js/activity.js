@@ -39,7 +39,7 @@ if (packageOptActivity !== "") {
           },
           msgCheckDate
         );
-        if (parseInt(elementQtyPackages) > 0 && result != 'no') return btnSubmitPackage.disabled = false;
+        if (parseInt(elementQtyPackages) > 0 || result != 'no') return btnSubmitPackage.disabled = false;
         return btnSubmitPackage.disabled = true;
       });
     }
@@ -54,8 +54,12 @@ if (packageOptActivity !== "") {
       const qty = document.getElementById(qtyType);
 
       const datePackageAct = element.getAttribute("data-date-package-act");
-      const elementDatePackageAct = document.getElementById(datePackageAct)?.value;
-      console.log(elementDatePackageAct, datePackageAct, document.getElementById(datePackageAct));
+      let elementDatePackageAct = document.getElementById(datePackageAct);
+      if (elementDatePackageAct) {
+        elementDatePackageAct = elementDatePackageAct.value;
+      } else {
+        elementDatePackageAct = "-";
+      }
       const qtyPackage = element.getAttribute("data-qty-package-act");
       const elementQtyPackage = document.getElementById(qtyPackage);
 
@@ -81,6 +85,8 @@ if (packageOptActivity !== "") {
         elementQtyPackage.value = parseInt(elementQtyPackage.value) + qtyNewInc;
         qty.innerText = qtyNewInc;
         console.log(elementDatePackageAct, elementQtyPackage);
+      console.log(elementDatePackageAct, datePackageAct, document.getElementById(datePackageAct));
+
         updatePrice(
           document.getElementById(totalPrice),
           priceType,
@@ -107,7 +113,7 @@ if (packageOptActivity !== "") {
 }
 
 function updatePrice(initialPrice, price, method, btn, dateVal) {
-  console.log(dateVal);
+  // console.log(dateVal);
   // console.log(initialPrice, price, method, btn);
   const digitCurr = parseInt(initialPrice.getAttribute("data-digit"));
   var prevPrice = parseFloat(initialPrice.innerText);
