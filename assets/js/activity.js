@@ -39,7 +39,7 @@ if (packageOptActivity !== "") {
           },
           msgCheckDate
         );
-        if (parseInt(elementQtyPackages) > 0 || msgCheckDate.innerText) return btnSubmitPackage.disabled = false;
+        if (parseInt(elementQtyPackages) > 0 && msgCheckDate.innerText) return btnSubmitPackage.disabled = false;
         return btnSubmitPackage.disabled = true;
       });
     }
