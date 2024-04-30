@@ -25,7 +25,6 @@ if (packageOptActivity !== "") {
     }
 
     const dateSelected = document.getElementById("date-package-act" + i) || "";
-    // console.log(dateSelected);
     if (dateSelected) {
       dateSelected.addEventListener("change", function (e) {
         const idTicket = dateSelected.getAttribute("data-id-ticket");
@@ -51,6 +50,9 @@ if (packageOptActivity !== "") {
       const totalPrice = element.getAttribute("data-total-price");
       const qty = document.getElementById(qtyType);
 
+      const datePackageAct = element.getAttribute("date-package-act");
+      const elementDatePackageAct = document.getElementById(datePackageAct);
+
       const btnDecrement = element.getAttribute("data-qty-act-dec");
       console.log("APA AJAH DEH");
       document.getElementById(btnDecrement).onclick = function () {
@@ -61,18 +63,19 @@ if (packageOptActivity !== "") {
           priceType,
           "dec",
           btnSubmitPackage,
+          elementDatePackageAct.value
         );
       };
 
       const btnIncrement = element.getAttribute("data-qty-act-inc");
       document.getElementById(btnIncrement).onclick = function () {
         qty.innerText = parseInt(qty.innerText) + 1;
-        console.log(dateSelected, document.getElementById("date-package-act" + i));
         updatePrice(
           document.getElementById(totalPrice),
           priceType,
           "increment",
           btnSubmitPackage,
+          elementDatePackageAct.value
         );
       };
 
@@ -104,7 +107,7 @@ function updatePrice(initialPrice, price, method, btn, dateVal) {
     prevPrice = prevPrice - priceType;
   }
   initialPrice.innerText = prevPrice.toFixed(digitCurr);
-  if (prevPrice <= 0) return (btn.disabled = true);
+  if (prevPrice <= 0 && !dateVal) return (btn.disabled = true);
   return (btn.disabled = false);
 }
 
