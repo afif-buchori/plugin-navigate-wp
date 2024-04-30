@@ -29,8 +29,11 @@ if (packageOptActivity !== "") {
       dateSelected.addEventListener("change", function (e) {
         const idTicket = dateSelected.getAttribute("data-id-ticket");
         const msgCheckDate = document.getElementById("msg-error" + i);
-        const elementQtyPackages = document.getElementById("total-qty-package" + i);
-        const btnSubmitPackage = document.getElementById("submit-package" + i) || "";
+        const elementQtyPackages = document.getElementById(
+          "total-qty-package" + i
+        );
+        const btnSubmitPackage =
+          document.getElementById("submit-package" + i) || "";
 
         getAvailDate(
           {
@@ -39,8 +42,9 @@ if (packageOptActivity !== "") {
           },
           msgCheckDate
         );
-        if (parseInt(elementQtyPackages) > 0 && msgCheckDate.innerText) return btnSubmitPackage.disabled = false;
-        return btnSubmitPackage.disabled = true;
+        if (parseInt(elementQtyPackages) > 0 && msgCheckDate.innerText)
+          return (btnSubmitPackage.disabled = false);
+        return (btnSubmitPackage.disabled = true);
       });
     }
 
@@ -55,10 +59,10 @@ if (packageOptActivity !== "") {
 
       const datePackageAct = element.getAttribute("data-date-package-act");
       let elementDatePackageAct = document.getElementById(datePackageAct);
-      
+
       const msgError = element.getAttribute("data-msg-error");
       let elementMsgError = document.getElementById(msgError);
-      
+
       const qtyPackage = element.getAttribute("data-qty-package-act");
       const elementQtyPackage = document.getElementById(qtyPackage);
 
@@ -76,7 +80,7 @@ if (packageOptActivity !== "") {
           priceType,
           "dec",
           btnSubmitPackage,
-          elementDatePackageAct ? elementDatePackageAct.value : '-',
+          elementDatePackageAct ? elementDatePackageAct.value : "-",
           elementMsgError.innerText
         );
       };
@@ -93,7 +97,7 @@ if (packageOptActivity !== "") {
           priceType,
           "increment",
           btnSubmitPackage,
-          elementDatePackageAct ? elementDatePackageAct.value : '-',
+          elementDatePackageAct ? elementDatePackageAct.value : "-",
           elementMsgError.innerText
         );
       };
@@ -153,11 +157,11 @@ async function getAvailDate(data, elMsg) {
     const res = await result.json();
     console.log(res);
     if (res.result === "no") {
-      elMsg.innerText = res.message;
-    }else {
+      const arrMsg = res.message.date ? res.message.date[0] : res.message;
+      elMsg.innerText = arrMsg;
+    } else {
       elMsg.innerText = "";
     }
-    
   } catch (error) {
     console.log(error);
     elMsg.innerText = "-";
