@@ -80,6 +80,7 @@ if (packageOptActivity !== "") {
         const qtyNewInc = parseInt(qty.innerText) + 1;
         elementQtyPackage.value = parseInt(elementQtyPackage.value) + qtyNewInc;
         qty.innerText = qtyNewInc;
+        console.log(elementDatePackageAct, elementQtyPackage);
         updatePrice(
           document.getElementById(totalPrice),
           priceType,
