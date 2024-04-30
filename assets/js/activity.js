@@ -55,11 +55,7 @@ if (packageOptActivity !== "") {
 
       const datePackageAct = element.getAttribute("data-date-package-act");
       let elementDatePackageAct = document.getElementById(datePackageAct);
-      if (elementDatePackageAct) {
-        elementDatePackageAct = elementDatePackageAct.value;
-      } else {
-        elementDatePackageAct = "-";
-      }
+      
       const qtyPackage = element.getAttribute("data-qty-package-act");
       const elementQtyPackage = document.getElementById(qtyPackage);
 
@@ -75,7 +71,7 @@ if (packageOptActivity !== "") {
           priceType,
           "dec",
           btnSubmitPackage,
-          elementDatePackageAct
+          elementDatePackageAct ? elementDatePackageAct.value : '-'
         );
       };
 
@@ -84,15 +80,13 @@ if (packageOptActivity !== "") {
         const qtyNewInc = parseInt(qty.innerText) + 1;
         elementQtyPackage.value = parseInt(elementQtyPackage.value) + qtyNewInc;
         qty.innerText = qtyNewInc;
-        console.log(elementDatePackageAct, elementQtyPackage);
-      console.log(elementDatePackageAct, datePackageAct, document.getElementById(datePackageAct), document.getElementById(datePackageAct).value);
 
         updatePrice(
           document.getElementById(totalPrice),
           priceType,
           "increment",
           btnSubmitPackage,
-          elementDatePackageAct
+          elementDatePackageAct ? elementDatePackageAct.value : '-'
         );
       };
 
@@ -113,7 +107,7 @@ if (packageOptActivity !== "") {
 }
 
 function updatePrice(initialPrice, price, method, btn, dateVal) {
-  // console.log(dateVal);
+  console.log(dateVal);
   // console.log(initialPrice, price, method, btn);
   const digitCurr = parseInt(initialPrice.getAttribute("data-digit"));
   var prevPrice = parseFloat(initialPrice.innerText);
