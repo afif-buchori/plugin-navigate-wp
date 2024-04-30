@@ -39,6 +39,7 @@ if (packageOptActivity !== "") {
           },
           msgCheckDate
         );
+        console.log(result);
         if (parseInt(elementQtyPackages) > 0 || result != 'no') return btnSubmitPackage.disabled = false;
         return btnSubmitPackage.disabled = true;
       });
@@ -64,7 +65,7 @@ if (packageOptActivity !== "") {
       document.getElementById(btnDecrement).onclick = function () {
         if (parseInt(qty.innerText) <= 0) return;
         const qtyNewDec = parseInt(qty.innerText) - 1;
-        elementQtyPackage.value = parseInt(elementQtyPackage.value) - qtyNewDec;
+        elementQtyPackage.value = qtyNewDec;
         qty.innerText = qtyNewDec;
         updatePrice(
           document.getElementById(totalPrice),
@@ -78,7 +79,7 @@ if (packageOptActivity !== "") {
       const btnIncrement = element.getAttribute("data-qty-act-inc");
       document.getElementById(btnIncrement).onclick = function () {
         const qtyNewInc = parseInt(qty.innerText) + 1;
-        elementQtyPackage.value = parseInt(elementQtyPackage.value) + qtyNewInc;
+        elementQtyPackage.value = qtyNewInc;
         qty.innerText = qtyNewInc;
 
         updatePrice(
