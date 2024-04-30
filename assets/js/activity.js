@@ -71,7 +71,7 @@ if (packageOptActivity !== "") {
       document.getElementById(btnDecrement).onclick = function () {
         if (parseInt(qty.innerText) <= 0) return;
         const qtyNewDec = parseInt(qty.innerText) - 1;
-        elementQtyPackage.value = qtyNewDec;
+        elementQtyPackage.value = elementQtyPackage.value - 1;
         console.log(elementQtyPackage.value);
 
         qty.innerText = qtyNewDec;
@@ -88,7 +88,7 @@ if (packageOptActivity !== "") {
       const btnIncrement = element.getAttribute("data-qty-act-inc");
       document.getElementById(btnIncrement).onclick = function () {
         const qtyNewInc = parseInt(qty.innerText) + 1;
-        elementQtyPackage.value = qtyNewInc;
+        elementQtyPackage.value = elementQtyPackage.value + 1;
         qty.innerText = qtyNewInc;
         console.log(elementQtyPackage.value);
 
