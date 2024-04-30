@@ -42,7 +42,8 @@ if (packageOptActivity !== "") {
           },
           msgCheckDate
         );
-        if (parseInt(elementQtyPackages) > 0 || msgCheckDate.innerText)
+        console.log(parseInt(elementQtyPackages.value));
+        if (parseInt(elementQtyPackages.value) > 0 || msgCheckDate.innerText)
           return (btnSubmitPackage.disabled = false);
         return (btnSubmitPackage.disabled = true);
       });
