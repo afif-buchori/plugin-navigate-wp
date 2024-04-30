@@ -122,7 +122,7 @@ function enx_mapping_card($data, $data_res, $currency)
                     <div class="flex items-center justify-between w-full rounded-full px-4 py-2 gap-4"
                         style="background-color: #dadada;">
                         <p>Total Price</p>
-                        <p id="total-price" class="ml-auto">123</p>
+                        <p id="total-price<?php echo $idx ?>" class="ml-auto">0</p>
                     </div>
                 </div>
             </div>
