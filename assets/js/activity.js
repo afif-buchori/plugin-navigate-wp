@@ -85,7 +85,7 @@ if (packageOptActivity !== "") {
         elementQtyPackage.value = parseInt(elementQtyPackage.value) + qtyNewInc;
         qty.innerText = qtyNewInc;
         console.log(elementDatePackageAct, elementQtyPackage);
-      console.log(elementDatePackageAct, datePackageAct, document.getElementById(datePackageAct));
+      console.log(elementDatePackageAct, datePackageAct, document.getElementById(datePackageAct), document.getElementById(datePackageAct).value);
 
         updatePrice(
           document.getElementById(totalPrice),
