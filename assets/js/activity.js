@@ -55,7 +55,7 @@ if (packageOptActivity !== "") {
 
       const datePackageAct = element.getAttribute("data-date-package-act");
       const elementDatePackageAct = document.getElementById(datePackageAct)?.value;
-      console.log(elementDatePackageAct);
+      console.log(elementDatePackageAct, datePackageAct);
       const qtyPackage = element.getAttribute("data-qty-package-act");
       const elementQtyPackage = document.getElementById(qtyPackage);
 
@@ -78,7 +78,7 @@ if (packageOptActivity !== "") {
       const btnIncrement = element.getAttribute("data-qty-act-inc");
       document.getElementById(btnIncrement).onclick = function () {
         const qtyNewInc = parseInt(qty.innerText) + 1;
-        elementQtyPackage.value = parseInt(elementQtyPackage.value) + qtyNewDec;
+        elementQtyPackage.value = parseInt(elementQtyPackage.value) + qtyNewInc;
         qty.innerText = qtyNewInc;
         updatePrice(
           document.getElementById(totalPrice),
