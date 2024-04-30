@@ -98,7 +98,8 @@ function enx_mapping_card($data, $data_res, $currency)
                             style="background-color: #dadada;" id="new-ticket-type-act"
                             data-qty-act-dec="<?= $idx . "qty-act-dec" . $key_tick ?>"
                             data-qty-type-act="<?= $idx . "qty-type-act" . $key_tick ?>"
-                            data-qty-act-inc="<?= $idx . "qty-act-inc" . $key_tick ?>">
+                            data-qty-act-inc="<?= $idx . "qty-act-inc" . $key_tick ?>"
+                            data-id-btn-submit="<?php echo "submit-package" . $idx ?>">
                             <p class="font-bold"><?php echo $tick_type->name ?></p>
                             <p class="text-xs md:text-sm ml-auto" style="opacity: 0.7;">
                                 <?php $currency->symbol ?>
@@ -117,12 +118,67 @@ function enx_mapping_card($data, $data_res, $currency)
                             </div>
                         </div>
                     <?php } ?>
+
+                    <div class="flex items-center justify-between w-full rounded-full px-4 py-2 gap-4"
+                        style="background-color: #dadada;">
+                        <p>Total Price</p>
+                        <p id="total-price" class="ml-auto">123</p>
+                    </div>
                 </div>
             </div>
 
             <div class="w-full flex gap-2 p-4">
                 <button id="<?php echo "submit-package" . $idx ?>" disabled type="button" class="ml-auto btn-primary">Select
                     Package</button>
+            </div>
+            <div id="modal-question<?php echo $idx ?>" style="
+                width: 100vw;
+                height: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 9999;
+                background-color: #111827c5;
+                display: none;
+                place-content: center;
+                padding: 0 44px;
+            ">
+                <div id="enxcontainer-modal" style="
+                    max-width: 880px;
+                    max-height: 70vh;
+                    padding: 20px 0 20px 20px;
+                    background-color: white;
+                    border-radius: 12px;
+                    display: flex;
+                    flex-direction: column;
+                    position: relative;
+                ">
+                    <div class="flex justify-between" style="padding-bottom: 8px;">
+                        <p class="text-xl font-bold">Questions</p>
+                        <button id="close-modal<?php echo $idx ?>" type="button" class="font-bold" style="
+                            background-color: white !important;
+                            width: 32px;
+                            height: 32px;
+                            border-radius: 999px;
+                            border: solid 2px black !important;
+                            display: grid;
+                            place-content: center;
+                            position: absolute;
+                            top: 8px;
+                            right: 8px;
+                        ">X</button>
+                    </div>
+                    <div style="
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                        height: 100%;
+                        overflow-y: auto;
+                        padding-right: 16px;
+                    ">
+
+                    </div>
+                </div>
             </div>
         </div>
     <?php }

@@ -25,40 +25,55 @@ if (packageOptActivity !== "") {
     }
 
     const dateSelected = document.getElementById("date-package-act" + i) || "";
-    console.log(dateSelected);
-    dateSelected.addEventListener("change", function (e) {
-      const idTicket = dateSelected.getAttribute("data-id-ticket");
-      getAvailDate({
-        id: idTicket,
-        date: e.target.value,
+    // console.log(dateSelected);
+    if (dateSelected) {
+      dateSelected.addEventListener("change", function (e) {
+        const idTicket = dateSelected.getAttribute("data-id-ticket");
+        getAvailDate({
+          id: idTicket,
+          date: e.target.value,
+        });
+        console.log(e.target.value, idTicket);
       });
-      console.log(e.target.value, idTicket);
-    });
+    }
 
-    const btnSubmitPackage =
-      document.getElementById("submit-package" + i) || "";
+    // const btnSubmitPackage =
+    //   document.getElementById("submit-package" + i) || "";
 
     const newTicketTypeAct = document.querySelectorAll("#new-ticket-type-act");
     newTicketTypeAct.forEach(function (element) {
-      var qtyType = element.getAttribute("data-qty-type-act");
+      const idBtnSubmit = element.getAttribute("data-id-btn-submit");
+      const btnSubmitPackage = document.getElementById(idBtnSubmit) || "";
+      const qtyType = element.getAttribute("data-qty-type-act");
       const qty = document.getElementById(qtyType);
 
-      var btnDecrement = element.getAttribute("data-qty-act-dec");
+      const btnDecrement = element.getAttribute("data-qty-act-dec");
       console.log("TESTING");
       document.getElementById(btnDecrement).onclick = function () {
         if (parseInt(qty.innerText) <= 0)
           return (btnSubmitPackage.disabled = true);
         qty.innerText = parseInt(qty.innerText) - 1;
-        btnSubmitPackage.disabled = false;
+        // console.log(btnSubmitPackage);
+        btnSubmitPackage.disabled = true;
       };
 
-      var btnIncrement = element.getAttribute("data-qty-act-inc");
+      const btnIncrement = element.getAttribute("data-qty-act-inc");
       document.getElementById(btnIncrement).onclick = function () {
         qty.innerText = parseInt(qty.innerText) + 1;
-        btnSubmitPackage.disabled = true;
+        btnSubmitPackage.disabled = false;
+        updatePrice(
+          document.getElementById("total-price" + i),
+          12,
+          "increment",
+          btnSubmitPackage
+        );
       };
     });
   }
+}
+
+function updatePrice(initialPrice, price, method, btn) {
+  console.log(initialPrice, price, method, btn);
 }
 
 const btnFindPakcage = document.getElementById("find-package-act") || "";
@@ -73,7 +88,6 @@ async function getAvailDate(data) {
 
   try {
     const url = API_ACT_URL + "/check-block-date";
-    console.log(url);
     const result = await fetch(url, {
       method: "POST",
       headers: {
@@ -82,7 +96,7 @@ async function getAvailDate(data) {
       },
       body: JSON.stringify(data),
     });
-    console.log(result);
+    console.log(result.json());
   } catch (error) {
     console.log(error);
   }
