@@ -1,19 +1,6 @@
 <?php
 function enx_get_page_content($data)
 {
-    $tick_types = [
-        [
-            "ticketName" => "ADULT",
-            "ticketQty" => 1,
-            "price" => 6.45,
-        ],
-        [
-            "ticketName" => "CHILD",
-            "ticketQty" => 1,
-            "price" => 6.45,
-        ],
-    ];
-    var_dump($tick_types);
     ob_start();
     ?>
     <div class="enx-container site-wrapper">
@@ -57,10 +44,10 @@ function enx_get_page_content($data)
                                         <div class="py-5 px-7">
                                             <p class="font-bold text-lg"><?php echo "ACTIVITY NAME" ?></p>
                                             <p class="font-bold" style="opacity: 0.7;"><?php echo "Package Name" ?></p>
-                                            <?php foreach ($tick_types as $type) { ?>
+                                            <?php foreach (["", ""] as $type) { ?>
                                                 <div class="flex justify-between">
-                                                    <p><?php echo $type->ticketName ?></p>
-                                                    <p><?php echo $type->price ?></p>
+                                                    <p><?php echo "adult" ?></p>
+                                                    <p><?php echo "1x" ?></p>
                                                 </div>
                                             <?php } ?>
                                             <div class="w-full flex justify-between">
