@@ -86,8 +86,8 @@ function enx_mapping_card($data, $data_res, $currency)
                         <div class="flex items-center justify-between w-full rounded-full px-4 py-2 gap-4"
                             style="background-color: #dadada;">
                             <input type="date" name="" id="date-package-act<?php echo $idx ?>" min="<?php echo date("Y-m-d") ?>"
-                                data-id-ticket="<?php echo $ticket->ticketType[0]->id ?>" class="w-full"
-                                style="background-color: transparent;">
+                                data-id-ticket="<?php echo $ticket->ticketType[0]->id ?>" class="w-full" placeholder="select date"
+                                style="background-color: transparent; height: 30px;">
                         </div>
                     <?php } ?>
                 </div>
@@ -98,9 +98,12 @@ function enx_mapping_card($data, $data_res, $currency)
                             style="background-color: #dadada;" id="new-ticket-type-act"
                             data-qty-act-dec="<?= $idx . "qty-act-dec" . $key_tick ?>"
                             data-qty-type-act="<?= $idx . "qty-type-act" . $key_tick ?>"
-                            data-qty-act-inc="<?= $idx . "qty-act-inc" . $key_tick ?>"
-                            data-id-btn-submit="<?php echo "submit-package" . $idx ?>">
-                            <p class="font-bold"><?php echo $tick_type->name ?></p>
+                            data-qty-act-inc="<?= $idx . "qty-act-inc" . $key_tick ?>" data-price="<?= $tick_type->price ?>"
+                            data-total-price="<?= "total-price" . $idx ?>" data-msg-error="<?php echo "msg-error" . $idx ?>"
+                            data-id-btn-submit="<?php echo "submit-package" . $idx ?>"
+                            data-modal-quest="<?php echo "modal-question" . $idx ?>"
+                            data-close-modal="<?php echo "close-modal-quest" . $idx ?>">
+                            <p class=" font-bold"><?php echo $tick_type->name ?></p>
                             <p class="text-xs md:text-sm ml-auto" style="opacity: 0.7;">
                                 <?php $currency->symbol ?>
                                 <?php echo number_format($tick_type->price, $currency->digit) ?>
@@ -122,11 +125,15 @@ function enx_mapping_card($data, $data_res, $currency)
                     <div class="flex items-center justify-between w-full rounded-full px-4 py-2 gap-4"
                         style="background-color: #dadada;">
                         <p>Total Price</p>
-                        <p id="total-price<?php echo $idx ?>" class="ml-auto">0</p>
+                        <p class="ml-auto"><?php echo $currency->symbol ?> <span data-digit="<?php echo $currency->digit ?>"
+                                id="total-price<?php echo $idx ?>">0</span></p>
                     </div>
                 </div>
             </div>
 
+            <div class="w-full flex">
+                <p id="<?php echo "msg-error" . $idx ?>" class="text-right text-xs md:text-sm px-4 ml-auto"></p>
+            </div>
             <div class="w-full flex gap-2 p-4">
                 <button id="<?php echo "submit-package" . $idx ?>" disabled type="button" class="ml-auto btn-primary">Select
                     Package</button>
@@ -155,7 +162,7 @@ function enx_mapping_card($data, $data_res, $currency)
                 ">
                     <div class="flex justify-between" style="padding-bottom: 8px;">
                         <p class="text-xl font-bold">Questions</p>
-                        <button id="close-modal<?php echo $idx ?>" type="button" class="font-bold" style="
+                        <button id="close-modal-quest<?php echo $idx ?>" type="button" class="font-bold" style="
                             background-color: white !important;
                             width: 32px;
                             height: 32px;
@@ -172,11 +179,44 @@ function enx_mapping_card($data, $data_res, $currency)
                         display: flex;
                         flex-direction: column;
                         width: 100%;
+                        min-width: 360px;
                         height: 100%;
                         overflow-y: auto;
                         padding-right: 16px;
                     ">
-
+                        <?php foreach ($ticket->ticketType as $key_type_quest => $type) { ?>
+                            <?php if ($key_type_quest > 0) { ?>
+                                <hr style="margin-top: 20px !important; margin-bottom: 10px !important;">
+                            <?php } ?>
+                            <p class="font-bold">
+                                <?php echo $type->name ?>
+                            </p>
+                            <?php if ($ticket->questions && count($ticket->questions) > 0) {
+                                foreach ($ticket->questions as $key_quest => $quest) { ?>
+                                    <?php if ($quest->type == "DATE") { ?>
+                                        <div class="">
+                                            <p><?php echo $quest->question ?> :</p>
+                                            <input type="date" class="w-full mb-2" style="border: solid 1px black !important;">
+                                        </div>
+                                    <?php } elseif ($quest->type == "OPTION") { ?>
+                                        <div class="">
+                                            <p><?php echo $quest->question ?> :</p>
+                                            <select name="" id="" class="w-full mb-2" style="border: solid 1px black !important;">
+                                                <option value="">---</option>
+                                                <?php foreach ($quest->options as $opt) { ?>
+                                                    <option value="<?php echo $opt ?>"><?php echo $opt ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div class="">
+                                            <p><?php echo $quest->question ?> :</p>
+                                            <input type="text" class="w-full mb-2" style="border: solid 1px black !important;">
+                                        </div>
+                                    <?php } ?>
+                                <?php }
+                            }
+                        } ?>
                     </div>
                 </div>
             </div>

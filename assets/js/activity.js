@@ -26,54 +26,88 @@ if (packageOptActivity !== "") {
 
     const dateSelected = document.getElementById("date-package-act" + i) || "";
     // console.log(dateSelected);
+    let dateVal = "";
     if (dateSelected) {
       dateSelected.addEventListener("change", function (e) {
         const idTicket = dateSelected.getAttribute("data-id-ticket");
-        getAvailDate({
-          id: idTicket,
-          date: e.target.value,
-        });
+        const msgCheckDate = document.getElementById("msg-error" + i);
+        getAvailDate(
+          {
+            id: idTicket,
+            date: e.target.value,
+          },
+          msgCheckDate
+        );
+        dateVal = e.target.value;
         console.log(e.target.value, idTicket);
       });
     }
-
-    // const btnSubmitPackage =
-    //   document.getElementById("submit-package" + i) || "";
 
     const newTicketTypeAct = document.querySelectorAll("#new-ticket-type-act");
     newTicketTypeAct.forEach(function (element) {
       const idBtnSubmit = element.getAttribute("data-id-btn-submit");
       const btnSubmitPackage = document.getElementById(idBtnSubmit) || "";
       const qtyType = element.getAttribute("data-qty-type-act");
+      const priceType = element.getAttribute("data-price");
+      const totalPrice = element.getAttribute("data-total-price");
       const qty = document.getElementById(qtyType);
 
       const btnDecrement = element.getAttribute("data-qty-act-dec");
-      console.log("TESTING");
+      console.log("APA AJAH DEH");
       document.getElementById(btnDecrement).onclick = function () {
-        if (parseInt(qty.innerText) <= 0)
-          return (btnSubmitPackage.disabled = true);
+        if (parseInt(qty.innerText) <= 0) return;
         qty.innerText = parseInt(qty.innerText) - 1;
-        // console.log(btnSubmitPackage);
-        btnSubmitPackage.disabled = true;
+        updatePrice(
+          document.getElementById(totalPrice),
+          priceType,
+          "dec",
+          btnSubmitPackage,
+          dateVal
+        );
       };
 
       const btnIncrement = element.getAttribute("data-qty-act-inc");
       document.getElementById(btnIncrement).onclick = function () {
         qty.innerText = parseInt(qty.innerText) + 1;
-        btnSubmitPackage.disabled = false;
         updatePrice(
-          document.getElementById("total-price" + i),
-          12,
+          document.getElementById(totalPrice),
+          priceType,
           "increment",
-          btnSubmitPackage
+          btnSubmitPackage,
+          dateVal
         );
+      };
+
+      const attrModal = element.getAttribute("data-modal-quest");
+      const modalQuestion = document.getElementById(attrModal);
+      btnSubmitPackage.onclick = function () {
+        modalQuestion.style.display = "grid";
+      };
+
+      const attrCloseModal = element.getAttribute("data-close-modal");
+      const btnCloseModalQuest = document.getElementById(attrCloseModal);
+      // console.log(attrCloseModal, btnCloseModalQuest);
+      btnCloseModalQuest.onclick = function () {
+        modalQuestion.style.display = "none";
       };
     });
   }
 }
 
-function updatePrice(initialPrice, price, method, btn) {
-  console.log(initialPrice, price, method, btn);
+function updatePrice(initialPrice, price, method, btn, dateVal) {
+  console.log(dateVal);
+  // console.log(initialPrice, price, method, btn);
+  const digitCurr = parseInt(initialPrice.getAttribute("data-digit"));
+  var prevPrice = parseFloat(initialPrice.innerText);
+  var priceType = parseFloat(price);
+  if (method == "increment") {
+    prevPrice = prevPrice + priceType;
+  } else {
+    prevPrice = prevPrice - priceType;
+  }
+  initialPrice.innerText = prevPrice.toFixed(digitCurr);
+  if (prevPrice <= 0) return (btn.disabled = true);
+  return (btn.disabled = false);
 }
 
 const btnFindPakcage = document.getElementById("find-package-act") || "";
@@ -83,8 +117,8 @@ if (btnFindPakcage) {
   });
 }
 
-async function getAvailDate(data) {
-  console.log(data);
+async function getAvailDate(data, elMsg) {
+  console.log(data, elMsg);
 
   try {
     const url = API_ACT_URL + "/check-block-date";
@@ -96,7 +130,9 @@ async function getAvailDate(data) {
       },
       body: JSON.stringify(data),
     });
-    console.log(result.json());
+    const res = await result.json();
+    console.log(res);
+    if (res.result === "no") elMsg.innerText = res.message;
   } catch (error) {
     console.log(error);
   }
