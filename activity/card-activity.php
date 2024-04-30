@@ -78,7 +78,7 @@ function enx_mapping_card($data, $data_res, $currency)
                         </div>
                     <?php } ?>
                 </div>
-                <input type="hidden" id='<?= "total-qty-package$idx" ?>'>
+                <input type="hidden" id='<?= "total-qty-package$idx" ?>' value="0">
                 <div id="ticket-type-act" class="flex-1 flex flex-col gap-1" data-ticket="<?php echo count($ticket->ticketType) ?>">
                     <?php foreach ($ticket->ticketType as $key_tick => $tick_type) { ?>
                         <div class="flex items-center justify-between w-full rounded-full px-4 py-2 gap-4" style="background-color: #dadada;" id="new-ticket-type-act" data-qty-package-act='<?= "total-qty-package$idx" ?>' data-date-package-act="date-package-act<?php echo $idx ?>" data-qty-act-dec="<?= $idx . "qty-act-dec" . $key_tick ?>" data-qty-type-act="<?= $idx . "qty-type-act" . $key_tick ?>" data-qty-act-inc="<?= $idx . "qty-act-inc" . $key_tick ?>" data-price="<?= $tick_type->price ?>" data-total-price="<?= "total-price" . $idx ?>" data-msg-error="<?php echo "msg-error" . $idx ?>" data-id-btn-submit="<?php echo "submit-package" . $idx ?>" data-modal-quest="<?php echo "modal-question" . $idx ?>" data-close-modal="<?php echo "close-modal-quest" . $idx ?>">
