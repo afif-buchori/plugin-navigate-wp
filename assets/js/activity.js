@@ -54,8 +54,8 @@ if (packageOptActivity !== "") {
       const qty = document.getElementById(qtyType);
 
       const datePackageAct = element.getAttribute("data-date-package-act");
-      const elementDatePackageAct = document.getElementById(datePackageAct);
-      
+      const elementDatePackageAct = document.getElementById(datePackageAct).value ?? 'without';
+      console.log(elementDatePackageAct);
       const qtyPackage = element.getAttribute("data-qty-package-act");
       const elementQtyPackage = document.getElementById(qtyPackage);
 
@@ -71,7 +71,7 @@ if (packageOptActivity !== "") {
           priceType,
           "dec",
           btnSubmitPackage,
-          elementDatePackageAct.value
+          elementDatePackageAct
         );
       };
 
@@ -85,7 +85,7 @@ if (packageOptActivity !== "") {
           priceType,
           "increment",
           btnSubmitPackage,
-          elementDatePackageAct.value
+          elementDatePackageAct
         );
       };
 
