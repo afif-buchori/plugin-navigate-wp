@@ -55,7 +55,7 @@ if (packageOptActivity !== "") {
 
       const datePackageAct = element.getAttribute("data-date-package-act");
       const elementDatePackageAct = document.getElementById(datePackageAct)?.value;
-      console.log(elementDatePackageAct, datePackageAct);
+      console.log(elementDatePackageAct, datePackageAct, document.getElementById(datePackageAct));
       const qtyPackage = element.getAttribute("data-qty-package-act");
       const elementQtyPackage = document.getElementById(qtyPackage);
 
@@ -117,7 +117,7 @@ function updatePrice(initialPrice, price, method, btn, dateVal) {
     prevPrice = prevPrice - priceType;
   }
   initialPrice.innerText = prevPrice.toFixed(digitCurr);
-  if (prevPrice <= 0 && !dateVal) return (btn.disabled = true);
+  if (prevPrice <= 0 || !dateVal) return (btn.disabled = true);
   return (btn.disabled = false);
 }
 
