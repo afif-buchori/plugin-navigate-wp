@@ -32,7 +32,7 @@ if (packageOptActivity !== "") {
         const elementQtyPackages = document.getElementById("total-qty-package" + i);
         const btnSubmitPackage = document.getElementById("submit-package" + i) || "";
 
-        const result = getAvailDate(
+        getAvailDate(
           {
             id: idTicket,
             date: e.target.value,
@@ -40,7 +40,7 @@ if (packageOptActivity !== "") {
           msgCheckDate
         );
         console.log(result);
-        if (parseInt(elementQtyPackages) > 0 || result != 'no') return btnSubmitPackage.disabled = false;
+        if (parseInt(elementQtyPackages) > 0 || msgCheckDate.innerText) return btnSubmitPackage.disabled = false;
         return btnSubmitPackage.disabled = true;
       });
     }
@@ -69,6 +69,8 @@ if (packageOptActivity !== "") {
         if (parseInt(qty.innerText) <= 0) return;
         const qtyNewDec = parseInt(qty.innerText) - 1;
         elementQtyPackage.value = qtyNewDec;
+        console.log(elementQtyPackage.value);
+
         qty.innerText = qtyNewDec;
         updatePrice(
           document.getElementById(totalPrice),
@@ -85,6 +87,7 @@ if (packageOptActivity !== "") {
         const qtyNewInc = parseInt(qty.innerText) + 1;
         elementQtyPackage.value = qtyNewInc;
         qty.innerText = qtyNewInc;
+        console.log(elementQtyPackage.value);
 
         updatePrice(
           document.getElementById(totalPrice),
@@ -156,9 +159,8 @@ async function getAvailDate(data, elMsg) {
       elMsg.innerText = "";
     }
     
-    return await res.result;
   } catch (error) {
     console.log(error);
-    return 'no';
+    elMsg.innerText = "-";
   }
 }
