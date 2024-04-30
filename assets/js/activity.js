@@ -54,7 +54,7 @@ if (packageOptActivity !== "") {
       const qty = document.getElementById(qtyType);
 
       const datePackageAct = element.getAttribute("data-date-package-act");
-      const elementDatePackageAct = document.getElementById(datePackageAct).value ?? 'without';
+      const elementDatePackageAct = document.getElementById(datePackageAct)?.value;
       console.log(elementDatePackageAct);
       const qtyPackage = element.getAttribute("data-qty-package-act");
       const elementQtyPackage = document.getElementById(qtyPackage);
