@@ -43,7 +43,7 @@ if (packageOptActivity !== "") {
           msgCheckDate
         );
         console.log(parseInt(elementQtyPackages.value));
-        if (parseInt(elementQtyPackages.value) > 0 || msgCheckDate.innerText)
+        if (parseInt(elementQtyPackages.value) > 0 && msgCheckDate.innerText)
           return (btnSubmitPackage.disabled = false);
         return (btnSubmitPackage.disabled = true);
       });
