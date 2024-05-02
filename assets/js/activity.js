@@ -40,7 +40,9 @@ if (packageOptActivity !== "") {
             id: idTicket,
             date: e.target.value,
           },
-          msgCheckDate
+          msgCheckDate,
+          elementQtyPackages,
+          btnSubmitPackage
         );
         console.log(parseInt(elementQtyPackages.value));
         if (parseInt(elementQtyPackages.value) > 0 && msgCheckDate.innerText)
@@ -142,7 +144,7 @@ if (btnFindPakcage) {
   });
 }
 
-async function getAvailDate(data, elMsg) {
+async function getAvailDate(data, elMsg, elementQtyPackages, btnSubmitPackage) {
   console.log(data, elMsg);
 
   try {
@@ -157,11 +159,13 @@ async function getAvailDate(data, elMsg) {
     });
     const res = await result.json();
     console.log(res);
-    if (res.result === "no") {
+    if (res.result === "no" || parseInt(elementQtyPackages.value) <= 0) {
       const arrMsg = res.message.date ? res.message.date[0] : res.message;
       elMsg.innerText = arrMsg;
+      return (btnSubmitPackage.disabled = true);
     } else {
       elMsg.innerText = "";
+      return (btnSubmitPackage.disabled = false);
     }
   } catch (error) {
     console.log(error);
