@@ -10,7 +10,7 @@ define("COUNTRY_ACTIVITY", "indonesia");
 // define("API_URL", "https://1942-202-58-193-186.ngrok-free.app");
 // define("API_URL", "https://snowy-desert-qioyjsoygqwg.vapor-farm-g1.com");
 define("API_URL", "https://graceful-delhi-cdwuunbhuyx3.vapor-farm-c1.com");
-define("API_URL_ACTIVITY", "https://9925-202-58-193-186.ngrok-free.app");
+define("API_URL_ACTIVITY", "https://3510-182-253-51-126.ngrok-free.app");
 // define("API_URL_ACTIVITY", "https://fancy-cliff-3uhjbxauhri2.vapor-farm-b1.com");
 // define("API_URL", "https://indigo-fern-3sxv44dajhcf.vapor-farm-f1.com");
 

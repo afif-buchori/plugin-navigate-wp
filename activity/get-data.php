@@ -3,6 +3,7 @@
 function enx_get_list_data_activity()
 {
     $country = $_GET['country'] ?? COUNTRY_ACTIVITY;
+    $country = str_replace(' ', '%20', $country);
     $page = $_GET['page'] ?? '';
     $paramsPage = $page != '' ? "&page=$page" : '';
     $url = API_ACTIVITY_URL . "/get/data-activitys" . CreateParams() . "&country=$country$paramsPage";

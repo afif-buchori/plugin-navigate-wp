@@ -54,8 +54,30 @@ function enx_generate_act_session()
 
 function enx_post_booking_act()
 {
+    session_start();
+    $dataSession = json_decode(json_encode($_SESSION['CART_ACTIVITY']), true) ?? [];
+
+    if ($dataSession) {
+        if ($dataSession[0]['questionList']) {
+            $dataQuestionList = [];
+            foreach ($dataSession[0]['questionList'] as $question) {
+                $type = $question['type'];
+                unset($question['type']);
+                $dataQuestionList[$type][] = $question;
+            }
+            $dataSession[0]['questionList'] = $dataQuestionList;
+            $dataSession[0]['ticketTypes'] = $dataSession[0]['ticketType'];
+            unset($dataSession[0]['ticketType']);
+        }
+    }
+
     $url = API_ACTIVITY_URL . "/post/booking";
-    $req = json_decode(file_get_contents("php://input"));
+    $req = json_decode(file_get_contents("php://input"), true);
+    $req['currency'] = DEFAULT_CURRENCY;
+    $req['url_payment_info'] = $_SERVER['HTTP_HOST'] . '/' . ACTIVITY_LINK . '/payment-info';
+    $dataSession = ['cart_activity' => $dataSession];
+    $req = json_decode(json_encode([...$req, ...$dataSession]));
+    // return $req;
     $data = fetchPost($url, $req);
     return $data;
 }

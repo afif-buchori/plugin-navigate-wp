@@ -113,7 +113,7 @@ function enx_mapping_card($data, $data_res, $currency)
                             data-id-ticket="<?php echo $ticket->id ?>" data-name-ticket="<?php echo $ticket->name ?>"
                             data-defined-duration="<?php echo $ticket->definedDuration ?>"
                             data-required-time-slot="<?php echo $ticket->timeSlot && count($ticket->timeSlot) > 0 ? "true" : "false" ?>"
-                            data-required-date="<?php echo $ticket->visitDate->required ?>"
+                            data-required-date="<?php echo $ticket->visitDate->required ? "true" : "false" ?>"
                             data-booking-ticket="data-book-ticket<?php echo $idx ?>"
                             data-all-ticket="data-all-ticket<?php echo $idx ?>" data-id-ticket-type="<?php echo $tick_type->id ?>"
                             data-form-quest="form-quest<?= $idx ?>" data-confirm-btn="confirm-btn<?= $idx ?>">
@@ -196,36 +196,46 @@ function enx_mapping_card($data, $data_res, $currency)
                         display: flex;
                         flex-direction: column;
                         width: 100%;
-                        min-width: 360px;
+                        min-width: 260px;
                         height: 100%;
                         overflow-y: auto;
                         padding-right: 16px;
                     ">
                         <form id="form-quest<?= $idx ?>" style="margin-bottom: 0px !important;">
-                            <?php var_dump(isset($ticket->timeSlot) && count($ticket->timeSlot) > 0) ?>
-
+                            <?php if (isset($ticket->timeSlot) && count($ticket->timeSlot) > 0) { ?>
+                                <div class="flex gap-2">
+                                    <p>Select Time:</p>
+                                    <select name="time-slot" id="" class="px-2"
+                                        style="border: solid 1px black !important; min-width: 30%">
+                                        <option value="">---</option>
+                                        <?php foreach ($ticket->timeSlot as $time) { ?>
+                                            <option value="<?= $time ?>"><?= $time ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            <?php } ?>
                             <?php foreach ($ticket->ticketType as $key_type_quest => $type) { ?>
                                 <?php if ($key_type_quest > 0) { ?>
                                     <hr style="margin-top: 20px !important; margin-bottom: 10px !important;">
                                 <?php } ?>
-                                <p class="font-bold">
-                                    <?php echo $type->name ?>
-                                </p>
                                 <?php if ($ticket->questions && count($ticket->questions) > 0) { ?>
+                                    <p class="font-bold">
+                                        <?php echo $type->name ?>
+                                    </p>
                                     <?php foreach ($ticket->questions as $key_quest => $quest) { ?>
                                         <?php if ($quest->type == "DATE") { ?>
                                             <div class="">
                                                 <p><?php echo $quest->question ?> :</p>
                                                 <input type="date"
                                                     name="<?php echo $quest->id . ':' . str_replace(' ', '_', $quest->question) . ':' . strtolower($type->name) ?>"
-                                                    class="w-full mb-2" style="border: solid 1px black !important;" required>
+                                                    class="w-full mb-2 px-2" style="border: solid 1px black !important;" required>
                                             </div>
                                         <?php } elseif ($quest->type == "OPTION") { ?>
                                             <div class="">
                                                 <p><?php echo $quest->question ?> :</p>
                                                 <select
                                                     name="<?php echo $quest->id . ':' . str_replace(' ', '_', $quest->question) . ':' . strtolower($type->name) ?>"
-                                                    id="" class="w-full mb-2" style="border: solid 1px black !important;" required>
+                                                    id="" class="w-full mb-2 px-2" style="border: solid 1px black !important;" required>
                                                     <option value="">---</option>
                                                     <?php foreach ($quest->options as $opt) { ?>
                                                         <option value="<?php echo $opt ?>"><?php echo $opt ?></option>
@@ -237,7 +247,7 @@ function enx_mapping_card($data, $data_res, $currency)
                                                 <p><?php echo $quest->question ?> :</p>
                                                 <input type="text"
                                                     name="<?php echo $quest->id . ':' . str_replace(' ', '_', $quest->question) . ':' . strtolower($type->name) ?>"
-                                                    class="w-full mb-2" style="border: solid 1px black !important;" required>
+                                                    class="w-full mb-2 px-2" style="border: solid 1px black !important;" required>
                                             </div>
                                         <?php } ?>
                                     <?php } ?>

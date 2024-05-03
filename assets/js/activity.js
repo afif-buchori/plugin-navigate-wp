@@ -45,7 +45,11 @@ if (packageOptActivity !== "") {
           btnSubmitPackage
         );
         console.log(parseInt(elementQtyPackages.value));
-        if (parseInt(elementQtyPackages.value) > 0 && msgCheckDate.innerText)
+        if (
+          parseInt(elementQtyPackages.value) > 0 &&
+          msgCheckDate.innerText &&
+          msgCheckDate.innerText != "checking date..."
+        )
           return (btnSubmitPackage.disabled = false);
         return (btnSubmitPackage.disabled = true);
       });
@@ -130,10 +134,9 @@ if (packageOptActivity !== "") {
       const attRequiredDate = element.getAttribute("data-required-date");
 
       btnSubmitPackage.onclick = function () {
-        console.log(elementDatePackageAct);
         const data = {
-          date: elementDatePackageAct?.value, //yyyy-mm-dd
-          requiredDate: attRequiredDate, //bol
+          date: elementDatePackageAct?.value ?? "", //yyyy-mm-dd
+          requiredDate: attRequiredDate == "true" ? true : false, //bol
           definedDuration: attDefinedDuration, //int
           requiredTimeSlot: attRequiredTimeSlot == "true" ? true : false, //bol
           timeSlot: "", //null
@@ -145,9 +148,7 @@ if (packageOptActivity !== "") {
           ticketType: JSON.parse(elDataBookingTicket.value),
           questionList: null,
         };
-        // console.log(elAllTicket, attIdTicketType);
-        // console.log(tes);
-        // console.log(JSON.parse(attDataTicketType));
+
         const attrData = element.getAttribute("data-with-question");
         if (!attrData) return createSession(data);
         modalQuestion.style.display = "grid";
@@ -157,20 +158,25 @@ if (packageOptActivity !== "") {
         elementFormQuest.addEventListener("submit", (e) => {
           e.preventDefault();
           let formData = new FormData(elementFormQuest);
-          // console.log(formData);
 
           let formDataObject = [];
+          let timeSlotValue = "";
 
           formData.forEach((value, key) => {
-            const keyData = key.split(":");
+            if (key == "time-slot") {
+              timeSlotValue = value;
+            }
 
-            // Bisa
-            formDataObject.push({
-              type: keyData[2],
-              id: keyData[0],
-              question: keyData[1].replaceAll("_", " "),
-              answer: value,
-            }); // End Bisa
+            if (key != "time-slot") {
+              const keyData = key.split(":");
+              // Bisa
+              formDataObject.push({
+                type: keyData[2],
+                id: keyData[0],
+                question: keyData[1].replaceAll("_", " "),
+                answer: value,
+              }); // End Bisa
+            }
 
             // let newData = formDataObject[keyData[2]] ?? [];
             // console.log(newData);
@@ -196,7 +202,11 @@ if (packageOptActivity !== "") {
           // const huhu = { ...data, questionList: formDataObject };
           // console.log(formDataObject);
           // console.log(JSON.stringify(huhu));
-          return createSession({ ...data, questionList: formDataObject });
+          return createSession({
+            ...data,
+            timeSlot: timeSlotValue,
+            questionList: formDataObject.length > 0 ? formDataObject : null,
+          });
           //
         });
       };
@@ -354,6 +364,72 @@ async function createSession(params) {
     const res = await result.json();
     // console.log(res);
     location.href = res;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const formBookActivity =
+  document.getElementById("checkout-form-activity") || "";
+if (formBookActivity) {
+  formBookActivity.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    let formData = new FormData(formBookActivity);
+    let datas = {};
+    formData.forEach((value, key) => {
+      let element = document.getElementById(key) ?? "";
+      let elementError = document.getElementById(key + "_error") ?? "";
+
+      if (element) {
+        element.classList.remove("is-invalid");
+      }
+
+      if (elementError) {
+        elementError.innerText = "";
+      }
+      datas[key] = value;
+    });
+    const res = await bookingActivity(datas);
+    console.log(res);
+    if (res.result == "no") {
+      const elementIds = res.keys;
+      const messages = res.message;
+      elementIds.forEach((elementId) => {
+        let element = document.getElementById(elementId) ?? "";
+        let elementError = document.getElementById(elementId + "_error") ?? "";
+
+        if (element) {
+          element.classList.add("is-invalid");
+        }
+
+        if (elementError) {
+          elementError.innerText = messages[elementId][0];
+        }
+      });
+    } else {
+      console.log(res);
+      // window.location.href = res.invoiceUrl;
+    }
+  });
+}
+
+async function bookingActivity(params) {
+  const body = params;
+  console.log(body);
+  try {
+    const url = API_ACT_URL + "/booking-act";
+    const result = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    const res = await result.json();
+    // console.log(res);
+    return res;
+    // location.href = res;
   } catch (error) {
     console.log(error);
   }
