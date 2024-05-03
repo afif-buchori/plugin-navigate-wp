@@ -45,9 +45,11 @@ function enx_post_check_block_date()
 
 function enx_generate_act_session()
 {
+    session_start();
     $_SESSION['CART_ACTIVITY'] = json_decode(file_get_contents("php://input"));
 
-    return $_SESSION['CART_ACTIVITY'];
+    return '/' . ACTIVITY_LINK . '/booking';
+    // return $_SESSION['CART_ACTIVITY'];
 }
 
 function enx_post_booking_act()

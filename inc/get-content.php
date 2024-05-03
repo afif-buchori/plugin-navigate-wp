@@ -130,7 +130,7 @@ function enx_get_global_page()
             // $data = enx_get_list_data_activity();
             // var_dump(json_encode($data));
             // $head_title = $data->meta->title;
-            $data = [];
+            $data = $_SESSION['CART_ACTIVITY'] ?? [];
             $head_title = "TESTING";
         } elseif ($url[1] == 'payment-info') {
             require_once (dirname(__FILE__) . '/../activity/activity-list.php');

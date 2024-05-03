@@ -85,7 +85,8 @@ function enx_mapping_card($data, $data_res, $currency)
                     <?php if ($ticket->visitDate->request) { ?>
                         <div class="flex items-center justify-between w-full rounded-full px-4 py-2 gap-4"
                             style="background-color: #dadada;">
-                            <input type="date" name="" id="date-package-act<?php echo $idx ?>" min="<?php echo date("Y-m-d") ?>"
+                            <input type="date" name="" id="date-package-act<?php echo $idx ?>"
+                                min="<?php echo date('Y-m-d', strtotime(date('Y-m-d') . ' + 2 days')) ?>"
                                 data-id-ticket="<?php echo $ticket->ticketType[0]->id ?>" class="w-full" placeholder="select date"
                                 style="background-color: transparent; height: 30px;">
                         </div>
@@ -105,9 +106,17 @@ function enx_mapping_card($data, $data_res, $currency)
                             data-qty-act-inc="<?= $idx . "qty-act-inc" . $key_tick ?>" data-price="<?= $tick_type->price ?>"
                             data-total-price="<?= "total-price" . $idx ?>" data-msg-error="<?php echo "msg-error" . $idx ?>"
                             data-id-btn-submit="<?php echo "submit-package" . $idx ?>"
-                            data-with-question="<?php $ticket->questions && count($ticket->questions) > 0 ?>"
+                            data-with-question="<?php echo (($ticket->questions && count($ticket->questions) > 0) || ($ticket->timeSlot && count($ticket->timeSlot) > 0)) ?>"
                             data-modal-quest="<?php echo "modal-question" . $idx ?>"
-                            data-close-modal="<?php echo "close-modal-quest" . $idx ?>">
+                            data-close-modal="<?php echo "close-modal-quest" . $idx ?>"
+                            data-id-activity="<?php echo $data_res->id ?>" data-name-activity="<?php echo $data_res->name ?>"
+                            data-id-ticket="<?php echo $ticket->id ?>" data-name-ticket="<?php echo $ticket->name ?>"
+                            data-defined-duration="<?php echo $ticket->definedDuration ?>"
+                            data-required-time-slot="<?php echo $ticket->timeSlot && count($ticket->timeSlot) > 0 ? "true" : "false" ?>"
+                            data-required-date="<?php echo $ticket->visitDate->required ?>"
+                            data-booking-ticket="data-book-ticket<?php echo $idx ?>"
+                            data-all-ticket="data-all-ticket<?php echo $idx ?>" data-id-ticket-type="<?php echo $tick_type->id ?>"
+                            data-form-quest="form-quest<?= $idx ?>" data-confirm-btn="confirm-btn<?= $idx ?>">
                             <p class=" font-bold"><?php echo $tick_type->name ?></p>
                             <p class="text-xs md:text-sm ml-auto" style="opacity: 0.7;">
                                 <?php $currency->symbol ?>
@@ -140,6 +149,9 @@ function enx_mapping_card($data, $data_res, $currency)
                 <p id="<?php echo "msg-error" . $idx ?>" class="text-right text-xs md:text-sm px-4 ml-auto"></p>
             </div>
             <div class="w-full flex gap-2 p-4">
+                <input type="hidden" name="" id="data-book-ticket<?php echo $idx ?>" value="">
+                <input type="hidden" name="" id="data-all-ticket<?php echo $idx ?>"
+                    value="<?php echo htmlspecialchars(json_encode($ticket->ticketType), ENT_QUOTES, 'UTF-8'); ?>">
                 <button id="<?php echo "submit-package" . $idx ?>" disabled type="button" class="ml-auto btn-primary">Select
                     Package</button>
             </div>
@@ -189,39 +201,52 @@ function enx_mapping_card($data, $data_res, $currency)
                         overflow-y: auto;
                         padding-right: 16px;
                     ">
-                        <?php foreach ($ticket->ticketType as $key_type_quest => $type) { ?>
-                            <?php if ($key_type_quest > 0) { ?>
-                                <hr style="margin-top: 20px !important; margin-bottom: 10px !important;">
-                            <?php } ?>
-                            <p class="font-bold">
-                                <?php echo $type->name ?>
-                            </p>
-                            <?php if ($ticket->questions && count($ticket->questions) > 0) {
-                                foreach ($ticket->questions as $key_quest => $quest) { ?>
-                                    <?php if ($quest->type == "DATE") { ?>
-                                        <div class="">
-                                            <p><?php echo $quest->question ?> :</p>
-                                            <input type="date" class="w-full mb-2" style="border: solid 1px black !important;">
-                                        </div>
-                                    <?php } elseif ($quest->type == "OPTION") { ?>
-                                        <div class="">
-                                            <p><?php echo $quest->question ?> :</p>
-                                            <select name="" id="" class="w-full mb-2" style="border: solid 1px black !important;">
-                                                <option value="">---</option>
-                                                <?php foreach ($quest->options as $opt) { ?>
-                                                    <option value="<?php echo $opt ?>"><?php echo $opt ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    <?php } else { ?>
-                                        <div class="">
-                                            <p><?php echo $quest->question ?> :</p>
-                                            <input type="text" class="w-full mb-2" style="border: solid 1px black !important;">
-                                        </div>
+                        <form id="form-quest<?= $idx ?>" style="margin-bottom: 0px !important;">
+                            <?php var_dump(isset($ticket->timeSlot) && count($ticket->timeSlot) > 0) ?>
+
+                            <?php foreach ($ticket->ticketType as $key_type_quest => $type) { ?>
+                                <?php if ($key_type_quest > 0) { ?>
+                                    <hr style="margin-top: 20px !important; margin-bottom: 10px !important;">
+                                <?php } ?>
+                                <p class="font-bold">
+                                    <?php echo $type->name ?>
+                                </p>
+                                <?php if ($ticket->questions && count($ticket->questions) > 0) { ?>
+                                    <?php foreach ($ticket->questions as $key_quest => $quest) { ?>
+                                        <?php if ($quest->type == "DATE") { ?>
+                                            <div class="">
+                                                <p><?php echo $quest->question ?> :</p>
+                                                <input type="date"
+                                                    name="<?php echo $quest->id . ':' . str_replace(' ', '_', $quest->question) . ':' . strtolower($type->name) ?>"
+                                                    class="w-full mb-2" style="border: solid 1px black !important;" required>
+                                            </div>
+                                        <?php } elseif ($quest->type == "OPTION") { ?>
+                                            <div class="">
+                                                <p><?php echo $quest->question ?> :</p>
+                                                <select
+                                                    name="<?php echo $quest->id . ':' . str_replace(' ', '_', $quest->question) . ':' . strtolower($type->name) ?>"
+                                                    id="" class="w-full mb-2" style="border: solid 1px black !important;" required>
+                                                    <option value="">---</option>
+                                                    <?php foreach ($quest->options as $opt) { ?>
+                                                        <option value="<?php echo $opt ?>"><?php echo $opt ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        <?php } else { ?>
+                                            <div class="">
+                                                <p><?php echo $quest->question ?> :</p>
+                                                <input type="text"
+                                                    name="<?php echo $quest->id . ':' . str_replace(' ', '_', $quest->question) . ':' . strtolower($type->name) ?>"
+                                                    class="w-full mb-2" style="border: solid 1px black !important;" required>
+                                            </div>
+                                        <?php } ?>
                                     <?php } ?>
                                 <?php }
-                            }
-                        } ?>
+                            } ?>
+                            <div class="w-full flex mt-5">
+                                <button type="submit" id="confirm-btn<?= $idx ?>" class="btn-primary ml-auto">Confirm</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
