@@ -163,38 +163,41 @@ if (packageOptActivity !== "") {
 
           formData.forEach((value, key) => {
             const keyData = key.split(":");
-            formDataObject.push({
-              type: keyData[2],
-              id: keyData[0],
-              question: keyData[1].replaceAll("_", " "),
-              answer: value,
-            });
 
-            // let newData = formDataObject[keyData[2]] ?? [];
-            // if (newData.length > 0) {
-            //   newData.push({
-            //     type:
-            //     id: keyData[0],
-            //     question: keyData[1].replaceAll("_", " "),
-            //     answer: value,
-            //   });
-            // } else {
-            //   newData = [
-            //     {
-            //       id: keyData[0],
-            //       question: keyData[1].replaceAll("_", " "),
-            //       answer: value,
-            //     },
-            //   ];
-            // }
+            // // Bisa
+            // formDataObject.push({
+            //   type: keyData[2],
+            //   id: keyData[0],
+            //   question: keyData[1].replaceAll("_", " "),
+            //   answer: value,
+            // }); // End Bisa
 
-            //   formDataObject[keyData[2]] = newData;
+            let newData = formDataObject[keyData[2]] ?? [];
+            
+            if (newData.length > 0) {
+
+              newData.push({
+                id: keyData[0],
+                question: keyData[1].replaceAll("_", " "),
+                answer: value,
+              });
+            } else {
+              newData = [
+                {
+                  id: keyData[0],
+                  question: keyData[1].replaceAll("_", " "),
+                  answer: value,
+                },
+              ];
+            }
+
+              formDataObject[keyData[2]] = newData;
           });
-          // console.log(formDataObject);
+          console.log(formDataObject);
           // const huhu = { ...data, questionList: formDataObject };
           // console.log(formDataObject);
           // console.log(JSON.stringify(huhu));
-          return createSession({ ...data, questionList: formDataObject });
+          // return createSession({ ...data, questionList: formDataObject });
         });
       };
 
