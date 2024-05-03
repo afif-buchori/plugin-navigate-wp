@@ -61,10 +61,11 @@ function enx_get_page_content($data)
                             $domain = $_SERVER['HTTP_HOST'];
                             $path = '/activity';
                             $country = $_GET['country'] ?? COUNTRY_ACTIVITY;
-                            $url = "$path?country=$country&page=$i"
-                                ?>
+                            $url = "$path?country=$country&page=$i";
+                            $isFirstPage = $data->page->current == null ? 1 : 0;
+                            ?>
                             <a href="<?= $url ?>" style="width: 2.5rem; aspect-ratio: 1/1; place-content: center;"
-                                class="inline-flex grid transition justify-center text-lg font-heading font-medium leading-none <?php echo ($i == $data->page->current || $data->page->current == null) ? "text-white bg-primary" : "text-primary bg-secondary" ?> hover:bg-primary hover:text-white"><?php echo $i ?></a>
+                                class="inline-flex grid transition justify-center text-lg font-heading font-medium leading-none <?php echo ($i == $data->page->current || $isFirstPage == $i) ? "text-primary bg-secondary" : "text-white bg-primary" ?> hover:bg-primary hover:text-white"><?php echo $i ?></a>
                         <?php } ?>
                     </div>
                 </div>

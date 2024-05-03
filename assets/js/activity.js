@@ -164,40 +164,40 @@ if (packageOptActivity !== "") {
           formData.forEach((value, key) => {
             const keyData = key.split(":");
 
-            // // Bisa
-            // formDataObject.push({
-            //   type: keyData[2],
-            //   id: keyData[0],
-            //   question: keyData[1].replaceAll("_", " "),
-            //   answer: value,
-            // }); // End Bisa
+            // Bisa
+            formDataObject.push({
+              type: keyData[2],
+              id: keyData[0],
+              question: keyData[1].replaceAll("_", " "),
+              answer: value,
+            }); // End Bisa
 
-            let newData = formDataObject[keyData[2]] ?? [];
-            
-            if (newData.length > 0) {
+            // let newData = formDataObject[keyData[2]] ?? [];
+            // console.log(newData);
+            // if (newData.length > 0) {
+            //   newData.push({
+            //     id: keyData[0],
+            //     question: keyData[1].replaceAll("_", " "),
+            //     answer: value,
+            //   });
+            // } else {
+            //   newData = [
+            //     {
+            //       id: keyData[0],
+            //       question: keyData[1].replaceAll("_", " "),
+            //       answer: value,
+            //     },
+            //   ];
+            // }
 
-              newData.push({
-                id: keyData[0],
-                question: keyData[1].replaceAll("_", " "),
-                answer: value,
-              });
-            } else {
-              newData = [
-                {
-                  id: keyData[0],
-                  question: keyData[1].replaceAll("_", " "),
-                  answer: value,
-                },
-              ];
-            }
-
-              formDataObject[keyData[2]] = newData;
+            // formDataObject[keyData[2]] = newData;
           });
-          console.log(formDataObject);
+          // console.log(formDataObject);
           // const huhu = { ...data, questionList: formDataObject };
           // console.log(formDataObject);
           // console.log(JSON.stringify(huhu));
-          // return createSession({ ...data, questionList: formDataObject });
+          return createSession({ ...data, questionList: formDataObject });
+          //
         });
       };
 
@@ -352,7 +352,7 @@ async function createSession(params) {
       body: JSON.stringify([body]),
     });
     const res = await result.json();
-    console.log(res);
+    // console.log(res);
     location.href = res;
   } catch (error) {
     console.log(error);
