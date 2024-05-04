@@ -64,7 +64,7 @@ function enx_get_page_content($data)
                                                 <div class="w-full flex justify-between">
                                                     <p>Total</p>
                                                     <p><?php echo $data_res->data->currency->symbol ?> <span
-                                                            class="font-bold"><?php echo number_format($data->total, $data_res->data->currency->digit) ?></span>
+                                                            class="font-bold"><?php echo number_format($data_booking->total, $data_res->data->currency->digit) ?></span>
                                                     </p>
                                                 </div>
                                             </div>

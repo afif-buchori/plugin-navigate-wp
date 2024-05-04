@@ -1,7 +1,7 @@
 <?php
 function enx_get_payment_info()
 {
-    $url = API_ACTIVITY_URL . "/get/data-order?" . $_GET['orderId'];
+    $url = API_ACTIVITY_URL . "/get/data-order?orderId=" . $_GET['orderId'];
     $order = fetchGet($url);
     return $order;
 }
@@ -73,17 +73,34 @@ function enx_get_page_content($data)
                                                 Name:</label>
                                             <ol class="style-1">
                                                 <?php foreach ($order->details as $item) { ?>
-                                                    <li><?php echo $item->item_description ?>
-                                                        <span class="font-medium"
-                                                            style="opacity: 0.7;">(<?= $item->item_name ?>)</span>
+                                                    <li>
+                                                        <div>
+                                                            <p>
+                                                                <span class="font-medium"
+                                                                    style="opacity: 0.7;"><?= $item->item_name ?></span>
+                                                                - <?php echo $item->item_description ?>
+                                                            </p>
+                                                            <div class="w-full flex gap-2">
+                                                                <p><?= $item->service_date ?></p>
+                                                                <p><?= $item->qty ?>x</p>
+                                                                <p class="ml-auto font-bold text-primary" style="opacity: 0.7;">
+                                                                    <?php echo $order->dataCurrency->symbol . number_format($item->total, $order->dataCurrency->digit) ?>
+                                                                </p>
+                                                            </div>
+                                                        </div>
                                                     </li>
                                                 <?php } ?>
                                             </ol>
                                         </div>
 
-                                        <div class="py-5 px-7 border-t border-primary border-opacity-10 text-xl font-bold">
-                                            Total:
-                                            <?php echo $order->original_currency . number_format($order->total, $order->original_currency->digit) ?>
+                                        <div
+                                            class="w-full flex gap-10 py-5 border-t border-primary border-opacity-10 text-xl font-bold">
+                                            <p class="ml-auto">
+                                                Total:
+                                            </p>
+                                            <p>
+                                                <?php echo $order->dataCurrency->symbol . number_format($order->total, $order->dataCurrency->digit) ?>
+                                            </p>
                                         </div>
 
                                     </div>

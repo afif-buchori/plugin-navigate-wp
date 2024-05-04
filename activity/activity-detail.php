@@ -14,7 +14,19 @@ function enx_get_page_content($data)
                 <section>
                     <div class="container">
                         <div class="pt-16 pb-5 xl:py-20">
-                            <div class="grid grid-cols-4 gap-2">
+                            <div class="md:hidden w-full flex" style="overflow-x: auto;">
+                                <div class="flex gap-2" style="padding-bottom: 8px;">
+                                    <img src="<?php echo $data->imageUrl . $res_activity->image ?>" width="320px"
+                                        class="rounded-lg" style="aspect-ratio: 16/9;">
+                                    <?php foreach ($data_res->media as $idx => $media) {
+                                        if ($idx < 3) { ?>
+                                            <img src="<?php echo $data->imageUrl . $media->path ?>" width="320px" class="rounded-lg"
+                                                style="aspect-ratio: 16/9; object-fit: cover;">
+                                        <?php }
+                                    } ?>
+                                </div>
+                            </div>
+                            <div class="hidden md:grid grid-cols-4 gap-2">
                                 <div class="col-span-4 <?php echo count($data_res->media) > 0 ? "md:col-span-3" : "" ?> ">
                                     <img src="<?php echo $data->imageUrl . $res_activity->image ?>" width="100%"
                                         class="rounded-lg" style="aspect-ratio: 16/9;">

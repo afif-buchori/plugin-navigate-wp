@@ -152,9 +152,113 @@ if (packageOptActivity !== "") {
         const attrData = element.getAttribute("data-with-question");
         if (!attrData) return createSession(data);
         modalQuestion.style.display = "grid";
-
+        const attrTimeSlot = element.getAttribute("data-time-slot");
+        const dataresTimeSlot = JSON.parse(
+          document.getElementById(attrTimeSlot).value
+        );
+        const dataQuestions = JSON.parse(
+          element.getAttribute("data-questions")
+        );
+        console.log(dataQuestions);
         const attrFormQuest = element.getAttribute("data-form-quest");
         const elementFormQuest = document.getElementById(attrFormQuest);
+        const attrFormContent = elementFormQuest.getAttribute("data-content");
+        const elementFormContent = document.getElementById(attrFormContent);
+
+        // const ticketTyesss = JSON.parse(elDataBookingTicket.value);
+        console.log("testing", data.ticketType);
+
+        let templateForm = data.requiredTimeSlot
+          ? `
+          <div class="flex gap-2 mb-5">
+              <p>Select Time:</p>
+              <select name="time-slot" id="" class="px-2"
+                  style="border: solid 1px black !important; min-width: 30%">
+                  <option value="">---</option>
+                  ${dataresTimeSlot.map(
+                    (item) => `<option value=${item}>${item}</option>`
+                  )}
+              </select>
+          </div>
+        `
+          : "";
+
+        // elementFormContent.innerHTML = templateFormTimeSlot;
+
+        templateForm += data.ticketType
+          .map((type) => {
+            return `
+            ${Array.from({ length: type.ticketQty })
+              .map((_, idx) => {
+                return `
+                  ${
+                    idx > 0
+                      ? `<hr style="margin-top: 20px !important; margin-bottom: 10px !important;">`
+                      : ""
+                  }
+                  <p class="font-bold">${type.ticketName} - ${idx + 1}</p>
+                  ${dataQuestions
+                    .map((quest) => {
+                      if (quest.type == "DATE") {
+                        return `
+                        <div>
+                            <p>${quest.question} :</p>
+                            <input type="date"
+                              name="${type.ticketId}:${
+                          quest.id
+                        }:${quest.question.replaceAll(
+                          " ",
+                          "_"
+                        )}:${type.ticketName.toLowerCase()}-${idx + 1}"
+                              class="w-full mb-2 px-2" style="border: solid 1px black !important;" required>
+                        </div>
+                        `;
+                      } else if (quest.type == "OPTION") {
+                        return `
+                        <div>
+                            <p>${quest.question} :</p>
+                            <select
+                                name="${type.ticketId}:${
+                          quest.id
+                        }:${quest.question.replaceAll(
+                          " ",
+                          "_"
+                        )}:${type.ticketName.toLowerCase()}-${idx + 1}"
+                                id="" class="w-full mb-2 px-2" style="border: solid 1px black !important;" required>
+                                <option value="">---</option>
+                                ${quest.options.map(
+                                  (item) =>
+                                    `<option value=${item}>${item}</option>`
+                                )}
+                            </select>
+                        </div>
+                        `;
+                      } else {
+                        return `
+                          <div class="">
+                          <p>${quest.question} :</p>
+                              <input type="text"
+                                  name="${type.ticketId}:${
+                          quest.id
+                        }:${quest.question.replaceAll(
+                          " ",
+                          "_"
+                        )}:${type.ticketName.toLowerCase()}-${idx + 1}"
+                                  class="w-full mb-2 px-2" style="border: solid 1px black !important;" required>
+                          </div>
+                        `;
+                      }
+                    })
+                    .join("")}
+                  `;
+              })
+              .join("")}
+          `;
+          })
+          .join("");
+
+        elementFormContent.innerHTML = templateForm;
+
         elementFormQuest.addEventListener("submit", (e) => {
           e.preventDefault();
           let formData = new FormData(elementFormQuest);
@@ -163,51 +267,41 @@ if (packageOptActivity !== "") {
           let timeSlotValue = "";
 
           formData.forEach((value, key) => {
+            // formDataObject[key] = value;
             if (key == "time-slot") {
               timeSlotValue = value;
             }
 
             if (key != "time-slot") {
               const keyData = key.split(":");
+              const name = keyData[3].toUpperCase();
+              const ticketId = keyData[0];
+              const ticketName = keyData[3].split("-")[0].toUpperCase();
+              const id = keyData[1];
+              const question = keyData[2].replaceAll("_", " ");
+              const answer = value;
+
               // Bisa
               formDataObject.push({
-                type: keyData[2],
-                id: keyData[0],
-                question: keyData[1].replaceAll("_", " "),
-                answer: value,
+                name: name,
+                ticketId: ticketId,
+                ticketName: ticketName,
+                id: id,
+                question: question,
+                answer: answer,
               }); // End Bisa
             }
-
-            // let newData = formDataObject[keyData[2]] ?? [];
-            // console.log(newData);
-            // if (newData.length > 0) {
-            //   newData.push({
-            //     id: keyData[0],
-            //     question: keyData[1].replaceAll("_", " "),
-            //     answer: value,
-            //   });
-            // } else {
-            //   newData = [
-            //     {
-            //       id: keyData[0],
-            //       question: keyData[1].replaceAll("_", " "),
-            //       answer: value,
-            //     },
-            //   ];
-            // }
-
-            // formDataObject[keyData[2]] = newData;
           });
-          // console.log(formDataObject);
-          // const huhu = { ...data, questionList: formDataObject };
-          // console.log(formDataObject);
-          // console.log(JSON.stringify(huhu));
+          // console.log({
+          //   ...data,
+          //   timeSlot: timeSlotValue,
+          //   questionList: formDataObject.length > 0 ? formDataObject : null,
+          // });
           return createSession({
             ...data,
             timeSlot: timeSlotValue,
             questionList: formDataObject.length > 0 ? formDataObject : null,
           });
-          //
         });
       };
 
@@ -317,7 +411,7 @@ async function getAvailDate(data, elMsg, elementQtyPackages, btnSubmitPackage) {
     // }
   } catch (error) {
     console.log(error);
-    elMsg.innerText = "-";
+    elMsg.innerText = "Internal Server Error";
   }
 }
 
@@ -390,7 +484,7 @@ if (formBookActivity) {
       datas[key] = value;
     });
     const res = await bookingActivity(datas);
-    console.log(res);
+    // console.log(res);
     if (res.result == "no") {
       const elementIds = res.keys;
       const messages = res.message;
@@ -407,15 +501,15 @@ if (formBookActivity) {
         }
       });
     } else {
-      console.log(res);
-      // window.location.href = res.invoiceUrl;
+      // console.log(res);
+      window.location.href = res.invoiceUrl;
     }
   });
 }
 
 async function bookingActivity(params) {
   const body = params;
-  console.log(body);
+  // console.log(body);
   try {
     const url = API_ACT_URL + "/booking-act";
     const result = await fetch(url, {
@@ -429,7 +523,7 @@ async function bookingActivity(params) {
     const res = await result.json();
     // console.log(res);
     return res;
-    // location.href = res;
+    // window.location.href = res;
   } catch (error) {
     console.log(error);
   }

@@ -128,15 +128,23 @@ function enx_get_global_page()
             session_start();
             require_once (dirname(__FILE__) . '/../activity/form-booking.php');
             // $data = enx_get_list_data_activity();
-            // var_dump(json_encode($data));
             // $head_title = $data->meta->title;
             $data = $_SESSION['CART_ACTIVITY'] ?? [];
-            $head_title = $data->meta->title;
+            $total = 0;
+            foreach ($data[0]->ticketType as $key => $value) {
+                $subTotal = $value->price * $value->ticketQty;
+                $total += $subTotal;
+            }
+            if (count($data) > 0) {
+                $data[0]->total = $total;
+            }
+            // var_dump($data);
+            $head_title = $data->meta->title ?? "Form Booking";
         } elseif ($url[1] == 'payment-info') {
             require_once (dirname(__FILE__) . '/../activity/payment-info.php');
             $data = enx_get_payment_info();
-            // var_dump(json_encode($data));
-            $head_title = $data->meta->title ?? "";
+            // var_dump(json_encode($data->order));
+            $head_title = $data->meta->title ?? "Payment Info";
         } else {
             require_once (dirname(__FILE__) . '/../activity/activity-detail.php');
             require_once (dirname(__FILE__) . '/../activity/card-activity.php');

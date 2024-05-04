@@ -56,28 +56,44 @@ function enx_post_booking_act()
 {
     session_start();
     $dataSession = json_decode(json_encode($_SESSION['CART_ACTIVITY']), true) ?? [];
+    if ($dataSession && isset($dataSession[0]['questionList'])) {
+        $questionLists = [];
 
-    if ($dataSession) {
-        if ($dataSession[0]['questionList']) {
-            $dataQuestionList = [];
-            foreach ($dataSession[0]['questionList'] as $question) {
-                $type = $question['type'];
-                unset($question['type']);
-                $dataQuestionList[$type][] = $question;
+        foreach ($dataSession[0]['questionList'] as $question) {
+            $name = $question['name'];
+            unset($question['name']);
+            $ticketId = $question['ticketId'];
+            $ticketName = $question['ticketName'];
+            unset($question['ticketId'], $question['ticketName']);
+
+            $key = $name . '-' . $ticketId . '-' . $ticketName;
+
+            if (!isset($questionLists[$key])) {
+                $questionLists[$key] = [
+                    'name' => $name,
+                    'ticketId' => $ticketId,
+                    'ticketName' => $ticketName,
+                    'questions' => []
+                ];
             }
-            $dataSession[0]['questionList'] = $dataQuestionList;
-            $dataSession[0]['ticketTypes'] = $dataSession[0]['ticketType'];
-            unset($dataSession[0]['ticketType']);
+
+            $questionLists[$key]['questions'][] = $question;
         }
+
+        $dataSession[0]['questionList'] = array_values($questionLists);
+        $dataSession[0]['ticketTypes'] = $dataSession[0]['ticketType'];
+        unset($dataSession[0]['ticketType']);
     }
 
     $url = API_ACTIVITY_URL . "/post/booking";
     $req = json_decode(file_get_contents("php://input"), true);
     $req['currency'] = DEFAULT_CURRENCY;
-    $req['url_payment_info'] = $_SERVER['HTTP_HOST'] . '/' . ACTIVITY_LINK . '/payment-info';
+    $req['url_payment_info'] = 'https://' . $_SERVER['HTTP_HOST'] . '/' . ACTIVITY_LINK . '/payment-info';
     $dataSession = ['cart_activity' => $dataSession];
+    // $req = json_encode([...$req, ...$dataSession]);
     $req = json_decode(json_encode([...$req, ...$dataSession]));
     // return $req;
     $data = fetchPost($url, $req);
+    unset($_SESSION['CART_ACTIVITY']);
     return $data;
 }
