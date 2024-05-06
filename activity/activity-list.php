@@ -29,6 +29,17 @@ function enx_get_page_content($data)
                 </div>
             </div>
 
+            <div class="w-full flex relative">
+                <div class="w-full flex justify-center absolute" style="top: -72px;">
+                    <form class="flex-1 flex" style="background-color: white; border-radius: 4px; max-width: 420px;">
+                        <input type="hidden" name="country" value="<?= $_GET['country'] ?? COUNTRY_ACTIVITY ?>">
+                        <input type="text" name="q" value="<?= $_GET['q'] ?? "" ?>" placeholder="Search Activity"
+                            class="w-full flex-1 px-4" style="background-color: transparent;">
+                        <button type="submit" class="btn-primary">Search</button>
+                    </form>
+                </div>
+            </div>
+
             <div class="container xl:grid grid-cols-12 xl:gap-12 2xl:gap-16 mt-16">
 
                 <div class="col-span-12">

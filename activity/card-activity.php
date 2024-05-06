@@ -154,8 +154,10 @@ function enx_mapping_card($data, $data_res, $currency)
                 <input type="hidden" name="" id="data-book-ticket<?php echo $idx ?>" value="">
                 <input type="hidden" name="" id="data-all-ticket<?php echo $idx ?>"
                     value="<?php echo htmlspecialchars(json_encode($ticket->ticketType), ENT_QUOTES, 'UTF-8'); ?>">
-                <button id="<?php echo "submit-package" . $idx ?>" disabled type="button" class="ml-auto btn-primary">Select
-                    Package</button>
+                <button id="<?php echo "submit-package" . $idx ?>" data-spinner="loading-spin-package<?= $idx ?>" disabled
+                    type="button" class="ml-auto btn-primary flex justify-center" style="width: 166px;">
+                    <p id="loading-spin-package<?= $idx ?>" class="">Select Package</p>
+                </button>
             </div>
             <div id="modal-question<?php echo $idx ?>" style="
                 width: 100vw;

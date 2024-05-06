@@ -8,10 +8,12 @@ function enx_get_page_content($data)
 
     $url = API_ACTIVITY_URL . '/get/booking-data?currency=' . DEFAULT_CURRENCY;
     $data_res = fetchGet($url);
-    // var_dump(json_encode($data_res));
+    // var_dump(json_encode($data));
     ob_start();
     ?>
     <div class="enx-container site-wrapper">
+        <?php
+        require_once (dirname(__FILE__) . '/../activity/modal-message.php'); ?>
         <div class="site-content">
             <div class="bg-gray-light3">
                 <section>
@@ -45,7 +47,7 @@ function enx_get_page_content($data)
                             <div class="col-span-4">
                                 <div class="mb-10 sticky top-10">
                                     <div class="wiget shadow-lg rounded-xl mb-10 bg-white">
-                                        <h5
+                                        <h5 id="data-booking-activity" data-booking-activity="<?= json_encode($data) ?>"
                                             class="font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
                                             Activity Details
                                         </h5>

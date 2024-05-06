@@ -44,7 +44,7 @@ if (packageOptActivity !== "") {
           elementQtyPackages,
           btnSubmitPackage
         );
-        console.log(parseInt(elementQtyPackages.value));
+        // console.log(parseInt(elementQtyPackages.value));
         if (
           parseInt(elementQtyPackages.value) > 0 &&
           msgCheckDate.innerText &&
@@ -74,7 +74,6 @@ if (packageOptActivity !== "") {
       const elementQtyPackage = document.getElementById(qtyPackage);
 
       const btnDecrement = element.getAttribute("data-qty-act-dec");
-      console.log("APA AJAH DEH");
 
       const attDataBookingTicket = element.getAttribute("data-booking-ticket");
       const attAllticket = element.getAttribute("data-all-ticket");
@@ -88,7 +87,7 @@ if (packageOptActivity !== "") {
         if (parseInt(qty.innerText) <= 0) return;
         const qtyNewDec = parseInt(qty.innerText) - 1;
         elementQtyPackage.value = parseInt(elementQtyPackage.value) - 1;
-        console.log(elementQtyPackage.value);
+        // console.log(elementQtyPackage.value);
         changeQty(elAllTicket, qtyNewDec, elDataBookingTicket, attIdTicketType);
 
         qty.innerText = qtyNewDec;
@@ -108,7 +107,7 @@ if (packageOptActivity !== "") {
         elementQtyPackage.value = parseInt(elementQtyPackage.value) + 1;
         qty.innerText = qtyNewInc;
         changeQty(elAllTicket, qtyNewInc, elDataBookingTicket, attIdTicketType);
-        console.log(elementQtyPackage.value);
+        // console.log(elementQtyPackage.value);
 
         updatePrice(
           document.getElementById(totalPrice),
@@ -159,14 +158,14 @@ if (packageOptActivity !== "") {
         const dataQuestions = JSON.parse(
           element.getAttribute("data-questions")
         );
-        console.log(dataQuestions);
+        // console.log(dataQuestions);
         const attrFormQuest = element.getAttribute("data-form-quest");
         const elementFormQuest = document.getElementById(attrFormQuest);
         const attrFormContent = elementFormQuest.getAttribute("data-content");
         const elementFormContent = document.getElementById(attrFormContent);
 
         // const ticketTyesss = JSON.parse(elDataBookingTicket.value);
-        console.log("testing", data.ticketType);
+        // console.log("testing", data.ticketType);
 
         let templateForm = data.requiredTimeSlot
           ? `
@@ -358,7 +357,7 @@ function changeQty(elAllTicket, qty, elDataBookingTicket, attIdTicketType) {
 }
 
 function updatePrice(initialPrice, price, method, btn, dateVal, msg) {
-  console.log(dateVal);
+  // console.log(dateVal);
   // console.log(initialPrice, price, method, btn);
   const digitCurr = parseInt(initialPrice.getAttribute("data-digit"));
   var prevPrice = parseFloat(initialPrice.innerText);
@@ -381,8 +380,14 @@ if (btnFindPakcage) {
 }
 
 async function getAvailDate(data, elMsg, elementQtyPackages, btnSubmitPackage) {
-  console.log(data, elMsg);
+  // console.log(data, elMsg);
   elMsg.innerText = "checking date...";
+  const loader = document.getElementById(
+    btnSubmitPackage.getAttribute("data-spinner")
+  );
+  loader.classList.add("spinner-654");
+  loader.innerText = "";
+
   try {
     const url = API_ACT_URL + "/check-block-date";
     const result = await fetch(url, {
@@ -394,8 +399,10 @@ async function getAvailDate(data, elMsg, elementQtyPackages, btnSubmitPackage) {
       body: JSON.stringify(data),
     });
     const res = await result.json();
-    console.log(res);
+    // console.log(res);
     if (res.result === "ok") {
+      loader.classList.remove("spinner-654");
+      loader.innerText = "Select Package";
       elMsg.innerText = "";
       if (parseInt(elementQtyPackages.value) > 0)
         return (btnSubmitPackage.disabled = false);
@@ -403,6 +410,8 @@ async function getAvailDate(data, elMsg, elementQtyPackages, btnSubmitPackage) {
     if (res.result === "no") {
       const arrMsg = res.message.date ? res.message.date[0] : res.message;
       elMsg.innerText = arrMsg;
+      loader.classList.remove("spinner-654");
+      loader.innerText = "Select Package";
       return (btnSubmitPackage.disabled = true);
     }
     //  else {
@@ -500,6 +509,8 @@ if (formBookActivity) {
           elementError.innerText = messages[elementId][0];
         }
       });
+    } else if (res.result == "session-end") {
+      checkSession(true);
     } else {
       // console.log(res);
       window.location.href = res.invoiceUrl;
@@ -527,4 +538,21 @@ async function bookingActivity(params) {
   } catch (error) {
     console.log(error);
   }
+}
+
+function checkSession(isFromFetching = false) {
+  // if (isFromFetching) {
+  //   console.log("testing no session");
+  //   return;
+  // }
+  const dataSession = document.getElementById("data-booking-activity");
+  const data = dataSession.dataset.bookingActivity;
+
+  const modal = document.getElementById("modal-session-end");
+  modal.style.setProperty("display", "grid");
+
+  const close = document.getElementById("close-modal-session-end");
+  close.onclick = function () {
+    modal.style.display = "none";
+  };
 }

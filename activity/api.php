@@ -56,44 +56,45 @@ function enx_post_booking_act()
 {
     session_start();
     $dataSession = json_decode(json_encode($_SESSION['CART_ACTIVITY']), true) ?? [];
-    if ($dataSession && isset($dataSession[0]['questionList'])) {
-        $questionLists = [];
+    if ($dataSession) {
+        foreach ($dataSession as $keySession => $session) {
+            if (isset($session['questionList'])) {
+                $questionLists = [];
 
-        foreach ($dataSession[0]['questionList'] as $question) {
-            $name = $question['name'];
-            unset($question['name']);
-            $ticketId = $question['ticketId'];
-            $ticketName = $question['ticketName'];
-            unset($question['ticketId'], $question['ticketName']);
+                foreach ($session['questionList'] as $question) {
+                    $name = $question['name'];
+                    unset($question['name']);
+                    $ticketId = $question['ticketId'];
+                    $ticketName = $question['ticketName'];
+                    unset($question['ticketId'], $question['ticketName']);
 
-            $key = $name . '-' . $ticketId . '-' . $ticketName;
+                    $key = $name . '-' . $ticketId . '-' . $ticketName;
 
-            if (!isset($questionLists[$key])) {
-                $questionLists[$key] = [
-                    'name' => $name,
-                    'ticketId' => $ticketId,
-                    'ticketName' => $ticketName,
-                    'questions' => []
-                ];
+                    if (!isset($questionLists[$key])) {
+                        $questionLists[$key] = [
+                            'name' => $name,
+                            'ticketId' => $ticketId,
+                            'ticketName' => $ticketName,
+                            'questions' => []
+                        ];
+                    }
+
+                    $questionLists[$key]['questions'][] = $question;
+                }
+                $dataSession[$keySession]['questionList'] = array_values($questionLists);
             }
-
-            $questionLists[$key]['questions'][] = $question;
+            $dataSession[$keySession]['ticketTypes'] = $dataSession[$keySession]['ticketType'];
+            unset($dataSession[$keySession]['ticketType']);
         }
-
-        $dataSession[0]['questionList'] = array_values($questionLists);
-        $dataSession[0]['ticketTypes'] = $dataSession[0]['ticketType'];
-        unset($dataSession[0]['ticketType']);
+        $url = API_ACTIVITY_URL . "/post/booking";
+        $req = json_decode(file_get_contents("php://input"), true);
+        $req['currency'] = DEFAULT_CURRENCY;
+        $req['url_payment_info'] = 'https://' . $_SERVER['HTTP_HOST'] . '/' . ACTIVITY_LINK . '/payment-info';
+        $dataSession = ['cart_activity' => $dataSession];
+        $req = json_decode(json_encode([...$req, ...$dataSession]));
+        $data = fetchPost($url, $req);
+        unset($_SESSION['CART_ACTIVITY']);
+        return $data;
     }
-
-    $url = API_ACTIVITY_URL . "/post/booking";
-    $req = json_decode(file_get_contents("php://input"), true);
-    $req['currency'] = DEFAULT_CURRENCY;
-    $req['url_payment_info'] = 'https://' . $_SERVER['HTTP_HOST'] . '/' . ACTIVITY_LINK . '/payment-info';
-    $dataSession = ['cart_activity' => $dataSession];
-    // $req = json_encode([...$req, ...$dataSession]);
-    $req = json_decode(json_encode([...$req, ...$dataSession]));
-    // return $req;
-    $data = fetchPost($url, $req);
-    unset($_SESSION['CART_ACTIVITY']);
-    return $data;
+    return (object) ['result' => 'session-end'];
 }
