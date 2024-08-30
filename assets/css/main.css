@@ -3519,6 +3519,14 @@ Add the correct display in Chrome and Safari.
     grid-column: span 3 / span 3 !important;
   }
 
+  .enx-container .md\:col-span-7 {
+    grid-column: span 7 / span 7 !important;
+  }
+
+  .enx-container .md\:col-span-9 {
+    grid-column: span 9 / span 9 !important;
+  }
+
   .enx-container .md\:flex-row {
     flex-direction: row !important;
   }
