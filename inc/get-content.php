@@ -165,9 +165,8 @@ function enx_get_global_page()
             $data_meta = $data->meta ?? null;
         } else {
             require_once(dirname(__FILE__) . '/../tour_package/tourpackage-detail.php');
-            require_once(dirname(__FILE__) . '/../tour_package/card-tourpackage.php');
+            // require_once(dirname(__FILE__) . '/../tour_package/card-tourpackage.php');
             $data = enx_get_detail_data_tour_package();
-            // var_dump(json_encode($data));
             $data_meta = $data->meta;
         }
     }

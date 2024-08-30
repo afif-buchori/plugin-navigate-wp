@@ -147,6 +147,19 @@ function change_template_tripgo($original_template)
     header("Content-Type: application/json");
     echo json_encode($data);
     exit();
+  } else if ($url[0] == 'api' && $url[1] == 'tour-package') {
+    $wp_query->is_404 = false;
+    $wp_query->is_page = true;
+    status_header(200);
+
+    require_once(dirname(__FILE__) . '/inc/function.php');
+    require_once(dirname(__FILE__) . '/tour_package/api.php');
+    $data = enx_get_data_api();
+    // var_dump("TESDS");
+
+    header("Content-Type: application/json");
+    echo json_encode($data);
+    exit();
   } else {
     return $original_template;
   }

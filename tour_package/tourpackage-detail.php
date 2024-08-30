@@ -55,7 +55,7 @@ function enx_get_page_content($data)
 
                                     <!-- <php if (isset($data_res->whatToExpect)) { ?>
                                         <h2 class="font-medium mt-5">What to Expect</h2>
-                                        <p><?php $dom = new DOMDocument();
+                                        <p><php $dom = new DOMDocument();
                                             $dom->loadHTML($data_res->whatToExpect);
                                             echo $dom->saveHTML();
                                             ?></p>
