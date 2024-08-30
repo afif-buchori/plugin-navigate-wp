@@ -279,7 +279,8 @@ function enx_get_page_content($data)
                                         <div>
                                             <label class="text-primary font-semibold block mb-3" for="country">Country:</label>
 
-                                            <select name="country" id="country_select2" class="<?php echo $error->country ? 'is-invalid' : '' ?>" type="text">
+                                            <select name="country" id="country_select2" class="<?php echo $error->country ? 'is-invalid' : '' ?> w-full form-select bg-gray-light4/60 py-2 px-3 w-auto font-numbers font-medium text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm" type="text">
+                                            <!-- <select name="country" id="country_select2" class="<?php echo $error->country ? 'is-invalid' : '' ?>" type="text"> -->
                                                 <option selected value="" class="hidden">--select country--</option>
                                                 <?php foreach ($checkoutdata->countries as $country) { ?>
                                                     <option value="<?php echo $country->id ?>" data-code="<?php echo $country->phonecode ?>" <?php echo $old->country == $country->id ? 'selected' : '' ?>><?php echo ($country->name) ?></option>
@@ -441,7 +442,7 @@ function enx_get_page_content($data)
 
                                 <div class="my-4 flex flex-col items-end ml-auto mt-7 mb-5" style="max-width: 292px">
                                     <input type="hidden" name="surl" value="<?php echo get_bloginfo('url') . '/' . AIRPORT_SERVICE_LINK . '/payment/success' ?>">
-                                    <input type="hidden" name="furl" value="<?php echo get_bloginfo('url') . '/' . AIRPORT_SERVICE_LINK . '/payment/fail' ?>">
+                                    <input type="hidden" name="furl" value="<?php echo get_bloginfo('url') . '/' . AIRPORT_SERVICE_LINK . '/payment/failed' ?>">
                                     <input type="hidden" name="select_currency" value="<?php echo !isset($_COOKIE[CURRENCY_COOKIE]) ? '' : $_COOKIE[CURRENCY_COOKIE] ?>">
                                     <button class="btn btn-primary btn-disable w-full" id="submit-booking" button-next-step iAgree-button disabled>Continue To Payment</button>
                                     <p class="text-xs mt-4">Click 'Continue to Payment' to securely proceed to Tondest.com, our trusted payment partner, for a seamless checkout experience.</p>

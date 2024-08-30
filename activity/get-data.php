@@ -9,6 +9,7 @@ function enx_get_list_data_activity()
     $page = $_GET['page'] ?? '';
     $paramsPage = $page != '' ? "&page=$page" : '';
     $url = API_ACTIVITY_URL . "/get/data-activitys" . CreateParams() . "&country=$country$paramsPage$paramsSearch";
+    // var_dump($url);
     // $url = API_ACTIVITY_URL . "/get/data-activitys" . CreateParams();
     return fetchGet($url);
 }

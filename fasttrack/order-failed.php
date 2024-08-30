@@ -3,23 +3,11 @@ function enx_get_page_content($data)
 {
     $url = API_FASTTRACK_URL . "/get/order?order=" . $_GET['order'];
     $order = fetchGet($url);
-    // var_dump(json_encode($order));
-    // var_dump(json_encode($order->status));
+    // var_dump(json_encode($order->payment_url));
     // var_dump(json_encode($order->expired_at));
     // var_dump(Date('Y-m-d H:i:s'));
-    // var_dump($order->expired_at == Date('Y-m-d H:i:s'));
-
-    $order_expired_at = strtotime($order->expired_at); // Ubah string waktu kedaluwarsa menjadi UNIX timestamp
-    $current_time = current_time('timestamp'); // Dapatkan waktu saat ini sebagai UNIX timestamp
-
-    // if ($current_time >= $order_expired_at) {
-    //     echo "Waktu pembayaran telah berakhir.";
-    // } else {
-    //     echo "Waktu pembayaran masih berlaku.";
-    // }
-
-    if ($order->status == 'Failed') {
-        header("Location: /airport-service/payment/failed/?order=" . $order->transaction_id);
+    if (strtolower($order->status) == 'paid') {
+        header("Location: /airport-service/payment/success/?order=" . $order->transaction_id);
     }
     ob_start();
     ?>
@@ -33,7 +21,7 @@ function enx_get_page_content($data)
                             <div class="col-span-6">
                                 <div class="mb-10 top-10">
                                     <div class="widget shadow-lg rounded-xl mb-10 bg-white">
-                                        <h5
+                                        <h5 id="data-expired-order" data-expired="<?= $order->expired_at ?>"
                                             class="font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
                                             Booking Details
                                         </h5>
@@ -45,15 +33,11 @@ function enx_get_page_content($data)
                                                         data-order="<?php echo $order->transaction_id ?>">Status:</p>
                                                     <span class="font-numbers font-bold text-primary/90 text-sm"
                                                         id="<?php echo $order->status == "Process" ? 'animate-pulse' : '' ?>"><?php echo $order->status ?></span>
-                                                    <?php if ($order->status == 'Unpaid' && $current_time <= $order_expired_at) { ?>
-                                                        <a href="<?= $order->payment_url ?>" class="ml-auto btn btn-link">Pay
-                                                            Now</a>
-                                                    <?php } elseif ($current_time <= $order_expired_at) { ?>
-                                                        <a href="<?= $order->payment_url ?>" class="ml-auto btn btn-link">Pay
-                                                            With Another Card</a>
+                                                    <?php if ($order->status == 'Unpaid') { ?>
+                                                        <a href="#" class="btn btn-link">Refresh</a>
                                                     <?php } ?>
                                                 </span>
-                                                <?php if ($order->status === 'Failed') { ?>
+                                                <?php if ($order->status === 'Failed' && $order->payments_failed_message) { ?>
                                                     <span class="text-red-error font-semibold flex gap-2 items-center"
                                                         for="email">
                                                         <p id="info-orders" data-status="<?php echo $order->status ?>"
@@ -143,34 +127,30 @@ function enx_get_page_content($data)
                             </div>
 
                             <div class="col-span-6">
-                                <div class="mb-10 top-10">
-                                    <div class="widget shadow-lg rounded-xl mb-10 bg-warning">
+                                <div id="is-change-to-expired" class="mb-10 top-10">
+                                    <div class="widget shadow-lg rounded-xl mb-10 bg-white">
                                         <h5
                                             class="font-heading text-xl font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
                                             Important Information
                                         </h5>
                                         <div class="py-5 px-7">
                                             <div class="mb-4">
-                                                <p>
-                                                    Please click on the link below to upload documents such as a
-                                                    passport and a vaccine certificate.
+                                                <p>Kindly proceed by clicking on the provided link to initiate the payment
+                                                    process once again.
                                                     <br />
-                                                    <a href="<?php echo "/" . AIRPORT_SERVICE_LINK . "/upload?order=" . $_GET['order'] ?>"
-                                                        class="btn-primary my-5">Continue
-                                                        to upload documents</a>
+                                                    <a href="<?php echo $order->payment_url ?>" class="btn-primary my-5">Pay
+                                                        With
+                                                        Another Card</a>
                                                     <br />
-                                                    <i class="font-size-13 text-gray block">*if you have uploaded the
-                                                        document please ignore it.</i>
-                                                    <i class="font-size-13 text-gray block">*we will delete the uploaded
-                                                        data
-                                                        after this transaction or service is completed.</i>
-                                                    <i class="font-size-13 text-gray block">*will guaranteed your document
-                                                        save.</i>
                                                 </p>
+                                                <p>The remaining payment time is <span id="count-down-expired"
+                                                        class="font-bold" style="margin-left: 4px;"></span></p>
+
                                             </div>
 
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
 

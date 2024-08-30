@@ -29,6 +29,7 @@ function enx_get_detail_data()
     //     'to' => $_GET['to'],
     //     'date' => $_GET['date'],
     // ));
+    
     $response = wp_remote_get($url);
     if (is_wp_error($response)) {
         return false;

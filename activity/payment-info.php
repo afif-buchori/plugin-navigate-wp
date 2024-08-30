@@ -7,8 +7,8 @@ function enx_get_payment_info()
 }
 function enx_get_page_content($data)
 {
-    // var_dump(json_encode($data));
     $order = $data->order;
+    // var_dump(json_encode($order->payments[0]->pay_before));
 
     ob_start();
     ?>
@@ -22,7 +22,8 @@ function enx_get_page_content($data)
                             <div class="col-span-6">
                                 <div class="mb-10 top-10">
                                     <div class="widget shadow-lg rounded-xl mb-10 bg-white">
-                                        <h5
+                                        <h5 id="data-expired-activity"
+                                            data-expired-activity="<?= $order->payments[0]->pay_before ?>"
                                             class="font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
                                             Booking Details
                                         </h5>
@@ -31,14 +32,26 @@ function enx_get_page_content($data)
                                                 <span class="text-primary font-semibold flex gap-2 items-center"
                                                     for="email">
                                                     <p id="info-orderss" data-status="<?php echo $order->status ?>"
-                                                        data-order="<?php echo $order->transaction_id ?>">Status:</p>
+                                                        data-order="<?php echo $order->id ?>">Status:</p>
                                                     <span class="font-numbers font-bold text-primary/90 text-sm"
-                                                        id="<?php echo $order->status == "Process" ? 'animate-pulse' : '' ?>"><?php echo $order->status ?></span>
+                                                        id="<?php echo $order->status == "Process" ? 'animate-pulse' : '' ?>"
+                                                        style="<?= strtolower($order->status) == "failed" ? "color: red !important;" : "" ?>"><?php echo ucwords(strtolower($order->status)) ?></span>
                                                     <?php if ($order->status == 'Unpaid') { ?>
-                                                        <a href="#" class="btn btn-link">Refresh</a>
+                                                        <a href="<?= $order->url_payment ?>" class="btn btn-link">Pay Now</a>
+                                                    <?php } elseif (strtolower($order->status) == "failed") { ?>
+                                                        <a href="<?= $order->url_payment ?>" id="btn-pay-another-act"
+                                                            class="btn btn-primary ml-auto">Pay
+                                                            With Another Card</a>
                                                     <?php } ?>
                                                 </span>
                                             </div>
+                                            <?php if (strtolower($order->status) == "failed") { ?>
+                                                <div id="is-show-exp-act" class="mb-4">
+                                                    <p>The remaining payment time is <span id="count-down-expired-act"
+                                                            class="font-bold" style="margin-left: 4px;"></span></p>
+                                                </div>
+                                            <?php } ?>
+
                                             <div class="mb-4">
                                                 <label class="text-primary font-semibold block" for="email">Name:</label>
                                                 <span

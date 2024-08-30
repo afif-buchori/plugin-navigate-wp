@@ -20,7 +20,7 @@ function enx_get_page_content($data)
                                 Search offers and find best for you
                             </h1>
                             <a href="#" class="font-semibold font-body text-primary">
-                                Check out best offers
+                                Realtime and instant confirmation
                                 <span class="iconify text-primary inline-block ml-3" data-icon="bi:arrow-right"
                                     data-inline="false"></span>
                             </a>

@@ -108,6 +108,9 @@ function enx_get_global_page()
             if ($url[2] == 'success') {
                 $head_title = "Payment Success";
                 require_once (dirname(__FILE__) . '/../fasttrack/order-success.php');
+            } else {
+                $head_title = "Payment Failed";
+                require_once (dirname(__FILE__) . '/../fasttrack/order-failed.php');
             }
         } elseif ($url[1] == 'upload') {
             $head_title = "Upload Documents";

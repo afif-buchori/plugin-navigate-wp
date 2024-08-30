@@ -556,3 +556,47 @@ function checkSession(isFromFetching = false) {
     modal.style.display = "none";
   };
 }
+
+const elDataExpiredAct = document.getElementById("data-expired-activity");
+function checkActivityExpiration() {
+  if (elDataExpiredAct) {
+    const dateExpiredString = elDataExpiredAct.getAttribute(
+      "data-expired-activity"
+    );
+    const dateExpired = new Date(dateExpiredString);
+    checkExpirationAct(dateExpired);
+  }
+}
+function checkExpirationAct(expirationDate) {
+  const now = new Date();
+  const nowGMT = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+  // console.log(expirationDate + " --- " + nowGMT.toUTCString());
+  const timeDiff = expirationDate.getTime() - nowGMT.getTime();
+  const secondsLeft = Math.floor(timeDiff / 1000);
+  if (secondsLeft <= 0) {
+    // console.log("Tanggal kedaluwarsa atau sudah lewat.");
+    const elExpiredShow = document.getElementById("is-show-exp-act");
+    elExpiredShow.innerHTML = `
+    <div style="background-color: #C7365950; padding: 12px; border-radius: 8px">
+    <p class="font-bold">Your order payment has expired.</p>
+    <p>Sorry, the payment link has expired. Therefore, your order is considered failed. Please try reordering if you are still interested.</p>
+    </div>`;
+    const btnPayAnother = document.getElementById("btn-pay-another-act");
+    btnPayAnother.style.visibility = "hidden";
+  } else {
+    const elCountDown = document.getElementById("count-down-expired-act");
+    elCountDown.innerText = formatTimeAct(secondsLeft);
+    setTimeout(checkActivityExpiration, 1000);
+  }
+}
+function formatTimeAct(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+  const paddedHours = String(hours).padStart(2, "0");
+  const paddedMinutes = String(minutes).padStart(2, "0");
+  const paddedSeconds = String(remainingSeconds).padStart(2, "0");
+  return `${paddedHours} : ${paddedMinutes} : ${paddedSeconds}`;
+}
+
+checkActivityExpiration();

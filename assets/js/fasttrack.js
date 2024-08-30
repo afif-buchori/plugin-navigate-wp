@@ -777,7 +777,8 @@ const getStatusOrder = async (id, count = 0) => {
     const res = await result.json();
     console.log(res);
     if (res.status === "UNPAID" && count < 3) {
-      setTimeout(() => getStatusOrder(id, count + 1), 2000);
+      setTimeout(() => getStatusOrder(id, count + 1), 20000);
+      // setTimeout(() => getStatusOrder(id, count + 1), 2000);
     } else if (res.status === "PROCESS") {
       setTimeout(() => getStatusOrder(id), 3000);
     } else {
@@ -819,3 +820,73 @@ if (containerModal !== "") {
     e.stopPropagation();
   });
 }
+
+// const elDataExpired = document.getElementById("data-expired-order") || "";
+// console.log(elDataExpired);
+// if (elDataExpired !== "") {
+//   const dateExpired = elDataExpired.getAttribute("data-expired");
+//   const today = new Date();
+//   // console.log(dataExpired, "today = " + today);
+//   checkExpiration(dateExpired);
+// }
+
+// function checkExpiration(expirationDate) {
+//   const now = new Date();
+//   const expired = expirationDate <= now;
+//   if (expired) {
+//     console.log("Tanggal kedaluwarsa atau sudah lewat.");
+//   } else {
+//     console.log("Tanggal masih berlaku.");
+//   }
+// }
+const elDataExpired = document.getElementById("data-expired-order");
+function checkAndScheduleExpiration() {
+  if (elDataExpired) {
+    const dateExpiredString = elDataExpired.getAttribute("data-expired");
+    const dateExpired = new Date(dateExpiredString);
+    checkExpiration(dateExpired);
+  }
+}
+function checkExpiration(expirationDate) {
+  const now = new Date();
+  const nowGMT = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+  // console.log(expirationDate + " --- " + nowGMT.toUTCString());
+  const timeDiff = expirationDate.getTime() - nowGMT.getTime();
+  const secondsLeft = Math.floor(timeDiff / 1000);
+  if (secondsLeft <= 0) {
+    // console.log("Tanggal kedaluwarsa atau sudah lewat.");
+    const elInfoExp = document.getElementById("is-change-to-expired");
+    elInfoExp.innerHTML = `
+      <div 
+        class="widget shadow-lg rounded-xl mb-10" 
+        style="background-color: #C7365950;"
+      >
+        <h5
+          class="font-heading text-xl font-bold border-b-2 border-primary border-opacity-10 px-7 py-3"
+        >
+          Your order payment has expired.
+        </h5>
+        <div class="py-5 px-7">
+          <div class="mb-4">
+            <p>Sorry, the payment link has expired. Therefore, your order is considered failed. Please try reordering if you are still interested.</p>
+          </div>
+        </div>
+      </div>`;
+  } else {
+    const elCountDown = document.getElementById("count-down-expired");
+    elCountDown.innerText = formatTime(secondsLeft);
+    // console.log("Sisa waktu sebelum kedaluwarsa: " + formatTime(secondsLeft));
+    setTimeout(checkAndScheduleExpiration, 1000);
+  }
+}
+function formatTime(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+  const paddedHours = String(hours).padStart(2, "0");
+  const paddedMinutes = String(minutes).padStart(2, "0");
+  const paddedSeconds = String(remainingSeconds).padStart(2, "0");
+  return `${paddedHours} : ${paddedMinutes} : ${paddedSeconds}`;
+}
+
+checkAndScheduleExpiration();

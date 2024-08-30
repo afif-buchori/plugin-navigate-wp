@@ -59,12 +59,14 @@ function enx_get_page_content($data)
                                         ?></p>
                                     <?php } ?>
 
-                                    <?php if (isset($data_res->operatingHours?->fixedDays) && count($data_res->operatingHours?->fixedDays) > 0) { ?>
-                                        <h2 class="font-medium mt-5">Opening Hours</h2>
-                                        <?php foreach ($data_res->operatingHours->fixedDays as $operation_hour) { ?>
-                                            <li class="pl-4">
-                                                <?php echo $operation_hour->day . ", " . $operation_hour->startHour . " - " . $operation_hour->endHour ?>
-                                            </li>
+                                    <?php if ($data_res->operatingHours) { ?>
+                                        <?php if ($data_res->operatingHours->fixedDays && count($data_res->operatingHours->fixedDays) > 0) { ?>
+                                            <h2 class="font-medium mt-5">Opening Hours</h2>
+                                            <?php foreach ($data_res->operatingHours->fixedDays as $operation_hour) { ?>
+                                                <li class="pl-4">
+                                                    <?php echo $operation_hour->day . ", " . $operation_hour->startHour . " - " . $operation_hour->endHour ?>
+                                                </li>
+                                            <?php } ?>
                                         <?php } ?>
                                     <?php } ?>
 

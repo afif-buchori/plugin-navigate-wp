@@ -4,6 +4,7 @@ function enx_get_page_content($data)
     $cartdata = json_decode(json_encode($_SESSION[NAVIGATE_CART]));
     $cart = $cartdata->main_service;
     $addons = json_decode($data->addons);
+    // var_dump($addons);
 
     $url = API_FASTTRACK_URL . "/get/rate" . createParams();
     $data = fetchPost($url,$cart);
