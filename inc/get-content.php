@@ -17,10 +17,11 @@ function enx_get_global_page()
     }
 
     $url = explode("/", substr(explode("?", $_SERVER['REQUEST_URI'])[0], 1));
+
     if ($url[0] == AIRPORT_SERVICE_LINK) {
-        require_once (dirname(__FILE__) . '/../fasttrack/get-data.php');
+        require_once(dirname(__FILE__) . '/../fasttrack/get-data.php');
         if ($url[1] == null) {
-            require_once (dirname(__FILE__) . '/../fasttrack/fasttrack-list.php');
+            require_once(dirname(__FILE__) . '/../fasttrack/fasttrack-list.php');
             $data = enx_get_list_data();
             $head_title = $data->meta->title;
         } elseif ($url[1] == 'postdata') {
@@ -91,7 +92,7 @@ function enx_get_global_page()
             }
             exit();
         } elseif ($url[1] == 'addon') {
-            require_once (dirname(__FILE__) . '/../fasttrack/addon.php');
+            require_once(dirname(__FILE__) . '/../fasttrack/addon.php');
             $head_title = "Additional Service";
             $cartSession = json_decode(json_encode($_SESSION[NAVIGATE_CART]));
             if (!$cartSession)
@@ -99,7 +100,7 @@ function enx_get_global_page()
             else
                 $data = enx_service_get_addon($cartSession->main_service->sid);
         } elseif ($url[1] == 'checkout') {
-            require_once (dirname(__FILE__) . '/../fasttrack/checkout.php');
+            require_once(dirname(__FILE__) . '/../fasttrack/checkout.php');
             $head_title = "Checkout";
             $cartSession = json_decode(json_encode($_SESSION[NAVIGATE_CART]));
             if (!$cartSession)
@@ -107,29 +108,29 @@ function enx_get_global_page()
         } elseif ($url[1] == 'payment') {
             if ($url[2] == 'success') {
                 $head_title = "Payment Success";
-                require_once (dirname(__FILE__) . '/../fasttrack/order-success.php');
+                require_once(dirname(__FILE__) . '/../fasttrack/order-success.php');
             } else {
                 $head_title = "Payment Failed";
-                require_once (dirname(__FILE__) . '/../fasttrack/order-failed.php');
+                require_once(dirname(__FILE__) . '/../fasttrack/order-failed.php');
             }
         } elseif ($url[1] == 'upload') {
             $head_title = "Upload Documents";
-            require_once (dirname(__FILE__) . '/../fasttrack/upload-documents.php');
+            require_once(dirname(__FILE__) . '/../fasttrack/upload-documents.php');
         } else {
-            require_once (dirname(__FILE__) . '/../fasttrack/fasttrack-detail.php');
+            require_once(dirname(__FILE__) . '/../fasttrack/fasttrack-detail.php');
             $data = enx_get_detail_data();
             $data_meta = $data->meta;
         }
     } elseif ($url[0] == ACTIVITY_LINK) {
-        require_once (dirname(__FILE__) . '/../activity/get-data.php');
+        require_once(dirname(__FILE__) . '/../activity/get-data.php');
         if ($url[1] == null) {
-            require_once (dirname(__FILE__) . '/../activity/activity-list.php');
+            require_once(dirname(__FILE__) . '/../activity/activity-list.php');
             $data = enx_get_list_data_activity();
             // var_dump(json_encode($data));
             $head_title = $data->meta->title;
         } elseif ($url[1] == 'booking') {
             session_start();
-            require_once (dirname(__FILE__) . '/../activity/form-booking.php');
+            require_once(dirname(__FILE__) . '/../activity/form-booking.php');
             // $data = enx_get_list_data_activity();
             // $head_title = $data->meta->title;
             $data = $_SESSION['CART_ACTIVITY'] ?? [];
@@ -144,14 +145,28 @@ function enx_get_global_page()
             // var_dump($data);
             $head_title = $data->meta->title ?? "Form Booking";
         } elseif ($url[1] == 'payment-info') {
-            require_once (dirname(__FILE__) . '/../activity/payment-info.php');
+            require_once(dirname(__FILE__) . '/../activity/payment-info.php');
             $data = enx_get_payment_info();
             // var_dump(json_encode($data->order));
             $head_title = $data->meta->title ?? "Payment Info";
         } else {
-            require_once (dirname(__FILE__) . '/../activity/activity-detail.php');
-            require_once (dirname(__FILE__) . '/../activity/card-activity.php');
+            require_once(dirname(__FILE__) . '/../activity/activity-detail.php');
+            require_once(dirname(__FILE__) . '/../activity/card-activity.php');
             $data = enx_get_detail_data_activity();
+            // var_dump(json_encode($data));
+            $data_meta = $data->meta;
+        }
+    } elseif ($url[0] == TOUR_PACKAGE_LINK) {
+        require_once(dirname(__FILE__) . '/../tour_package/get-data.php');
+        if ($url[1] == null) {
+            require_once(dirname(__FILE__) . '/../tour_package/tourpackage-list.php');
+            $data = enx_get_list_data_tour_package();
+            $head_title = $data->meta->title;
+            $data_meta = $data->meta ?? null;
+        } else {
+            require_once(dirname(__FILE__) . '/../tour_package/tourpackage-detail.php');
+            require_once(dirname(__FILE__) . '/../tour_package/card-tourpackage.php');
+            $data = enx_get_detail_data_tour_package();
             // var_dump(json_encode($data));
             $data_meta = $data->meta;
         }
@@ -205,7 +220,7 @@ function enx_get_content($header_title, $content, $meta = null)
     // }
 
     enx_header($header_title . " – " . get_bloginfo('name'), $meta->keyword ?? "", $meta->description ?? "", $meta->image_url ?? "");
-    ?>
+?>
     <main id="primary" class="site-main">
         <article id="tripgo-list" <?php post_class(); ?>>
             <header class="entry-header">
@@ -220,6 +235,6 @@ function enx_get_content($header_title, $content, $meta = null)
             </footer><!-- .entry-footer -->
         </article>
     </main>
-    <?php
+<?php
     get_footer();
 }
