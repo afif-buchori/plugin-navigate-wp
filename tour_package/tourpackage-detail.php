@@ -9,7 +9,7 @@ function enx_get_page_content($data)
     // $currency = $data->dataCurrency;
     // var_dump(json_encode($data_res));
     ob_start();
-    ?>
+?>
     <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -39,7 +39,7 @@ function enx_get_page_content($data)
                                         if ($idx < 3) { ?>
                                             <img src="<?php echo $media ?>" width="100%" class="rounded-lg"
                                                 style="aspect-ratio: 16/9; object-fit: cover;">
-                                        <?php }
+                                    <?php }
                                     } ?>
                                 </div>
                             </div>
@@ -132,7 +132,10 @@ function enx_get_page_content($data)
 
                                         <p class="text-sm">Date:</p>
                                         <input type="date" name="date" min="<?php echo date('Y-m-d\TH:i') ?>"
-                                            //data-action-ft="onchange-calculate"
+                                            id="tp_date_detail" data-service='<?= json_encode([
+                                                                                    'slug' => $data_res->slug,
+                                                                                    'slug_country' => $data_res->country->slug
+                                                                                ]) ?>'
                                             class="w-full form-input bg-gray-light4/60 border-none rounded py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm mb-4" />
 
                                         <button id="find-package-act" type="button" class="w-full btn-primary mb-4">Select
@@ -177,7 +180,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-    <?php
+<?php
     $contents = ob_get_clean();
     return $contents;
 }

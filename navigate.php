@@ -179,6 +179,7 @@ function enx_load_style_and_script()
   wp_enqueue_script('tripgo-alpinejs', plugins_url('/assets/js/alpinejs.min.js', __FILE__), array(), VERSION, true);
   wp_enqueue_script('tripgo-fasttrack', plugins_url('/assets/js/fasttrack.js', __FILE__), array(), VERSION, true);
   wp_enqueue_script('activity-js', plugins_url('/assets/js/activity.js', __FILE__), array(), VERSION, true);
+  wp_enqueue_script('tourpackage-js', plugins_url('/assets/js/tour_package.js', __FILE__), array(), VERSION, true);
 
   wp_enqueue_style('select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css');
   wp_enqueue_script('jquery');
