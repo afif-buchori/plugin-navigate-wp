@@ -165,7 +165,7 @@ function enx_get_global_page()
             $data_meta = $data->meta ?? null;
         } else {
             require_once(dirname(__FILE__) . '/../tour_package/tourpackage-detail.php');
-            // require_once(dirname(__FILE__) . '/../tour_package/card-tourpackage.php');
+            require_once(dirname(__FILE__) . '/../tour_package/contents/list-package.php');
             $data = enx_get_detail_data_tour_package();
             $data_meta = $data->meta;
         }
@@ -219,7 +219,7 @@ function enx_get_content($header_title, $content, $meta = null)
     // }
 
     enx_header($header_title . " – " . get_bloginfo('name'), $meta->keyword ?? "", $meta->description ?? "", $meta->image_url ?? "");
-?>
+    ?>
     <main id="primary" class="site-main">
         <article id="tripgo-list" <?php post_class(); ?>>
             <header class="entry-header">
@@ -234,6 +234,6 @@ function enx_get_content($header_title, $content, $meta = null)
             </footer><!-- .entry-footer -->
         </article>
     </main>
-<?php
+    <?php
     get_footer();
 }

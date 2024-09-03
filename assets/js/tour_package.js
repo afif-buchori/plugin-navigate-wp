@@ -37,3 +37,18 @@ async function fetchingPost(url, data) {
   }
 }
 // End Fetch Post
+
+// Modal List Package
+const modalListPackage = document.getElementById("modal-list-tour-package");
+const btnSlectPackage = document.getElementById("btn-open-list-modal-package");
+if (btnSlectPackage) {
+  btnSlectPackage.addEventListener("click", function () {
+    const btnClose = document.getElementById("close-modal-list-tourpackage");
+    modalListPackage.style.display = "grid";
+    btnClose.addEventListener(
+      "click",
+      () => (modalListPackage.style.display = "none")
+    );
+  });
+}
+// End Modal List Package

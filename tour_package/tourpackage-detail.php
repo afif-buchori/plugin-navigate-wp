@@ -78,7 +78,7 @@ function enx_get_page_content($data)
                                                     <div
                                                         class="md:grid grid-cols-12 md:space-x-4 relative <?php echo ($i == (count($contents->itinerary) - 1) ? 'smt-4' : ($i > 0 ? 'smy-4' : 'smb-4')) ?>">
                                                         <div class="col-span-12 py-5">
-                                                            <?php if (count($contents->itinerary)) { ?>
+                                                            <?php if (count($contents->itinerary) > 1) { ?>
                                                                 <span class="absolute left-45px md:left-55px"
                                                                     style="border-left: solid 2px #BBE9FF !important; position: absolute; top: 0px; left: 58px; 
                                                                     height: <?php echo count($contents->itinerary) === $key + 1 ? "30px" : ($key === 0 ? 'calc(100% - 30px)' : '100%'); ?>; 
@@ -209,7 +209,8 @@ function enx_get_page_content($data)
                                             ]) ?>'
                                             class="w-full form-input bg-gray-light4/60 border-none rounded py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm mb-4" />
 
-                                        <button id="find-package-act" type="button" class="w-full btn-primary mb-4">Select
+                                        <button id="btn-open-list-modal-package" type="button"
+                                            class="w-full btn-primary mb-4">Select
                                             Package</button>
 
                                         <div class="flex flex-col gap-1 mb-4">

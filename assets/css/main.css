@@ -5145,4 +5145,27 @@ div:before {
     grid-column: span 2 / span 2 !important;
   }
 }
+#enxcontainer-modal .btn-close {
+  background-color: white !important;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: solid 2px black !important;
+  display: grid;
+  place-content: center;
+  position: absolute;
+  padding: 0px !important;
+  top: 8px;
+  right: 8px;
+  color: black;
+}
+#enxcontainer-modal .btn-close:hover {
+  transform: scale(1.025) !important;
+  transition: 200ms ease !important;
+}
+#enxcontainer-modal .btn-close:active {
+  transform: scale(0.9) !important;
+  transition: 100ms ease !important;
+}
+
 /* end new */
