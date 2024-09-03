@@ -38,6 +38,7 @@ function enx_post_getpackage()
     $url = API_TOUR_PACKAGE_URL . "/post/get-package";
     // $req = $_GET;
     $req = json_decode(file_get_contents("php://input"));
+    $req->currency = str_replace("currency=", "", checkCurrency());
     // var_dump($req, $_GET);
     // die;
     $data = fetchPost($url, $req);
