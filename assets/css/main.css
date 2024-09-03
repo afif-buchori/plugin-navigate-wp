@@ -3544,6 +3544,10 @@ Add the correct display in Chrome and Safari.
     grid-column: span 3 / span 3 !important;
   }
 
+  .enx-container .md\:col-span-4 {
+    grid-column: span 4 / span 4 !important;
+  }
+
   .enx-container .md\:col-span-7 {
     grid-column: span 7 / span 7 !important;
   }

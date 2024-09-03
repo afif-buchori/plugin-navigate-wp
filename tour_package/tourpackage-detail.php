@@ -31,7 +31,8 @@ function enx_get_page_content($data)
                                 </div>
                             </div>
                             <div class="hidden md:grid grid-cols-4 gap-2">
-                                <div class="<?php echo count($data_res->images) > 0 ? " md:col-span-3" : "" ?> ">
+                                <div
+                                    class="<?php echo count($data_res->images) > 0 ? " md:col-span-3" : "md:col-span-4" ?> ">
                                     <img src="<?php echo $data_res->image ?>" width="100%" class="rounded-lg"
                                         style="aspect-ratio: 16/9;">
                                 </div>
@@ -189,8 +190,9 @@ function enx_get_page_content($data)
                                     <php } ?> -->
                                 </div>
 
-                                <div class="col-span-3 hidden md:flex flex-col relative">
-                                    <div class="shadow shadow-lg p-4 sticky top-28 right-0" style="
+                                <form class="col-span-3 hidden md:flex flex-col relative">
+                                    <form id="form-package-detail-tourpackage" method="post"
+                                        class="shadow shadow-lg p-4 sticky top-28 right-0" style="
                                         width: 100%;
                                         border-radius: 8px;
                                         background-color: white;
@@ -235,8 +237,8 @@ function enx_get_page_content($data)
 
                                         <button id="find-package-act" type="button" class="w-full btn-primary">Find
                                             Package</button>
-                                    </div>
-                                </div>
+                                    </form>
+                                </form>
                             </div>
 
                             <!-- <div id="package-opt-activity" class="w-full flex flex-col gap-4 p-4 rounded-lg mt-10"
