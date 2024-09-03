@@ -7,7 +7,7 @@ function enx_get_page_content($data)
     // $res_tour = $data->service;
     $data_res = $data->service;
     $contents = $data_res->contents;
-    // $currency = $data->dataCurrency;
+    $currency = $data_res->minimum_price->price_detail->currency;
     // var_dump(json_encode($contents));
     ob_start();
     ?>
@@ -51,10 +51,26 @@ function enx_get_page_content($data)
                                     <h1 class="col-span-3 md:text-2xl font-bold">
                                         <?php echo $data_res->contents->title ?>
                                     </h1>
-                                    <!-- <p><php echo $data_res->addressLine ?? $data_res->city . ", " . $data_res->country ?>
-                                    </p> -->
+                                    <p>
+                                        <span class="iconify inline" data-icon="mdi:location" data-width="20"
+                                            data-height="20"></span>
+                                        <?php echo $data_res->country->name ?>
+                                    </p>
+
+                                    <!-- LIST ICON -->
+                                    <div class="flex gap-4">
+                                        <span class="iconify inline" data-icon="mingcute:time-duration-fill" data-width="20"
+                                            data-height="20"></span>
+                                        <span class="iconify inline" data-icon="mdi:home-city-outline" data-width="20"
+                                            data-height="20"></span>
+                                        <span class="iconify inline" data-icon="ion:ticket-outline" data-width="20"
+                                            data-height="20"></span>
+                                    </div>
+                                    <!-- LIST ICON -->
                                     <!-- <h2 class="font-medium mt-5">Descriptions</h2> -->
-                                    <p class="pl-4 text-center my-16"><?php echo $data_res->contents->description ?></p>
+                                    <p style="text-align: justify;" class="my-16">
+                                        <?php echo $data_res->contents->description ?>
+                                    </p>
 
 
                                     <div id="" class="w" data-x-data="accordionInit()">
@@ -190,55 +206,67 @@ function enx_get_page_content($data)
                                     <php } ?> -->
                                 </div>
 
-                                <form class="col-span-3 hidden md:flex flex-col relative">
+                                <div class="col-span-3 hidden md:flex flex-col relative">
                                     <form id="form-package-detail-tourpackage" method="post"
-                                        class="shadow shadow-lg p-4 sticky top-28 right-0" style="
+                                        class="shadow shadow-lg sticky top-28 right-0" style="
                                         width: 100%;
                                         border-radius: 8px;
                                         background-color: white;
+                                        overflow: hidden;
                                     ">
-                                        <p class="mb-2">Start From </p>
+                                        <div style="background-color: #18551915;" class="flex p-4 justify-between">
+                                            <p class="">Start From </p>
+                                            <p class="font-bold">
+                                                <?php echo $currency->symbol ?>
+                                                <?php echo number_format($data_res->minimum_price->price, $currency->digit) ?>
+                                            </p>
+                                        </div>
                                         <!-- <p class="mb-2">Start From <span class="font-bold">
                                                 <php echo $currency->symbol ?>
                                                 <php echo number_format($res_tour->original_price, $currency->digit) ?></span>
                                         </p> -->
 
-                                        <p class="text-sm">Date:</p>
-                                        <input type="date" name="date" min="<?php echo date('Y-m-d\TH:i') ?>"
-                                            id="tp_date_detail" data-service='<?= json_encode([
-                                                'slug' => $data_res->slug,
-                                                'slug_country' => $data_res->country->slug
-                                            ]) ?>'
-                                            class="w-full form-input bg-gray-light4/60 border-none rounded py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm mb-4" />
+                                        <div class="p-4">
+                                            <p class="text-sm">Date:</p>
+                                            <input type="date" name="date" min="<?php echo date('Y-m-d\TH:i') ?>"
+                                                id="tp_date_detail" data-service='<?= json_encode([
+                                                    'slug' => $data_res->slug,
+                                                    'slug_country' => $data_res->country->slug
+                                                ]) ?>'
+                                                class="w-full form-input bg-gray-light4/60 border-none rounded py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm mb-4" />
 
-                                        <button id="btn-open-list-modal-package" type="button"
-                                            class="w-full btn-primary mb-4">Select
-                                            Package</button>
+                                            <p class="text-sm">Package:</p>
+                                            <button id="btn-open-list-modal-package" type="button"
+                                                class="w-full btn-primary mb-4">Select
+                                                Package</button>
 
-                                        <div class="flex flex-col gap-1 mb-4">
-                                            <div class="flex items-center justify-between">
-                                                <p>Adult:</p>
-                                                <div class="w-40"><?php renderInputNumber("adult", 1, 1) ?></div>
+                                            <textarea name="package-data" hidden
+                                                value="<?php echo json_encode([]) ?>"></textarea>
+                                            <div class="flex flex-col gap-1 mb-4">
+                                                <div class="flex items-center justify-between">
+                                                    <p>Adult:</p>
+                                                    <div class="w-40"><?php renderInputNumber("adult", 1, 1) ?></div>
+                                                </div>
+                                                <div class="flex items-center justify-between">
+                                                    <p>Child:</p>
+                                                    <div class="w-40"><?php renderInputNumber("child", 0, 0) ?></div>
+                                                </div>
+                                                <div class="flex items-center justify-between">
+                                                    <p>Infant:</p>
+                                                    <div class="w-40"><?php renderInputNumber("infant", 0, 0) ?></div>
+                                                </div>
                                             </div>
-                                            <div class="flex items-center justify-between">
-                                                <p>Child:</p>
-                                                <div class="w-40"><?php renderInputNumber("child", 0, 0) ?></div>
+
+                                            <div class="flex justify-between font-bold mb-2">
+                                                <p>Total</p>
+                                                <p>USD 123.80</p>
                                             </div>
-                                            <div class="flex items-center justify-between">
-                                                <p>Infant:</p>
-                                                <div class="w-40"><?php renderInputNumber("infant", 0, 0) ?></div>
-                                            </div>
+
+                                            <button id="find-package-act" type="button" class="w-full btn-primary">Find
+                                                Package</button>
                                         </div>
-
-                                        <div class="flex justify-between font-bold mb-2">
-                                            <p>Total</p>
-                                            <p>USD 123.80</p>
-                                        </div>
-
-                                        <button id="find-package-act" type="button" class="w-full btn-primary">Find
-                                            Package</button>
                                     </form>
-                                </form>
+                                </div>
                             </div>
 
                             <!-- <div id="package-opt-activity" class="w-full flex flex-col gap-4 p-4 rounded-lg mt-10"
