@@ -18,7 +18,8 @@ define("API_URL", "https://graceful-delhi-cdwuunbhuyx3.vapor-farm-c1.com"); //PR
 // define("API_URL_ACTIVITY", "https://fancy-cliff-3uhjbxauhri2.vapor-farm-b1.com");
 define("API_URL_ACTIVITY", "https://tondest.com");
 
-define("API_URL_TOUR_PACKAGE", "https://1a4d-182-253-51-86.ngrok-free.app"); //ngrok
+define("API_URL_TOUR_PACKAGE", "https://fancy-cliff-3uhjbxauhri2.vapor-farm-b1.com");
+// define("API_URL_TOUR_PACKAGE", "https://1a4d-182-253-51-86.ngrok-free.app"); //ngrok
 
 // define("API_URL", "https://apiclient.enixindo.com");
 // define("API_URL", "https://5ce4-103-89-78-133.ngrok-free.app");

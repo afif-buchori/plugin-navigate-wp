@@ -6,10 +6,11 @@ function enx_get_page_content($data)
     // $data = enx_get_detail_data();
     // $res_tour = $data->service;
     $data_res = $data->service;
+    $contents = $data_res->contents;
     // $currency = $data->dataCurrency;
-    // var_dump(json_encode($data_res));
+    // var_dump(json_encode($contents));
     ob_start();
-?>
+    ?>
     <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -39,7 +40,7 @@ function enx_get_page_content($data)
                                         if ($idx < 3) { ?>
                                             <img src="<?php echo $media ?>" width="100%" class="rounded-lg"
                                                 style="aspect-ratio: 16/9; object-fit: cover;">
-                                    <?php }
+                                        <?php }
                                     } ?>
                                 </div>
                             </div>
@@ -52,18 +53,83 @@ function enx_get_page_content($data)
                                     <!-- <p><php echo $data_res->addressLine ?? $data_res->city . ", " . $data_res->country ?>
                                     </p> -->
                                     <!-- <h2 class="font-medium mt-5">Descriptions</h2> -->
-                                    <p class="pl-4 text-center"><?php echo $data_res->contents->description ?></p>
+                                    <p class="pl-4 text-center my-16"><?php echo $data_res->contents->description ?></p>
 
-                                    <div style="border: solid 1px #CBE2B5 !important; background-color: #CBE2B560 !important;"
-                                        class="p-4 flex flex-col gap-4 md:flex-row rounded-lg bg-gray-light3">
+
+                                    <div id="" class="w" data-x-data="accordionInit()">
+
+                                        <div class="widget shadow-lg rounded-xl mb-10 bg-white">
+                                            <h5
+                                                class="font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
+                                                Itinerary
+                                                <input type="radio" class="hidden"
+                                                    name="addon_<php echo $contents->itinerary ?>" value="notset"
+                                                    checked="checked" />
+                                            </h5>
+                                            <div class="px-2 md:px-8">
+
+                                                <?php
+                                                $n = 0;
+                                                $i = 0;
+                                                foreach ($contents->itinerary as $key => $item) {
+                                                    if ($i > 0)
+                                                        echo "<hr />";
+                                                    ?>
+                                                    <div
+                                                        class="md:grid grid-cols-12 md:space-x-4 relative <?php echo ($i == (count($contents->itinerary) - 1) ? 'smt-4' : ($i > 0 ? 'smy-4' : 'smb-4')) ?>">
+                                                        <div class="col-span-12 py-5">
+                                                            <?php if (count($contents->itinerary)) { ?>
+                                                                <span class="absolute left-45px md:left-55px"
+                                                                    style="border-left: solid 2px #BBE9FF !important; position: absolute; top: 0px; left: 58px; 
+                                                                    height: <?php echo count($contents->itinerary) === $key + 1 ? "30px" : ($key === 0 ? 'calc(100% - 30px)' : '100%'); ?>; 
+                                                                    top: <?php echo $key === 0 ? "30px" : "0px" ?> ;"></span>
+                                                            <?php } ?>
+                                                            <div class="flex items-center justify-between cursor-pointer"
+                                                                data-x-bind="trigger(<?php echo $n; ?>)">
+                                                                <div class="flex gap-2 text-xs md:text-base">
+                                                                    <strong style="opacity: 0.6;" class="whitespace-nowrap">Day
+                                                                        <?php echo $key ?>
+                                                                    </strong>
+                                                                    <span class="mt-0.5 md:mt-1.5"
+                                                                        style="width: 12px; height: 12px; border-radius: 99px; background-color: #BBE9FF;"></span>
+                                                                    <strong class="flex-1"><?php echo $item->title ?></strong>
+                                                                </div>
+                                                                <span class="iconify -mt-1 transition-all duration-500 inline"
+                                                                    data-icon="fluent:chevron-down-12-regular" data-width="20"
+                                                                    data-height="20"
+                                                                    data-x-bind="iconStyle(<?php echo $n; ?>)"></span>
+                                                            </div>
+                                                            <div class="relative overflow-hidden transition-all max-h-0 duration-700 inner-text-sm ml-14 md:ml-72px mt-2"
+                                                                data-x-ref="container-<?php echo $n; ?>"
+                                                                data-x-bind="containerStyle(<?php echo $n; ?>)">
+                                                                <span>
+                                                                    <?php echo $item->description ?>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <?php
+                                                    $n++;
+                                                    $i++;
+                                                } ?>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="border: solid 1px #D1E9F6 !important; background-color: #D1E9F660 !important;"
+                                        class="p-4 flex flex-col gap-4 md:flex-row rounded-lg bg-gray-light3 shadow-lg">
                                         <div class="flex-1 flex flex-col gap-2">
                                             <h2 style="border-bottom: solid 2px black !important; width: fit-content;"
                                                 class="font-bold">
                                                 Include:</h2>
                                             <?php foreach ($data_res->contents->include as $key => $incl) { ?>
-                                                <p class="text-xs sm:text-sm"><span
-                                                        style="color: #00712D !important;">&#10003;</span> <?php echo $incl ?>
-                                                </p>
+                                                <div class="text-sm md:text-base flex gap-2">
+                                                    <span class="iconify inline-block text-green-success"
+                                                        data-icon="akar-icons:circle-check" data-width="20" data-height="20"
+                                                        style="margin-top: 0.125rem"></span>
+                                                    <p class="flex-1"><?php echo $incl ?></p>
+                                                </div>
                                             <?php } ?>
                                         </div>
                                         <div class="flex-1 flex flex-col gap-2">
@@ -71,7 +137,12 @@ function enx_get_page_content($data)
                                                 class="font-bold">
                                                 Exclude:</h2>
                                             <?php foreach ($data_res->contents->exclude as $key => $excl) { ?>
-                                                <p><?php echo $excl ?></p>
+                                                <div class="text-sm md:text-base flex gap-2">
+                                                    <span class="iconify inline-block text-red-error"
+                                                        data-icon="radix-icons:cross-circled" data-width="20" data-height="20"
+                                                        style="margin-top: 0.12rem"></span>
+                                                    <p class="flex-1"><?php echo $excl ?></p>
+                                                </div>
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -133,9 +204,9 @@ function enx_get_page_content($data)
                                         <p class="text-sm">Date:</p>
                                         <input type="date" name="date" min="<?php echo date('Y-m-d\TH:i') ?>"
                                             id="tp_date_detail" data-service='<?= json_encode([
-                                                                                    'slug' => $data_res->slug,
-                                                                                    'slug_country' => $data_res->country->slug
-                                                                                ]) ?>'
+                                                'slug' => $data_res->slug,
+                                                'slug_country' => $data_res->country->slug
+                                            ]) ?>'
                                             class="w-full form-input bg-gray-light4/60 border-none rounded py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm mb-4" />
 
                                         <button id="find-package-act" type="button" class="w-full btn-primary mb-4">Select
@@ -180,7 +251,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-<?php
+    <?php
     $contents = ob_get_clean();
     return $contents;
 }

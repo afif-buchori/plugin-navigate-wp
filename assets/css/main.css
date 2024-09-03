@@ -1460,6 +1460,10 @@ Add the correct display in Chrome and Safari.
   left: 1.25rem !important;
 }
 
+.enx-container .left-45px {
+  left: 45px !important;
+}
+
 .enx-container .-right-20 {
   right: -5rem !important;
 }
@@ -1644,6 +1648,11 @@ Add the correct display in Chrome and Safari.
 .enx-container .mt-0 {
   margin-top: 0px !important;
 }
+
+.enx-container .mt-0\.5 {
+  margin-top: 2px !important;
+}
+
 .enx-container .mt-2 {
   margin-top: 1rem !important /* 8px */;
 }
@@ -1790,6 +1799,18 @@ Add the correct display in Chrome and Safari.
 
 .enx-container .ml-1 {
   margin-left: 0.25rem !important;
+}
+
+.enx-container .ml-14 {
+  margin-left: 3.5rem !important;
+}
+
+.enx-container .ml-16 {
+  margin-left: 4rem !important;
+}
+
+.enx-container .ml-20 {
+  margin-left: 5rem !important;
 }
 
 .enx-container .mt-3 {
@@ -3511,6 +3532,10 @@ Add the correct display in Chrome and Safari.
     left: 1.25rem !important;
   }
 
+  .enx-container .md\:left-55px {
+    left: 55px !important;
+  }
+
   .enx-container .md\:top-20 {
     top: 5rem !important;
   }
@@ -3554,8 +3579,16 @@ Add the correct display in Chrome and Safari.
     margin-top: 0px !important;
   }
 
+  .enx-container .md\:mt-1\.5 {
+    margin-top: 6px !important;
+  }
+
   .enx-container .md\:ml-12 {
     margin-left: 3rem !important;
+  }
+
+  .enx-container .md\:ml-72px {
+    margin-left: 72px !important;
   }
 
   .enx-container .md\:mt-3 {
@@ -3668,6 +3701,11 @@ Add the correct display in Chrome and Safari.
 
   .enx-container .md\:p-5 {
     padding: 1.25rem !important;
+  }
+
+  .enx-container .md\:px-4 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 
   .enx-container .md\:px-8 {
