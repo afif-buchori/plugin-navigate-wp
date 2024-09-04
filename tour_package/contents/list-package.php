@@ -31,7 +31,7 @@
             height: 100%;
             overflow-y: auto;
             padding-right: 16px;
-        ">
+        " id="detail-content">
             <!-- CONTENTS -->
 
             <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, veritatis magnam, sed sequi
