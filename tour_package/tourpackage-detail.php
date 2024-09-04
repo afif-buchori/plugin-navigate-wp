@@ -10,7 +10,7 @@ function enx_get_page_content($data)
     $currency = $data_res->minimum_price->price_detail->currency;
     // var_dump(json_encode($contents));
     ob_start();
-    ?>
+?>
     <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -41,7 +41,7 @@ function enx_get_page_content($data)
                                         if ($idx < 3) { ?>
                                             <img src="<?php echo $media ?>" width="100%" class="rounded-lg"
                                                 style="aspect-ratio: 16/9; object-fit: cover;">
-                                        <?php }
+                                    <?php }
                                     } ?>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@ function enx_get_page_content($data)
                                                 foreach ($contents->itinerary as $key => $item) {
                                                     if ($i > 0)
                                                         echo "<hr />";
-                                                    ?>
+                                                ?>
                                                     <div
                                                         class="md:grid grid-cols-12 md:space-x-4 relative <?php echo ($i == (count($contents->itinerary) - 1) ? 'smt-4' : ($i > 0 ? 'smy-4' : 'smb-4')) ?>">
                                                         <div class="col-span-12 py-5">
@@ -126,7 +126,7 @@ function enx_get_page_content($data)
                                                         </div>
 
                                                     </div>
-                                                    <?php
+                                                <?php
                                                     $n++;
                                                     $i++;
                                                 } ?>
@@ -230,40 +230,48 @@ function enx_get_page_content($data)
                                             <p class="text-sm">Date:</p>
                                             <input type="date" name="date" min="<?php echo date('Y-m-d\TH:i') ?>"
                                                 id="tp_date_detail" data-service='<?= json_encode([
-                                                    'slug' => $data_res->slug,
-                                                    'slug_country' => $data_res->country->slug
-                                                ]) ?>'
+                                                                                        'slug' => $data_res->slug,
+                                                                                        'slug_country' => $data_res->country->slug
+                                                                                    ]) ?>'
                                                 class="w-full form-input bg-gray-light4/60 border-none rounded py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm mb-4" />
 
-                                            <p class="text-sm">Package:</p>
-                                            <button id="btn-open-list-modal-package" type="button"
-                                                class="w-full btn-primary mb-4">Select
-                                                Package</button>
+                                            <div id="btn-slc-package-detail" hidden>
+                                                <p class="text-sm">Package:</p>
+                                                <button id="btn-open-list-modal-package" type="button"
+                                                    class="w-full btn-primary mb-4">Select
+                                                    Package</button>
+                                            </div>
 
+                                            <!-- DATA -->
                                             <textarea name="package-data" hidden
                                                 value="<?php echo json_encode([]) ?>"></textarea>
-                                            <div class="flex flex-col gap-1 mb-4">
-                                                <div class="flex items-center justify-between">
-                                                    <p>Adult:</p>
-                                                    <div class="w-40"><?php renderInputNumber("adult", 1, 1) ?></div>
-                                                </div>
-                                                <div class="flex items-center justify-between">
-                                                    <p>Child:</p>
-                                                    <div class="w-40"><?php renderInputNumber("child", 0, 0) ?></div>
-                                                </div>
-                                                <div class="flex items-center justify-between">
-                                                    <p>Infant:</p>
-                                                    <div class="w-40"><?php renderInputNumber("infant", 0, 0) ?></div>
-                                                </div>
-                                            </div>
+                                            <input type="hidden" name="package-selected" value="">
+                                            <!-- END DATA -->
 
-                                            <div class="flex justify-between font-bold mb-2">
-                                                <p>Total</p>
-                                                <p>USD 123.80</p>
-                                            </div>
+                                            <div id="btn-inpt-passanger-detail" hidden>
+                                                <div class="flex flex-col gap-1 mb-4">
+                                                    <div class="flex items-center justify-between">
+                                                        <p>Adult:</p>
+                                                        <div class="w-40"><?php renderInputNumber("adult", 1, 1) ?></div>
+                                                    </div>
+                                                    <div class="flex items-center justify-between">
+                                                        <p>Child:</p>
+                                                        <div class="w-40"><?php renderInputNumber("child", 0, 0) ?></div>
+                                                    </div>
+                                                    <div class="flex items-center justify-between">
+                                                        <p>Infant:</p>
+                                                        <div class="w-40"><?php renderInputNumber("infant", 0, 0) ?></div>
+                                                    </div>
+                                                </div>
 
-                                            <button id="find-package-act" type="button" class="w-full btn-primary">Find
-                                                Package</button>
+                                                <div class="flex justify-between font-bold mb-2">
+                                                    <p>Total</p>
+                                                    <p>USD 123.80</p>
+                                                </div>
+
+                                                <button id="find-package-act" type="button" class="w-full btn-primary">Find
+                                                    Package</button>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -282,7 +290,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-    <?php
+<?php
     $contents = ob_get_clean();
     return $contents;
 }

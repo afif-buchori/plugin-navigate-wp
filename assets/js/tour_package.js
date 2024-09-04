@@ -1,14 +1,16 @@
 const API_TP_URL = "/api/tour-package";
 
 // Function Detail
-const date_detail = document.getElementById("tp_date_detail") ?? null;
+const form_detail = document.querySelector("#form-package-detail-tourpackage") ?? null;
 
-if (date_detail) {
+if (form_detail) {
+  // Date
+  const date_detail = document.getElementById("tp_date_detail") ?? null;
   date_detail.addEventListener("change", async function (e) {
     const attr_service = JSON.parse(date_detail.getAttribute("data-service"));
-    const form_detail = document.querySelector("#form-package-detail-tourpackage");
     const input_passangers = form_detail.querySelectorAll("input[type='number']");
     const package_data = form_detail.querySelector("textarea[name='package-data']");
+    const btn_slct_package = document.querySelector("#btn-slc-package-detail");
 
     let passangers = {};
     input_passangers.forEach((input) => {
@@ -26,11 +28,30 @@ if (date_detail) {
     const res = await fetchingPost(url, body);
     if (res && res.data) {
       package_data.value = JSON.stringify(res.data);
-      console.log(JSON.parse(package_data.value)); // Cek apakah res.data ada
+      btn_slct_package.removeAttribute("hidden");
     } else {
+      btn_slct_package.setAttribute("hidden", "");
       console.log("Response data is empty or not returned correctly");
     }
   });
+  // End Date
+
+  // Modal List Package
+  const modalListPackage = document.getElementById("modal-list-tour-package") ?? null;
+  const btnSlectPackage = document.getElementById("btn-open-list-modal-package") ?? null;
+  if (btnSlectPackage) {
+    btnSlectPackage.addEventListener("click", function () {
+      const package_data = form_detail.querySelector("textarea[name='package-data']") ?? null;
+      const btnClose = document.getElementById("close-modal-list-tourpackage");
+      let data = [];
+      if (package_data) data = JSON.parse(package_data.value);
+      console.log(data);
+
+      modalListPackage.style.display = "grid";
+      btnClose.addEventListener("click", () => (modalListPackage.style.display = "none"));
+    });
+  }
+  // End Modal List Package
 }
 // End Function Detail
 
@@ -53,15 +74,3 @@ async function fetchingPost(url, data) {
   }
 }
 // End Fetch Post
-
-// Modal List Package
-const modalListPackage = document.getElementById("modal-list-tour-package");
-const btnSlectPackage = document.getElementById("btn-open-list-modal-package");
-if (btnSlectPackage) {
-  btnSlectPackage.addEventListener("click", function () {
-    const btnClose = document.getElementById("close-modal-list-tourpackage");
-    modalListPackage.style.display = "grid";
-    btnClose.addEventListener("click", () => (modalListPackage.style.display = "none"));
-  });
-}
-// End Modal List Package
