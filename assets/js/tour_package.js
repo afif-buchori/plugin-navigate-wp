@@ -22,7 +22,7 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
     const attr_service = JSON.parse(date_detail.getAttribute("data-service")) ?? {};
     const url_get_package_detail = API_TP_URL + "/get-package";
     const package_selected = document.querySelector("input[name='package-selected']");
-    const loading_select_pac = document.getElementById("loading-select-package-detail");
+    const loading_select_pac = document.getElementById("loading-select-package-detail") ?? null;
 
     let passengers = {};
     let body_detail = {
@@ -189,14 +189,34 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
     }
     // End Modal List Package
 
-    form_detail.addEventListener("submit", function (event) {
+    // Submit
+    form_detail.addEventListener("submit", async function (event) {
       event.preventDefault();
+      const package_data = form_detail.querySelector("textarea[name='package-data']") ?? null;
+
+      let data = [];
+      if (package_data) data = JSON.parse(package_data.value);
+      const select_data = data.filter((d) => d.travel_period_id == package_selected.value);
+
       const { date, adult, child, infant } = body_detail;
       const body_form_detail = {
         id: package_selected.value,
+        date,
+        adult,
+        child,
+        infant,
       };
-      console.log(body_form_detail, date, adult, child, infant);
+      const url_post_session = API_TP_URL + "/generate-tp-session";
+      const res = await fetchingPost(url_post_session, body_form_detail);
+      if (res && select_data.length > 0) {
+        if (select_data[0].addons > 0) {
+          window.location.href = "/tour-package/addons";
+        } else {
+          window.location.href = "/tour-package/booking";
+        }
+      }
     });
+    // End Submit
   }
 
   // Modal Term & Conditions

@@ -21,11 +21,11 @@ function enx_get_data_api_post()
     $data = [];
     if ($url[2] == "get-package") {
         $data = enx_post_getpackage();
+    } elseif ($url[2] == "generate-tp-session") {
+        session_start();
+        $data = enx_generate_tp_session();
     }
-    // elseif ($url[2] == "generate-act-session") {
-    //     session_start();
-    //     $data = enx_generate_act_session();
-    // } elseif ($url[2] == "booking-act") {
+    // elseif ($url[2] == "booking-act") {
     //     $data = enx_post_booking_act();
     // }
 
@@ -45,11 +45,11 @@ function enx_post_getpackage()
     return $data;
 }
 
-// function enx_generate_act_session()
-// {
-//     session_start();
-//     $_SESSION['CART_ACTIVITY'] = json_decode(file_get_contents("php://input"));
-
-//     return '/' . ACTIVITY_LINK . '/booking';
-//     // return $_SESSION['CART_ACTIVITY'];
-// }
+function enx_generate_tp_session()
+{
+    session_start();
+    $_SESSION['SESSION_TOUR_PACKAGE'] = json_decode(file_get_contents("php://input"));
+    return true;
+    // return '/' . ACTIVITY_LINK . '/booking';
+    // return $_SESSION['CART_ACTIVITY'];
+}
