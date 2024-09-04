@@ -1,14 +1,13 @@
 <?php
 function enx_get_page_content($data)
 {
-    var_dump($data);
-    die();
     $old = json_decode(OLD);
     $error = json_decode(ERROR_DATA);
 
-    // $url = API_ACTIVITY_URL . '/get/booking-data?currency=' . DEFAULT_CURRENCY;
-    // $data_res = fetchGet($url);
-    // var_dump(json_encode($data));
+    $url = API_TOUR_PACKAGE_URL . '/post/data-booking';
+    $data->currency = str_replace("currency=", "", checkCurrency());
+    $data_res = fetchPost($url, $data);
+    var_dump($data_res->countrys);
     ob_start();
 ?>
     <div class="enx-container site-wrapper">
@@ -122,11 +121,11 @@ function enx_get_page_content($data)
                                             <div class="absolute top-7 left-0 flex w-full" style="z-index: -10">
                                                 <select name="phone_code" id="phone_code_select2" class="">
                                                     <option selected value="">--Code Phone--</option>
-                                                    <!-- <php foreach ($data_res->data->countrys as $country) { >
-                                                        <option value="<php echo $country->phonecode >" <php echo $old->phone_code == $country->phonecode  'selected' : '' >>
-                                                            <php echo ('(+' . $country->phonecode . ') - ' . $country->nicename) >
+                                                    <?php foreach ($data_res->countrys as $country) { ?>
+                                                        <option value="<?php echo $country->phonecode ?>" <?php echo $old->phone_code == $country->phonecode ? 'selected' : '' ?>>
+                                                            <?php echo ('(+' . $country->phonecode . ') - ' . $country->nicename) ?>
                                                         </option>
-                                                    <php } > -->
+                                                    <?php } ?>
                                                 </select>
                                             </div>
 
