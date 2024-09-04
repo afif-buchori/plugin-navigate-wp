@@ -10,7 +10,7 @@ function enx_get_page_content($data)
     $currency = $data_res->minimum_price->price_detail->currency;
     // var_dump(json_encode($contents));
     ob_start();
-?>
+    ?>
     <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -41,7 +41,7 @@ function enx_get_page_content($data)
                                         if ($idx < 3) { ?>
                                             <img src="<?php echo $media ?>" width="100%" class="rounded-lg"
                                                 style="aspect-ratio: 16/9; object-fit: cover;">
-                                    <?php }
+                                        <?php }
                                     } ?>
                                 </div>
                             </div>
@@ -58,17 +58,30 @@ function enx_get_page_content($data)
                                     </p>
 
                                     <!-- LIST ICON -->
-                                    <div class="flex gap-4">
-                                        <span class="iconify inline" data-icon="mingcute:time-duration-fill" data-width="20"
-                                            data-height="20"></span>
-                                        <span class="iconify inline" data-icon="mdi:home-city-outline" data-width="20"
-                                            data-height="20"></span>
-                                        <span class="iconify inline" data-icon="ion:ticket-outline" data-width="20"
-                                            data-height="20"></span>
+                                    <div style="border-top: solid 2px #45474B50 !important; border-bottom: solid 2px #45474B50 !important; align-items: stretch;"
+                                        class="flex gap-4 p-4 mt-5">
+                                        <div class="flex gap-2 items-center">
+                                            <span class="iconify inline" data-icon="mingcute:time-duration-fill"
+                                                data-width="20" data-height="20"></span>
+                                            <p><?php echo $contents->duration->first . " ~ " . $contents->duration->last ?>
+                                                Days</p>
+                                        </div>
+                                        <span style="width: 2px; background-color: #45474B50;"></span>
+                                        <div class="flex gap-2 items-center">
+                                            <span class="iconify inline" data-icon="mdi:home-city-outline" data-width="20"
+                                                data-height="20"></span>
+                                            <p><?php echo $contents->cities_visited->first . " ~ " . $contents->cities_visited->last ?>
+                                                Cities Visited</p>
+                                        </div>
+                                        <span style="width: 2px; background-color: #45474B50;"></span>
+                                        <div class="flex gap-2 items-center">
+                                            <span class="iconify inline" data-icon="ion:ticket-outline" data-width="20"
+                                                data-height="20"></span>
+                                            <p>E-ticket</p>
+                                        </div>
                                     </div>
                                     <!-- LIST ICON -->
-                                    <!-- <h2 class="font-medium mt-5">Descriptions</h2> -->
-                                    <p style="text-align: justify;" class="my-16">
+                                    <p style="text-align: justify;" class="mt-10 mb-10">
                                         <?php echo $data_res->contents->description ?>
                                     </p>
 
@@ -91,7 +104,7 @@ function enx_get_page_content($data)
                                                 foreach ($contents->itinerary as $key => $item) {
                                                     if ($i > 0)
                                                         echo "<hr />";
-                                                ?>
+                                                    ?>
                                                     <div
                                                         class="md:grid grid-cols-12 md:space-x-4 relative <?php echo ($i == (count($contents->itinerary) - 1) ? 'smt-4' : ($i > 0 ? 'smy-4' : 'smb-4')) ?>">
                                                         <div class="col-span-12 py-5">
@@ -122,11 +135,27 @@ function enx_get_page_content($data)
                                                                 <span>
                                                                     <?php echo $item->description ?>
                                                                 </span>
+                                                                <?php if ($item->with_add_info) {
+                                                                    $icon = [
+                                                                        'utensils' => '<span class="iconify mt-1 inline"
+                                                                                    data-icon="fa6-solid:utensils" data-width="16"
+                                                                                    data-height="16"></span>',
+                                                                        'plane' => '<span class="iconify mt-1 inline" data-icon="ri:plane-fill"
+                                                                                    data-width="16" data-height="16"></span>'
+                                                                    ];
+                                                                    foreach ($item->add_info as $key => $info) {
+                                                                        ?>
+                                                                        <div class="flex gap-2 <?php echo $key == 0 ? "mt-4" : "" ?>">
+                                                                            <?php echo $icon[$info->icon] ?? "" ?>
+                                                                            <p><?php echo $info->description ?></p>
+                                                                        </div>
+                                                                    <?php }
+                                                                } ?>
                                                             </div>
                                                         </div>
 
                                                     </div>
-                                                <?php
+                                                    <?php
                                                     $n++;
                                                     $i++;
                                                 } ?>
@@ -134,76 +163,55 @@ function enx_get_page_content($data)
                                         </div>
                                     </div>
 
-                                    <div style="border: solid 1px #D1E9F6 !important; background-color: #D1E9F660 !important;"
-                                        class="p-4 flex flex-col gap-4 md:flex-row rounded-lg bg-gray-light3 shadow-lg">
-                                        <div class="flex-1 flex flex-col gap-2">
-                                            <h2 style="border-bottom: solid 2px black !important; width: fit-content;"
-                                                class="font-bold">
-                                                Include:</h2>
-                                            <?php foreach ($data_res->contents->include as $key => $incl) { ?>
-                                                <div class="text-sm md:text-base flex gap-2">
-                                                    <span class="iconify inline-block text-green-success"
-                                                        data-icon="akar-icons:circle-check" data-width="20" data-height="20"
-                                                        style="margin-top: 0.125rem"></span>
-                                                    <p class="flex-1"><?php echo $incl ?></p>
-                                                </div>
-                                            <?php } ?>
-                                        </div>
-                                        <div class="flex-1 flex flex-col gap-2">
-                                            <h2 style="border-bottom: solid 2px black !important; width: fit-content;"
-                                                class="font-bold">
-                                                Exclude:</h2>
-                                            <?php foreach ($data_res->contents->exclude as $key => $excl) { ?>
-                                                <div class="text-sm md:text-base flex gap-2">
-                                                    <span class="iconify inline-block text-red-error"
-                                                        data-icon="radix-icons:cross-circled" data-width="20" data-height="20"
-                                                        style="margin-top: 0.12rem"></span>
-                                                    <p class="flex-1"><?php echo $excl ?></p>
-                                                </div>
-                                            <?php } ?>
+                                    <div class="bg-white rounded-lg">
+                                        <div style="border: solid 1px #D1E9F6 !important; background-color: #D1E9F660 !important;"
+                                            class="p-4 flex flex-col gap-4 md:flex-row rounded-lg bg-gray-light3 shadow-lg">
+                                            <div class="flex-1 flex flex-col gap-2">
+                                                <h2 style="border-bottom: solid 2px black !important; width: fit-content;"
+                                                    class="font-bold">
+                                                    Include:</h2>
+                                                <?php foreach ($data_res->contents->include as $key => $incl) { ?>
+                                                    <div class="text-sm md:text-base flex gap-2">
+                                                        <span class="iconify inline-block text-green-success"
+                                                            data-icon="akar-icons:circle-check" data-width="20" data-height="20"
+                                                            style="margin-top: 0.125rem"></span>
+                                                        <p class="flex-1"><?php echo $incl ?></p>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="flex-1 flex flex-col gap-2">
+                                                <h2 style="border-bottom: solid 2px black !important; width: fit-content;"
+                                                    class="font-bold">
+                                                    Exclude:</h2>
+                                                <?php foreach ($data_res->contents->exclude as $key => $excl) { ?>
+                                                    <div class="text-sm md:text-base flex gap-2">
+                                                        <span class="iconify inline-block text-red-error"
+                                                            data-icon="radix-icons:cross-circled" data-width="20"
+                                                            data-height="20" style="margin-top: 0.12rem"></span>
+                                                        <p class="flex-1"><?php echo $excl ?></p>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <!-- <php if (isset($data_res->whatToExpect)) { ?>
-                                        <h2 class="font-medium mt-5">What to Expect</h2>
-                                        <p><php $dom = new DOMDocument();
-                                            $dom->loadHTML($data_res->whatToExpect);
-                                            echo $dom->saveHTML();
-                                            ?></p>
-                                    <php } ?>
-
-                                    <php if ($data_res->operatingHours) { ?>
-                                        <php if ($data_res->operatingHours->fixedDays && count($data_res->operatingHours->fixedDays) > 0) { ?>
-                                            <h2 class="font-medium mt-5">Opening Hours</h2>
-                                            <php foreach ($data_res->operatingHours->fixedDays as $operation_hour) { ?>
-                                                <li class="pl-4">
-                                                    <php echo $operation_hour->day . ", " . $operation_hour->startHour . " - " . $operation_hour->endHour ?>
-                                                </li>
-                                            <php } ?>
-                                        <php } ?>
-                                    <php } ?> -->
-
-                                    <!-- <php if (isset($data_res->blockedDate) && count($data_res->blockedDate) > 0) { ?>
-                                        <h2 class="font-medium mt-5">Blocked Out Dates</h2>
-                                        <div class="pl-4">
-                                            <table style="width: fit-content;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="min-width: 210px; text-align: start;">Date</th>
-                                                        <th style="text-align: start;">Remark</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <php foreach ($data_res->blockedDate as $block) { ?>
-                                                        <tr>
-                                                            <td><php echo date('l, d F Y', strtotime($block->date)) ?></td>
-                                                            <td><php echo $block->title ?></td>
-                                                        </tr>
-                                                    <php } ?>
-                                                </tbody>
-                                            </table>
+                                    <div id="btn-open-modal-tc-detail"
+                                        style="border: solid 2px #FFDE4D !important; background-color: #45474B; padding: 1rem 40px 1rem 1rem;"
+                                        class="relative rounded-lg mt-10 shadow-lg cursor-pointer">
+                                        <div style="color: #FFDE4D;" class="flex gap-2">
+                                            <span id="animate-pulse" class="iconify mt-1 inline"
+                                                data-icon="akar-icons:info-fill" data-width="20" data-height="20"></span>
+                                            <p class="font-bold">Term and Conditions</p>
                                         </div>
-                                    <php } ?> -->
+                                        <p class="text-white text-xs md:text-sm">By placing an order, you must accept the
+                                            terms and conditions.
+                                            Please read first
+                                            to be sure.</p>
+                                        <span style="top: calc(50% - 20px); right: 14px;"
+                                            class="iconify mt-1 inline animate-pulse absolute text-white"
+                                            data-icon="typcn:chevron-right" data-width="32" data-height="32"></span>
+                                    </div>
+                                    <?php include_once plugin_dir_path(__FILE__) . 'contents/modal-termcondition.php'; ?>
                                 </div>
 
                                 <div class="col-span-3 hidden md:flex flex-col relative">
@@ -216,7 +224,7 @@ function enx_get_page_content($data)
                                     ">
                                         <div style="background-color: #18551915;" class="flex p-4 justify-between">
                                             <p class="">Start From </p>
-                                            <p class="font-bold">
+                                            <p id="min-price-detail" class="font-bold">
                                                 <?php echo $currency->symbol ?>
                                                 <?php echo number_format($data_res->minimum_price->price, $currency->digit) ?>
                                             </p>
@@ -230,35 +238,40 @@ function enx_get_page_content($data)
                                             <p class="text-sm">Date:</p>
                                             <input type="date" name="date" min="<?php echo date('Y-m-d\TH:i') ?>"
                                                 id="tp_date_detail" data-service='<?= json_encode([
-                                                                                        'slug' => $data_res->slug,
-                                                                                        'slug_country' => $data_res->country->slug
-                                                                                    ]) ?>'
+                                                    'slug' => $data_res->slug,
+                                                    'slug_country' => $data_res->country->slug
+                                                ]) ?>'
                                                 class="w-full form-input bg-gray-light4/60 border-none rounded py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm mb-4" />
 
-                                            <div id="btn-slc-package-detail" hidden>
+                                            <div id="btn-slc-package-detail" class="hidden">
                                                 <p class="text-sm">Package:</p>
                                                 <button id="btn-open-list-modal-package" type="button"
                                                     class="w-full btn-primary mb-4">Select
                                                     Package</button>
                                             </div>
-
+                                            <div id="loading-select-package-detail" class="hidden">
+                                                <div id="skeleton-pulse" style="background-color: #405D72;"
+                                                    class="w-full h-10 rounded-lg"></div>
+                                            </div>
                                             <!-- DATA -->
                                             <textarea name="package-data" hidden
                                                 value="<?php echo json_encode([]) ?>"></textarea>
                                             <input type="hidden" name="package-selected" value="">
                                             <!-- END DATA -->
 
-                                            <div id="btn-inpt-passanger-detail" hidden>
+                                            <div id="btn-inpt-passanger-detail" class="hidden">
                                                 <div class="flex flex-col gap-1 mb-4">
-                                                    <div class="flex items-center justify-between">
+                                                    <div id="div-qtydetail-adult" class="flex items-center justify-between">
                                                         <p>Adult:</p>
                                                         <div class="w-40"><?php renderInputNumber("adult", 1, 1) ?></div>
                                                     </div>
-                                                    <div class="flex items-center justify-between">
+                                                    <div id="div-qtydetail-child"
+                                                        class="flex items-center justify-between hidden">
                                                         <p>Child:</p>
                                                         <div class="w-40"><?php renderInputNumber("child", 0, 0) ?></div>
                                                     </div>
-                                                    <div class="flex items-center justify-between">
+                                                    <div id="div-qtydetail-infant"
+                                                        class="flex items-center justify-between hidden">
                                                         <p>Infant:</p>
                                                         <div class="w-40"><?php renderInputNumber("infant", 0, 0) ?></div>
                                                     </div>
@@ -266,11 +279,12 @@ function enx_get_page_content($data)
 
                                                 <div class="flex justify-between font-bold mb-2">
                                                     <p>Total</p>
-                                                    <p>USD 123.80</p>
+                                                    <p id="total-price-detail">USD 123.80</p>
                                                 </div>
 
-                                                <button id="find-package-act" type="button" class="w-full btn-primary">Find
-                                                    Package</button>
+                                                <button id="find-package-tourpack" type="submit"
+                                                    class="w-full btn-primary">Book
+                                                    Now</button>
                                             </div>
                                         </div>
                                     </form>
@@ -290,7 +304,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-<?php
+    <?php
     $contents = ob_get_clean();
     return $contents;
 }

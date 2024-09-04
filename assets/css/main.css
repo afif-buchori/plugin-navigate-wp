@@ -1925,6 +1925,10 @@ Add the correct display in Chrome and Safari.
   height: 1.5rem !important;
 }
 
+.enx-container .h-10 {
+  height: 2.5rem !important;
+}
+
 .enx-container .h-\[100vh\] {
   height: 100vh !important;
 }
@@ -2802,6 +2806,10 @@ Add the correct display in Chrome and Safari.
 
 .enx-container .pl-14 {
   padding-left: 3.5rem !important;
+}
+
+.enx-container .pb-0 {
+  padding-bottom: 0px !important;
 }
 
 .enx-container .text-left {
@@ -4801,6 +4809,25 @@ span[data-select2-id] {
   border: solid 2px #111827;
   padding: 0.25rem 0.5rem;
   font-size: 14px;
+}
+
+.enx-container #skeleton-pulse {
+  animation: skeletonpulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+  position: relative !important;
+}
+.enx-container #skeleton-pulse::after {
+  content: "...";
+  position: absolute !important;
+  bottom: 6px !important;
+  right: -28px !important;
+  font-size: 32px;
+  animation: skeletonpulse 0.5s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
+@keyframes skeletonpulse {
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .enx-container #animate-pulse {
