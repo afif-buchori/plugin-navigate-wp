@@ -12,7 +12,8 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
   //Booking Tour
   console.log("Booking Tour");
 
-  const payment_settings = document.querySelectorAll("input[name='payment-settings']") ?? [];
+  const payment_settings =
+    document.querySelectorAll("input[name='payment-settings']") ?? [];
 
   payment_settings.forEach((element) => {
     element.addEventListener("click", function (e) {
@@ -26,7 +27,10 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
 
         let check_pay = data_payment.total_payment;
 
-        total.innerHTML = attr_currency.symbol + " " + numberFormat(data_payment.total_payment, attr_currency.digit);
+        total.innerHTML =
+          attr_currency.symbol +
+          " " +
+          numberFormat(data_payment.total_payment, attr_currency.digit);
         console.log(data_payment, attr_service_fee);
       }
     });
@@ -36,17 +40,26 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
   console.log("Detail Tour");
 
   // Function Detail
-  const form_detail = document.querySelector("#form-package-detail-tourpackage") ?? null;
+  const form_detail =
+    document.querySelector("#form-package-detail-tourpackage") ?? null;
 
   if (form_detail) {
-    const package_data = form_detail.querySelector("textarea[name='package-data']");
-    const input_passengers = form_detail.querySelectorAll("input[type='number']") ?? [];
+    const package_data = form_detail.querySelector(
+      "textarea[name='package-data']"
+    );
+    const input_passengers =
+      form_detail.querySelectorAll("input[type='number']") ?? [];
     const date_detail = document.getElementById("tp_date_detail") ?? null;
-    const attr_service = JSON.parse(date_detail.getAttribute("data-service")) ?? {};
+    const attr_service =
+      JSON.parse(date_detail.getAttribute("data-service")) ?? {};
     const url_get_package_detail = API_TP_URL + "/get-package";
-    const package_selected = document.querySelector("input[name='package-selected']");
-    const loading_select_pac = document.getElementById("loading-select-package-detail") ?? null;
-    const btn_submit_package = document.getElementById("find-package-tourpack") ?? null;
+    const package_selected = document.querySelector(
+      "input[name='package-selected']"
+    );
+    const loading_select_pac =
+      document.getElementById("loading-select-package-detail") ?? null;
+    const btn_submit_package =
+      document.getElementById("find-package-tourpack") ?? null;
 
     let passengers = {};
     let body_detail = {
@@ -65,10 +78,13 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
       }
       controllerPass = new AbortController();
       const signal = controllerPass.signal;
-      if (btn_submit_package) {
-        btn_submit_package.innerText = "Calculate...";
-        btn_submit_package.setAttribute("disabled", "");
-      }
+      const loader_price =
+        document.getElementById("loader-total-price-detail") ?? null;
+      const total_price = document.getElementById("total-price-detail") ?? null;
+      loader_price.classList.remove("hidden");
+      total_price.classList.add("hidden");
+      btn_submit_package.innerText = "Calculate...";
+      btn_submit_package.setAttribute("disabled", "");
       try {
         const result = await fetch(url, {
           method: "POST",
@@ -82,6 +98,8 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
         const res = await result.json();
         btn_submit_package.innerText = "Book Now";
         btn_submit_package.removeAttribute("disabled");
+        loader_price.classList.add("hidden");
+        total_price.classList.remove("hidden");
         return res;
       } catch (error) {
         if (error.name === "AbortError") {
@@ -90,6 +108,8 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
           console.log(error);
           btn_submit_package.innerText = "Book Now";
           btn_submit_package.removeAttribute("disabled");
+          loader_price.classList.add("hidden");
+          total_price.classList.remove("hidden");
         }
         return error;
       }
@@ -121,9 +141,14 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
         console.log(body_detail);
 
         // Fetch
-        const res = await fetchingPassenger(url_get_package_detail, body_detail);
+        const res = await fetchingPassenger(
+          url_get_package_detail,
+          body_detail
+        );
         if (res && res.data) {
-          const select_data = res.data.filter((d) => d.travel_period_id == package_selected.value);
+          const select_data = res.data.filter(
+            (d) => d.travel_period_id == package_selected.value
+          );
           if (select_data.length > 0) changeMinTol(select_data);
           package_data.value = JSON.stringify(res.data);
 
@@ -153,9 +178,14 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
         console.log(body_detail);
 
         // Fetch
-        const res = await fetchingPassenger(url_get_package_detail, body_detail);
+        const res = await fetchingPassenger(
+          url_get_package_detail,
+          body_detail
+        );
         if (res && res.data) {
-          const select_data = res.data.filter((d) => d.travel_period_id == package_selected.value);
+          const select_data = res.data.filter(
+            (d) => d.travel_period_id == package_selected.value
+          );
           if (select_data.length > 0) changeMinTol(select_data);
           package_data.value = JSON.stringify(res.data);
 
@@ -174,7 +204,9 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
 
     // Date
     date_detail.addEventListener("change", async function (e) {
-      const btn_slct_package = document.querySelector("#btn-slc-package-detail");
+      const btn_slct_package = document.querySelector(
+        "#btn-slc-package-detail"
+      );
 
       body_detail = {
         ...body_detail,
@@ -199,12 +231,17 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
     // End Date
 
     // Modal List Package
-    const modalListPackage = document.getElementById("modal-list-tour-package") ?? null;
-    const btnSlectPackage = document.getElementById("btn-open-list-modal-package") ?? null;
+    const modalListPackage =
+      document.getElementById("modal-list-tour-package") ?? null;
+    const btnSlectPackage =
+      document.getElementById("btn-open-list-modal-package") ?? null;
     if (btnSlectPackage) {
       btnSlectPackage.addEventListener("click", function () {
-        const package_data = form_detail.querySelector("textarea[name='package-data']") ?? null;
-        const btnClose = document.getElementById("close-modal-list-tourpackage");
+        const package_data =
+          form_detail.querySelector("textarea[name='package-data']") ?? null;
+        const btnClose = document.getElementById(
+          "close-modal-list-tourpackage"
+        );
         const content = document.getElementById("detail-content") ?? null;
 
         let data = [];
@@ -218,8 +255,16 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
                 .map(
                   (element) => `
                 <li>
-                  <input type="radio" id="${element.travel_period_id}" value="${element.travel_period_id}" name="list-package-detail" ${package_selected.value == element.travel_period_id ? "checked" : ""}>
-                  <label for="${element.travel_period_id}">${element.contents.title}</label>
+                  <input type="radio" id="${element.travel_period_id}" value="${
+                    element.travel_period_id
+                  }" name="list-package-detail" ${
+                    package_selected.value == element.travel_period_id
+                      ? "checked"
+                      : ""
+                  }>
+                  <label for="${element.travel_period_id}">${
+                    element.contents.title
+                  }</label>
                 </li>
               `
                 )
@@ -232,25 +277,39 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
         }
 
         // Funct List
-        const list_datas = document.querySelectorAll("input[name='list-package-detail']") ?? [];
+        const list_datas =
+          document.querySelectorAll("input[name='list-package-detail']") ?? [];
         list_datas.forEach((element) => {
           element.addEventListener("click", function (e) {
             if (e.target.checked) {
               package_selected.value = e.target.value;
-              const select_data = data.filter((d) => d.travel_period_id == package_selected.value);
+              const select_data = data.filter(
+                (d) => d.travel_period_id == package_selected.value
+              );
 
               if (select_data.length > 0) {
                 Object.entries(passengers).forEach(([key, value]) => {
                   if (key != "adult") {
-                    if (select_data[0].rate.with_child_rate || select_data[0].rate.with_infant_rate) {
-                      const div_passenger = document.querySelector(`#div-qtydetail-${key}`);
-                      if (div_passenger.classList.contains("hidden")) div_passenger.classList.remove("hidden");
+                    if (
+                      select_data[0].rate.with_child_rate ||
+                      select_data[0].rate.with_infant_rate
+                    ) {
+                      const div_passenger = document.querySelector(
+                        `#div-qtydetail-${key}`
+                      );
+                      if (div_passenger.classList.contains("hidden"))
+                        div_passenger.classList.remove("hidden");
                     } else {
-                      document.querySelector(`#div-qtydetail-${key}`).classList.add("hidden");
+                      document
+                        .querySelector(`#div-qtydetail-${key}`)
+                        .classList.add("hidden");
                     }
                   } else {
-                    const div_passenger = document.querySelector(`#btn-inpt-passanger-detail`);
-                    if (div_passenger.classList.contains("hidden")) div_passenger.classList.remove("hidden");
+                    const div_passenger = document.querySelector(
+                      `#btn-inpt-passanger-detail`
+                    );
+                    if (div_passenger.classList.contains("hidden"))
+                      div_passenger.classList.remove("hidden");
                   }
                 });
                 changeMinTol(select_data);
@@ -265,7 +324,10 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
         // End Func List
 
         modalListPackage.style.display = "grid";
-        btnClose.addEventListener("click", () => (modalListPackage.style.display = "none"));
+        btnClose.addEventListener(
+          "click",
+          () => (modalListPackage.style.display = "none")
+        );
       });
     }
     // End Modal List Package
@@ -273,11 +335,14 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
     // Submit
     form_detail.addEventListener("submit", async function (event) {
       event.preventDefault();
-      const package_data = form_detail.querySelector("textarea[name='package-data']") ?? null;
+      const package_data =
+        form_detail.querySelector("textarea[name='package-data']") ?? null;
 
       let data = [];
       if (package_data) data = JSON.parse(package_data.value);
-      const select_data = data.filter((d) => d.travel_period_id == package_selected.value);
+      const select_data = data.filter(
+        (d) => d.travel_period_id == package_selected.value
+      );
 
       const { date, adult, child, infant } = body_detail;
       const body_form_detail = {
@@ -301,13 +366,20 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
   }
 
   // Modal Term & Conditions
-  const modalTCdetail = document.getElementById("modal-term-condition-tourpackage") ?? null;
-  const btnOpenModalTCdetail = document.getElementById("btn-open-modal-tc-detail") ?? null;
+  const modalTCdetail =
+    document.getElementById("modal-term-condition-tourpackage") ?? null;
+  const btnOpenModalTCdetail =
+    document.getElementById("btn-open-modal-tc-detail") ?? null;
   if (btnOpenModalTCdetail) {
     btnOpenModalTCdetail.addEventListener("click", function () {
-      const btnClose = document.getElementById("close-modal-term-condition-tourpackage");
+      const btnClose = document.getElementById(
+        "close-modal-term-condition-tourpackage"
+      );
       modalTCdetail.style.display = "grid";
-      btnClose.addEventListener("click", () => (modalTCdetail.style.display = "none"));
+      btnClose.addEventListener(
+        "click",
+        () => (modalTCdetail.style.display = "none")
+      );
     });
   }
   // END Modal Term & Conditions
@@ -317,8 +389,14 @@ if (url_name[0] == "tour-package" && !url_name[1]) {
     const minimum_price = document.getElementById("min-price-detail");
     const total_price = document.getElementById("total-price-detail");
     const curr = select_data[0].rate.currency.client_currency;
-    minimum_price.innerHTML = `${curr.symbol} ${numberFormat(select_data[0].rate.minimum_price.client_currency, curr.digit)}`;
-    total_price.innerHTML = `${curr.symbol} ${numberFormat(select_data[0].rate.total.client_currency, curr.digit)}`;
+    minimum_price.innerHTML = `${curr.symbol} ${numberFormat(
+      select_data[0].rate.minimum_price.client_currency,
+      curr.digit
+    )}`;
+    total_price.innerHTML = `${curr.symbol} ${numberFormat(
+      select_data[0].rate.total.client_currency,
+      curr.digit
+    )}`;
   }
   // End Func Change Minimum & Total
   // End Function Detail

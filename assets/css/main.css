@@ -5199,4 +5199,34 @@ div:before {
   transition: 100ms ease !important;
 }
 
+.enx-container .loader-dots-654 {
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 44px !important;
+}
+.enx-container .loader-dots-654::before,
+.enx-container .loader-dots-654::after,
+.enx-container .loader-dots-654 div {
+  content: "" !important;
+  width: 12px !important;
+  height: 12px !important;
+  background-color: #000 !important;
+  /* mix-blend-mode: color-burn !important; */
+  border-radius: 99px !important;
+  animation: loaderdot654 0.6s infinite ease-in-out !important;
+}
+.enx-container .loader-dots-654::after {
+  animation-delay: 0.4s !important;
+}
+.enx-container .loader-dots-654 div {
+  animation-delay: 0.2s !important;
+}
+@keyframes loaderdot654 {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+}
+
 /* end new */

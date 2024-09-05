@@ -279,12 +279,14 @@ function enx_get_page_content($data)
 
                                                 <div class="flex justify-between font-bold mb-2">
                                                     <p>Total</p>
-                                                    <p id="total-price-detail">USD 123.80</p>
+                                                    <div id="loader-total-price-detail" class="loader-dots-654 hidden">
+                                                        <div></div>
+                                                    </div>
+                                                    <p id="total-price-detail">USD 0.00</p>
                                                 </div>
 
                                                 <button id="find-package-tourpack" type="submit"
-                                                    class="w-full btn-primary">Book
-                                                    Now</button>
+                                                    class="w-full btn-primary">Book Now</button>
                                             </div>
                                         </div>
                                     </form>
