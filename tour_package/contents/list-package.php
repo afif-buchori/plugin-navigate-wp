@@ -7,10 +7,12 @@
     z-index: 9999;
     background-color: #111827c5;
     display: none;
-    place-content: center;
+    justify-content: center;
+    align-items: center;
     padding: 0 44px;
 ">
     <div id="enxcontainer-modal" style="
+        width: 100%;
         max-width: 880px;
         max-height: 70vh;
         padding: 20px 0 20px 20px;

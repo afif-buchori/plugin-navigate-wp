@@ -286,8 +286,11 @@ function enx_get_page_content($data)
                                                 </div>
 
                                                 <button id="find-package-tourpack" type="submit"
-                                                    class="w-full btn-primary">Book Now</button>
+                                                    style="margin-bottom: 0px !important;" class="w-full btn-primary">Book
+                                                    Now</button>
                                             </div>
+
+                                            <p id="error-msg-list-package" class="error-message text-center"></p>
                                         </div>
                                     </form>
                                 </div>
