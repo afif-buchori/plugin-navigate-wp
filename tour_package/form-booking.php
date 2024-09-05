@@ -106,7 +106,7 @@ function enx_get_page_content($data)
                                     </div>
                                 </div>
 
-                                <div>
+                                <div id="card_total_booking" class="hidden">
                                     <div class="wiget shadow-lg rounded-xl mb-5 bg-white">
                                         <div class="flex justify-between px-7 py-3">
                                             <h6 class="font-heading text-primary font-bold ">
