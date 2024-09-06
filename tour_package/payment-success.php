@@ -14,7 +14,8 @@ function enx_get_page_content($data)
     $curr = $data->currency_detail;
     $breadCrumbStep = $data->breadCrumbStep;
     // var_dump(json_encode($order->payments[0]->pay_before));
-
+    $total = 0;
+    $grand_total = 0;
     ob_start();
 ?>
     <div class="enx-container site-wrapper" id="page-addon">
@@ -34,7 +35,7 @@ function enx_get_page_content($data)
                                         <div class="py-5 px-7">
                                             <?php foreach ($payments as $key => $value) { ?>
                                                 <div class="<?php echo $key > 0 ? "mt-4" : "" ?>">
-                                                    <div>
+                                                    <div class="mt-2">
                                                         <h6>
                                                             Detail Payment :
                                                         </h6>
@@ -42,16 +43,15 @@ function enx_get_page_content($data)
                                                     <div class="pl-4 border-b border-primary border-opacity-10">
                                                         <h6 class="font-bold">
                                                             <?php
-                                                            $sort_pay = $key > 0 ? $key - 1 : 0;
-                                                            echo $key > 0 ?  "Payment #{$sort_pay}" : (count($payments) > 1 ? 'Down Payment' : 'Full Payment')  ?>
+                                                            echo $key > 0 ?  "Payment #" . $key : (count($payments) > 1 ? 'Down Payment' : 'Full Payment')  ?>
                                                         </h6>
                                                     </div>
                                                     <div class="pl-4 flex justify-between border-b border-primary border-opacity-10">
                                                         <h6>
-                                                            Payment Status : <?php echo $value->status ? $value->status : ($key == 0 ? null : ($payments[$key - 1]->status == "PAID" ? "Waiting" : ($key == 1 ? "Waiting Down Payment" : "Waiting Payment {($key - 1)}"))) ?>
+                                                            Payment Status : <?php echo $value->status ? $value->status : ($key == 0 ? null : ($payments[$key - 1]->status == "PAID" ? "Waiting" : ($key == 1 ? "Waiting Down Payment" : "Waiting Payment " . $key))) ?>
                                                         </h6>
 
-                                                        <?php if ($key > 0) { ?>
+                                                        <?php if (($key == 0 && $value->status != "PAID") || ($key > 0 && $payments[$key - 1]->status == "PAID") && $value->status != "PAID") { ?>
                                                             <button class="btn btn-primary">Payment Now</button>
                                                         <?php } ?>
                                                     </div>
@@ -70,46 +70,29 @@ function enx_get_page_content($data)
                                                     </div>
                                                 </div>
                                             <?php } ?>
-                                            <!-- <div class="mb-4"> -->
-                                            <!-- <span class="text-primary font-semibold flex gap-2 items-center"
-                                                    for="email">
-                                                    <p id="info-orderss" data-status="<php echo $order->status ?>"
-                                                        data-order="<php echo $order->id ?>">Status:</p>
-                                                    <span class="font-numbers font-bold text-primary/90 text-sm"
-                                                        id="<php echo $order->status == "Process" ? 'animate-pulse' : '' ?>"
-                                                        style="<= strtolower($order->status) == "failed" ? "color: red !important;" : "" ?>"><php echo ucwords(strtolower($order->status)) ?></span>
-                                                    <php if ($order->status == 'Unpaid') { ?>
-                                                        <a href="<= $order->url_payment ?>" class="btn btn-link">Pay Now</a>
-                                                    <php } elseif (strtolower($order->status) == "failed") { ?>
-                                                        <a href="<= $order->url_payment ?>" id="btn-pay-another-act"
-                                                            class="btn btn-primary ml-auto">Pay
-                                                            With Another Card</a>
-                                                    <php } ?>
-                                                </span> -->
-                                            <!-- </div> -->
-                                            <!-- <php if (strtolower($order->status) == "failed") { ?>
-                                                <div id="is-show-exp-act" class="mb-4">
-                                                    <p>The remaining payment time is <span id="count-down-expired-act"
-                                                            class="font-bold" style="margin-left: 4px;"></span></p>
-                                                </div>
-                                            <php } ?> -->
 
-                                            <div class="mb-4 mt-4">
+                                            <div class="mb-4 mt-4 border-t border-primary border-opacity-10">
                                                 <label class="text-primary font-semibold block" for="email">Name:</label>
-                                                <!-- <span
-                                                    class="font-numbers font-medium text-primary/90 text-sm"><php echo $order->first_name . " " . $order->last_name ?></span> -->
+                                                <span
+                                                    class="font-numbers font-medium text-primary/90 text-sm">
+                                                    <?php echo $order->first_name . " " . $order->last_name ?>
+                                                </span>
                                             </div>
 
-                                            <div class="mb-4">
+                                            <div class="mb-4 border-t border-primary border-opacity-10">
                                                 <label class="text-primary font-semibold block" for="email">Email:</label>
-                                                <!-- <span
-                                                    class="font-numbers font-medium text-primary/90 text-sm"><php echo hideEmailAddress($order->email) ?></span> -->
+                                                <span
+                                                    class="font-numbers font-medium text-primary/90 text-sm">
+                                                    <?php echo $order->email ?>
+                                                </span>
                                             </div>
 
-                                            <div class="mb-4">
+                                            <div class="border-t border-primary border-opacity-10">
                                                 <label class="text-primary font-semibold block" for="email">Phone:</label>
-                                                <!-- <span
-                                                    class="font-numbers font-medium text-primary/90 text-sm"><php echo $order->phone ?></span> -->
+                                                <span
+                                                    class="font-numbers font-medium text-primary/90 text-sm">
+                                                    <?php echo $order->phone ?>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -123,39 +106,93 @@ function enx_get_page_content($data)
                                         Service Details
                                     </h5>
                                     <div class="py-5 px-7">
-                                        <div class="mb-4">
-                                            <label class="text-primary font-semibold block" for="email">Service
-                                                Name:</label>
-                                            <ol class="style-1">
-                                                <!-- <php foreach ($order->details as $item) { ?>
-                                                    <li>
-                                                        <div>
-                                                            <p>
-                                                                <span class="font-medium"
-                                                                    style="opacity: 0.7;"><= $item->item_name ?></span>
-                                                                - <php echo $item->item_description ?>
-                                                            </p>
-                                                            <div class="w-full flex gap-2">
-                                                                <p><= $item->service_date ?></p>
-                                                                <p><= $item->qty ?>x</p>
-                                                                <p class="ml-auto font-bold text-primary" style="opacity: 0.7;">
-                                                                    <php echo $order->dataCurrency->symbol . number_format($item->total, $order->dataCurrency->digit) ?>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                <php } ?> -->
-                                            </ol>
+                                        <div class="mb-4 border-b-2 border-primary border-opacity-10">
+                                            <label class="text-primary block">Status : <span class="font-bold"><?php echo $order->status == "DP" ? "Down Payment" : $order->status ?></span></label>
+                                        </div>
+                                        <div class="mb-4 border-b-2 border-primary border-opacity-10">
+                                            <label class="text-primary block">Booking Id : <span class="font-bold"><?php echo $order->booking_id ?></span></label>
                                         </div>
 
+                                        <?php foreach ($details as $key => $value) {
+
+                                            $qty_item = $value->qty;
+                                            $price_item = $value->price;
+
+                                            if ($value->price_advance) {
+                                                $new_qty_a = $value->qty_advance;
+                                                $new_qty = 0;
+                                                $new_price = 0;
+                                                foreach ($value->item_price_advance as $i_price_key => $i_price_val) {
+                                                    $new_price += $i_price_val * $new_qty_a->$i_price_key;
+                                                    $new_qty += $new_qty_a->$i_price_key;
+                                                }
+                                                $qty_item = $new_qty;
+                                                $price_item = $new_price;
+                                            }
+
+                                            $total += $price_item;
+                                            $grand_total += $total;
+                                        ?>
+                                            <div class="mb-4">
+                                                <div class="flex justify-between ">
+                                                    <p>
+                                                        <?php echo $value->item_name ?> <span class="font-bold">(x<?php echo $qty_item ?>)</span>
+                                                    </p>
+                                                    <p>
+                                                        <?php echo $curr->symbol . " " . number_format($price_item, $curr->digit) ?>
+                                                    </p>
+                                                </div>
+                                                <p>
+                                                    <?php echo date_format(new DateTime($value->service_date), "l, d M Y") ?>
+                                                </p>
+                                            </div>
+                                        <?php } ?>
+
                                         <div
-                                            class="w-full flex gap-10 py-5 border-t border-primary border-opacity-10 text-xl font-bold">
-                                            <p class="ml-auto">
-                                                Total:
-                                            </p>
-                                            <p>
-                                                <!-- <php echo $order->dataCurrency->symbol . number_format($order->total, $order->dataCurrency->digit) ?> -->
-                                            </p>
+                                            class="w-full py-5 border-t border-primary border-opacity-10 text-xl font-bold">
+                                            <div class=" flex gap-10">
+                                                <p class="ml-auto">
+                                                    Sub Total:
+                                                </p>
+                                                <p>
+                                                    <?php echo $curr->symbol . " " .  number_format($total, $curr->digit) ?>
+                                                </p>
+                                            </div>
+                                            <?php
+                                            if (count($order->costs) > 0) {
+                                                foreach ($order->costs as $key => $v) {
+                                                    $grand_total += $v->value;
+                                            ?>
+                                                    <div class=" flex gap-10">
+                                                        <p class="ml-auto">
+                                                            <?php echo $v->name ?> :
+                                                        </p>
+                                                        <p>
+                                                            <?php echo $curr->symbol . " " .  number_format($v->value, $curr->digit) ?>
+                                                        </p>
+                                                    </div>
+                                            <?php }
+                                            } ?>
+
+                                            <div class=" flex gap-10">
+                                                <p class="ml-auto">
+                                                    Total:
+                                                </p>
+                                                <p>
+                                                    <?php echo $curr->symbol . " " .  number_format($grand_total, $curr->digit) ?>
+                                                </p>
+                                            </div>
+
+                                            <?php if ($order->status != "PAID") { ?>
+                                                <div class=" flex gap-10">
+                                                    <p class="ml-auto">
+                                                        Balance:
+                                                    </p>
+                                                    <p>
+                                                        <?php echo $curr->symbol . " " .  number_format($order->balance, $curr->digit) ?>
+                                                    </p>
+                                                </div>
+                                            <?php } ?>
                                         </div>
 
                                     </div>
