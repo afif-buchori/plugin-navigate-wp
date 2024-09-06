@@ -8,7 +8,33 @@ function enx_get_page_content($data)
     $data_res = $data->service;
     $contents = $data_res->contents;
     $currency = $data_res->minimum_price->price_detail->currency;
-    // var_dump(json_encode($contents));
+    function groupDatesByMonth($dates)
+    {
+        $grouped_dates = [];
+        foreach ($dates as $date) {
+            $month_year = date('Y-m', strtotime($date));
+            if (!isset($grouped_dates[$month_year])) {
+                $grouped_dates[$month_year] = [];
+            }
+            $grouped_dates[$month_year][] = $date;
+        }
+        foreach ($grouped_dates as $month => $dates) {
+            sort($grouped_dates[$month]);
+        }
+        ksort($grouped_dates);
+        $result = [];
+        foreach ($grouped_dates as $month => $dates) {
+            $formatted_month = date('F Y', strtotime($month . '-01'));
+            $result[] = [
+                'monthly' => $formatted_month,
+                'dates' => $dates
+            ];
+        }
+        return $result;
+    }
+
+    $close_dates = groupDatesByMonth($data_res->close_date_time);
+    // var_dump(json_encode($close_dates));
     ob_start();
     ?>
     <div class="enx-container site-wrapper">
@@ -84,6 +110,29 @@ function enx_get_page_content($data)
                                     <p style="text-align: justify;" class="mt-10 mb-10">
                                         <?php echo $data_res->contents->description ?>
                                     </p>
+
+                                    <!-- BLOCK DATE -->
+                                    <div style="background-color: #EB367810;" class="widget shadow-lg rounded-xl mb-10">
+                                        <p class="font-bold text-lg p-4 border-b-2 border-primary border-opacity-10">Close
+                                            Date
+                                        </p>
+                                        <div class="p-4 pt-0">
+                                            <?php foreach ($close_dates as $key => $data_dates) { ?>
+                                                <p style="opacity: 0.4; <?php echo $key > 0 ? "border-top: solid 1px #45474B60 !important;" : "" ?>"
+                                                    class="font-bold <?php echo $key > 0 ? "mt-4" : "" ?> pt-4">
+                                                    <?php echo $data_dates['monthly'] ?>
+                                                </p>
+                                                <div class="flex flex-wrap gap-x-4 px-2">
+                                                    <?php foreach ($data_dates['dates'] as $kd => $c_date) { ?>
+                                                        <p style="width: 140px;">
+                                                            <?php echo date_format(new DateTime($c_date), "d M Y") ?>
+                                                        </p>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                    <!-- END BLOCK DATE -->
 
 
                                     <div id="" class="w" data-x-data="accordionInit()">
@@ -296,6 +345,7 @@ function enx_get_page_content($data)
                                 </div>
                             </div>
 
+                            <?php include_once plugin_dir_path(__FILE__) . 'contents/list-package.php'; ?>
                             <!-- <div id="package-opt-activity" class="w-full flex flex-col gap-4 p-4 rounded-lg mt-10"
                                 style="background-color: #4cc0ce40;" data-package="<php echo count($data->ticket) ?>">
                                 <h3 class="font-bold">Package Options</h3>

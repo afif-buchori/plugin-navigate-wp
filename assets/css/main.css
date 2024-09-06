@@ -1472,6 +1472,10 @@ Add the correct display in Chrome and Safari.
   top: 0px !important;
 }
 
+.enx-container .top-1 {
+  top: -4px !important;
+}
+
 .enx-container .-top-10 {
   top: -2.5rem !important;
 }
@@ -2386,6 +2390,10 @@ Add the correct display in Chrome and Safari.
   border-bottom-right-radius: 9999px !important;
 }
 
+.enx-container .border {
+  border-width: 1px !important;
+}
+
 .enx-container .border-2 {
   border-width: 2px !important;
 }
@@ -2736,6 +2744,10 @@ Add the correct display in Chrome and Safari.
   padding-top: 0.5rem !important;
 }
 
+.enx-container .pt-4 {
+  padding-top: 1rem !important;
+}
+
 .enx-container .pt-5 {
   padding-top: 1.25rem !important;
 }
@@ -2762,6 +2774,10 @@ Add the correct display in Chrome and Safari.
 
 .enx-container .pt-\[1px\] {
   padding-top: 1px !important;
+}
+
+.enx-container .pb-2 {
+  padding-bottom: 0.5rem !important;
 }
 
 .enx-container .pb-4 {
@@ -5225,6 +5241,14 @@ div:before {
     opacity: 0.2;
     transform: scale(0.8);
   }
+}
+
+.enx-container .checked-icon {
+  display: none !important;
+}
+/* Tampilkan icon jika input radio dalam keadaan checked */
+.enx-container input[type="radio"]:checked + p + div .checked-icon {
+  display: block !important;
 }
 
 /* end new */
