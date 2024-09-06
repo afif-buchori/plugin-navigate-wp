@@ -173,6 +173,10 @@ function enx_get_global_page()
             require_once(dirname(__FILE__) . '/../tour_package/form-booking.php');
             $data = $_SESSION['SESSION_TOUR_PACKAGE'] ?? [];
             $head_title = "Form Booking";
+        } elseif ($url[1] == 'paymentsuccess') {
+            require_once(dirname(__FILE__) . '/../tour_package/payment-success.php');
+            $data = enx_get_payment_success();
+            $head_title = $data->meta->title ?? "Payment Success";
         } else {
             require_once(dirname(__FILE__) . '/../tour_package/tourpackage-detail.php');
             require_once(dirname(__FILE__) . '/../tour_package/contents/list-package.php');

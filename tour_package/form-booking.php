@@ -3,7 +3,6 @@ function enx_get_page_content($data)
 {
     $old = json_decode(OLD);
     $error = json_decode(ERROR_DATA);
-
     $url = API_TOUR_PACKAGE_URL . '/post/data-booking';
     $data->currency = str_replace("currency=", "", checkCurrency());
     $data_res = fetchPost($url, $data);
@@ -18,7 +17,7 @@ function enx_get_page_content($data)
                 <section>
                     <div class="container">
 
-                        <div class="stepper-wrapper">
+                        <!-- <div class="stepper-wrapper">
                             <div class="stepper-item completed">
                                 <div class="step-counter">
                                     <p></p>
@@ -27,7 +26,7 @@ function enx_get_page_content($data)
                             </div>
                             <div class="stepper-item active">
                                 <div class="step-counter">
-                                    <h5></h5>
+                                    <p></p>
                                 </div>
                                 <div class="step-name">Form Booking</div>
                             </div>
@@ -39,9 +38,22 @@ function enx_get_page_content($data)
                                 <div class="step-counter"></div>
                                 <div class="step-name">Payment Info</div>
                             </div>
+                        </div> -->
+                        <div class="stepper-wrapper">
+                            <?php foreach ($data_res->breadCrumbStep as $key => $value) {
+                            ?>
+                                <div class="stepper-item  <?php echo $value->name != 'Booking Form' &&  $key == 0 ? 'completed' : '' ?>">
+                                    <div class="step-counter">
+                                        <?php if ($value->name == 'Booking Form') { ?>
+                                            <p></p>
+                                        <?php } ?>
+                                    </div>
+                                    <div class="step-name"><?php echo $value->name ?></div>
+                                </div>
+                            <?php  } ?>
                         </div>
 
-                        <div class="md:grid grid-cols-12 gap-x-16 pt-16 pb-5 xl:py-20">
+                        <form id="form-booking-tourpackage" class="md:grid grid-cols-12 gap-x-16 pt-16 pb-5 xl:py-20">
                             <!-- SIDE BOOKING -->
                             <div class="col-span-4">
                                 <div class="mb-5">
@@ -77,15 +89,19 @@ function enx_get_page_content($data)
 
                                 <div class="mb-5">
                                     <div class="wiget shadow-lg rounded-xl mb-5 bg-white">
-                                        <h5 class="font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
+                                        <h5 class="flex justify-between font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
                                             Payment Settings
+                                            <div class="text-sm hidden" style="color: rgba(242, 84, 84, 1) !important;"
+                                                id="select_payment_error">
+                                                Select Payment!
+                                            </div>
                                         </h5>
                                         <div class="py-5 px-7">
                                             <?php foreach ($data_res->service->payment as $key => $payment) {
                                                 $payment_in_id = strtolower(str_replace(" ", "_", $payment->title)) . "_$key";
                                             ?>
                                                 <div class="<?php echo $key > 0 ? "mt-4" : "" ?>">
-                                                    <input type="radio" name="payment-settings" id="<?php echo $payment_in_id ?>" value='<?php echo json_encode($payment) ?>'
+                                                    <input type="radio" name="payment_settings" id="<?php echo $payment_in_id ?>" value='<?php echo json_encode($payment) ?>'
                                                         data-service-fee="<?php echo (float)$rate->service_fee ?>" data-currency='<?php echo json_encode($currency) ?>'>
                                                     <label for="<?php echo $payment_in_id ?>" class="pl-4"><?php echo $payment->title ?></label>
                                                     <?php foreach ($payment->detail as $detail) {
@@ -131,7 +147,7 @@ function enx_get_page_content($data)
                             </div>
                             <!-- SIDE FORM BOOKING -->
 
-                            <form id="form-booking-tourpackage" class="col-span-8">
+                            <div class="col-span-8">
                                 <h2 class="font-heading font-bold text-primary text-transform-unset mt-3 text-2xl">
                                     Your Booking
                                 </h2>
@@ -144,8 +160,8 @@ function enx_get_page_content($data)
                                         <input name="first_name" id="first_name" value=""
                                             class="transition w-full form-input bg-gray-light4/60 py-2 px-3 w-auto font-numbers font-medium text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm"
                                             type="text" placeholder="First name">
-                                        <div class="text-sm" style="color: rgba(242, 84, 84, 1) !important;"
-                                            id="first_name_error">
+                                        <div class="text-sm error-div" style="color: rgba(242, 84, 84, 1) !important;"
+                                            id="firstName_error">
 
                                         </div>
                                     </div>
@@ -155,8 +171,8 @@ function enx_get_page_content($data)
                                         <input name="last_name" id="last_name" value=""
                                             class="transition w-full form-input bg-gray-light4/60 py-2 px-3 w-auto font-numbers font-medium text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm"
                                             type="text" placeholder="First name">
-                                        <div class="text-sm" style="color: rgba(242, 84, 84, 1) !important;"
-                                            id="last_name_error">
+                                        <div class="text-sm error-div" style="color: rgba(242, 84, 84, 1) !important;"
+                                            id="lastName_error">
                                         </div>
                                     </div>
                                     <div class="flex-1">
@@ -164,7 +180,7 @@ function enx_get_page_content($data)
                                         <input name="email" id="email" value=""
                                             class="transition w-full form-input bg-gray-light4/60 py-2 px-3 w-auto font-numbers font-medium text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm"
                                             type="text" placeholder="First name">
-                                        <div class="text-sm" style="color: rgba(242, 84, 84, 1) !important;"
+                                        <div class="text-sm error-div" style="color: rgba(242, 84, 84, 1) !important;"
                                             id="email_error">
                                         </div>
                                     </div>
@@ -193,10 +209,10 @@ function enx_get_page_content($data)
                                                 class="transition w-full form-input bg-gray-light4/60 py-2 pr-3 pl-24 w-auto font-numbers font-medium text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm"
                                                 type="number" placeholder="Phone">
                                         </div>
-                                        <div class="text-sm" style="color: rgba(242, 84, 84, 1) !important;"
-                                            id="phone_code_error">
+                                        <div class="text-sm error-div" style="color: rgba(242, 84, 84, 1) !important;"
+                                            id="codePhone_error">
                                         </div>
-                                        <div class="text-sm" style="color: rgba(242, 84, 84, 1) !important;"
+                                        <div class="text-sm error-div" style="color: rgba(242, 84, 84, 1) !important;"
                                             id="phone_error">
                                         </div>
 
@@ -219,9 +235,9 @@ function enx_get_page_content($data)
                                     <p class="text-xs mt-4">Click 'Continue to Payment' to securely proceed to Tondest.com,
                                         our trusted payment partner, for a seamless checkout experience.</p>
                                 </div>
-                            </form>
+                            </div>
 
-                        </div>
+                        </form>
                     </div>
                 </section>
             </div>

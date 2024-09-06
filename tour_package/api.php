@@ -24,10 +24,10 @@ function enx_get_data_api_post()
     } elseif ($url[2] == "generate-tp-session") {
         session_start();
         $data = enx_generate_tp_session();
+    } elseif ($url[2] == "booking-tp") {
+        session_start();
+        $data = enx_post_booking();
     }
-    // elseif ($url[2] == "booking-act") {
-    //     $data = enx_post_booking_act();
-    // }
 
     return $data;
 }
@@ -39,6 +39,20 @@ function enx_post_getpackage()
     // $req = $_GET;
     $req = json_decode(file_get_contents("php://input"));
     $req->currency = str_replace("currency=", "", checkCurrency());
+    // var_dump($req, $_GET);
+    // die;
+    $data = fetchPost($url, $req);
+    return $data;
+}
+
+function enx_post_booking()
+{
+    $url = API_TOUR_PACKAGE_URL . "/post/booking-post";
+    // $req = $_GET;
+    $req = json_decode(file_get_contents("php://input"));
+    $req->currency = str_replace("currency=", "", checkCurrency());
+    $req->data_session = $_SESSION['SESSION_TOUR_PACKAGE'] ?? [];
+    $req->domain = $_SERVER['SERVER_NAME'];
     // var_dump($req, $_GET);
     // die;
     $data = fetchPost($url, $req);
