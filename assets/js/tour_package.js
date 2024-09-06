@@ -326,7 +326,7 @@ if (url_name[0] == "tourpackage" && !url_name[1]) {
             .map(
               (el) => `
             <div class="mt-5">
-                <label class="flex items-center justify-between gap-4">
+                <label class="flex items-center justify-between gap-4 cursor-pointer">
                     <input type="radio" hidden id="${
                       el.travel_period_id
                     }" value="${
@@ -355,7 +355,7 @@ if (url_name[0] == "tourpackage" && !url_name[1]) {
                 el.rate.currency.client_currency.digit
               )}</p>
                 </div>
-                <p>${el.contents.description}</p>
+                <p class="line-clamp-4">${el.contents.description}</p>
             </div>
           `
             )

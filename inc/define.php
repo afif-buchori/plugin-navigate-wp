@@ -4,7 +4,7 @@ define("NAVIGATE_LINK", "navigateid");
 define("TRIPGO_LINK", "tripgo");
 define("AIRPORT_SERVICE_LINK", "airport-service");
 define("ACTIVITY_LINK", "activity");
-define("TOUR_PACKAGE_LINK", "tour-package");
+define("TOUR_PACKAGE_LINK", "tourpackage");
 define("COUNTRY_ACTIVITY", "indonesia");
 define("COUNTRY_TOUR_PACKAGE", "korea");
 // define("API_URL", "https://portal.navigate.com");

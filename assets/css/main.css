@@ -5246,9 +5246,13 @@ div:before {
 .enx-container .checked-icon {
   display: none !important;
 }
-/* Tampilkan icon jika input radio dalam keadaan checked */
 .enx-container input[type="radio"]:checked + p + div .checked-icon {
   display: block !important;
 }
-
+.enx-container .line-clamp-4 {
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 4 !important;
+}
 /* end new */
