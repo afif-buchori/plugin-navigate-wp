@@ -166,8 +166,7 @@ function enx_get_global_page()
         } elseif ($url[1] == 'addons') {
             session_start();
             $data = $_SESSION['SESSION_TOUR_PACKAGE'] ?? [];
-            var_dump($data);
-            die();
+            dd($data);
         } elseif ($url[1] == 'booking') {
             session_start();
             require_once(dirname(__FILE__) . '/../tour_package/form-booking.php');
@@ -233,7 +232,7 @@ function enx_get_content($header_title, $content, $meta = null)
     // }
 
     enx_header($header_title . " – " . get_bloginfo('name'), $meta->keyword ?? "", $meta->description ?? "", $meta->image_url ?? "");
-    ?>
+?>
     <main id="primary" class="site-main">
         <article id="tripgo-list" <?php post_class(); ?>>
             <header class="entry-header">
@@ -248,6 +247,6 @@ function enx_get_content($header_title, $content, $meta = null)
             </footer><!-- .entry-footer -->
         </article>
     </main>
-    <?php
+<?php
     get_footer();
 }

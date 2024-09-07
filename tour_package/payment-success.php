@@ -17,7 +17,7 @@ function enx_get_page_content($data)
     $total = 0;
     $grand_total = 0;
     ob_start();
-    ?>
+?>
     <div class="enx-container site-wrapper" id="page-addon">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -54,7 +54,7 @@ function enx_get_page_content($data)
                                                         </h6>
 
                                                         <?php if (($key == 0 && $value->status != "PAID") || ($key > 0 && $payments[$key - 1]->status == "PAID") && $value->status != "PAID") { ?>
-                                                            <button class="btn btn-primary">Payment Now</button>
+                                                            <button class="btn btn-primary generate_payment" data-payment='<?php echo json_encode($value) ?>'>Payment Now</button>
                                                         <?php } ?>
                                                     </div>
                                                     <div class="pl-4 border-b border-primary border-opacity-10">
@@ -134,7 +134,7 @@ function enx_get_page_content($data)
 
                                             $total += $price_item;
                                             $grand_total += $total;
-                                            ?>
+                                        ?>
                                             <div class="mb-4">
                                                 <div class="flex justify-between ">
                                                     <p>
@@ -165,7 +165,7 @@ function enx_get_page_content($data)
                                             if (count($order->costs) > 0) {
                                                 foreach ($order->costs as $key => $v) {
                                                     $grand_total += $v->value;
-                                                    ?>
+                                            ?>
                                                     <div class=" flex gap-10">
                                                         <p class="ml-auto">
                                                             <?php echo $v->name ?> :
@@ -174,7 +174,7 @@ function enx_get_page_content($data)
                                                             <?php echo $curr->symbol . " " . number_format($v->value, $curr->digit) ?>
                                                         </p>
                                                     </div>
-                                                <?php }
+                                            <?php }
                                             } ?>
 
                                             <div class=" flex gap-10">
@@ -209,7 +209,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-    <?php
+<?php
     $contents = ob_get_clean();
     return $contents;
 }

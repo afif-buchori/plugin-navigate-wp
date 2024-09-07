@@ -128,11 +128,28 @@ function fetchPost($url, $body)
     return json_decode(json_encode($response));
 }
 
-function dd($val)
+function dd(...$vars)
 {
-    var_dump($val);
-    die();
+    if (php_sapi_name() !== 'cli' && !headers_sent()) {
+        header('HTTP/1.1 500 Internal Server Error');
+        header('Content-Type: application/json');
+    }
+
+    $output = [];
+    $separator = str_repeat('-', 50);
+
+    foreach ($vars as $index => $var) {
+        $output["variable_$index"] = $var;
+        if ($index < count($vars) - 1) {
+            $output["separator_$index"] = $separator;
+        }
+    }
+
+    echo json_encode($output, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+    exit(1);
 }
+
 // KITA
 // function fetchGet($url)
 // {
