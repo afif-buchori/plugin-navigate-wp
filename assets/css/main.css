@@ -5258,4 +5258,9 @@ div:before {
   -webkit-box-orient: vertical !important;
   -webkit-line-clamp: 4 !important;
 }
+.enx-container .accordion-container {
+  overflow: hidden;
+  transition: max-height 0.6s ease !important; /* Smooth accordion effect */
+}
+
 /* end new */

@@ -449,7 +449,7 @@ if (url_name[0] == "tourpackage" && !url_name[1]) {
                 // detailItinerary.innerHTML = generateItin(
                 //   select_data[0].contents.itinerary
                 // );
-                generateItin(select_data[0].contents.itinerary);
+                // generateItin(select_data[0].contents.itinerary);
               }
             }
           });
@@ -542,31 +542,8 @@ if (url_name[0] == "tourpackage" && !url_name[1]) {
 
 // GENERATE ITINERARY
 function generateItin(itinerary = []) {
-  // Data itinerary
-  // const itinerary = [
-  //   {
-  //     title: "Title Day 1",
-  //     description: "Description for day 1",
-  //     with_add_info: true,
-  //     add_info: [
-  //       { icon: "utensils", description: "Lunch included" },
-  //       { icon: "plane", description: "Flight to destination" },
-  //     ]
-  //   },
-  //   {
-  //     title: "Title Day 2",
-  //     description: "Description for day 2",
-  //     with_add_info: false,
-  //     add_info: []
-  //   },
-  //   // Add more itinerary items as needed
-  // ];
-
-  // Kontainer tempat itinerary akan ditambahkan
   let container = document.getElementById("detail-tp-itinerary");
-  let n = 0; // Untuk memberikan ID unik
-
-  // Hapus konten HTML di dalam container (jika ada)
+  let n = 0;
   container.innerHTML = "";
 
   itinerary.forEach((item, key) => {
@@ -592,7 +569,7 @@ function generateItin(itinerary = []) {
               : ""
           }
           
-          <div class="flex items-center justify-between cursor-pointer" data-x-bind="trigger(${n})">
+          <div class="flex items-center justify-between cursor-pointer" x-bind="trigger(${n})">
             <div class="flex gap-2 text-xs md:text-base">
               <strong style="opacity: 0.6;" class="whitespace-nowrap">Day ${
                 key + 1
@@ -603,12 +580,12 @@ function generateItin(itinerary = []) {
             </div>
             <span class="iconify -mt-1 transition-all duration-500 inline"
               data-icon="fluent:chevron-down-12-regular" data-width="20" data-height="20"
-              data-x-bind="icon-${n}">
+              x-bind="iconStyle(${n})">
             </span>
           </div>
           
           <div class="relative overflow-hidden transition-all max-h-0 duration-700 inner-text-sm ml-14 md:ml-72px mt-2" 
-            data-x-ref="container-${n}" data-x-bind="containerStyle${n}">
+            x-ref="container-${n}" x-bind="containerStyle(${n})">
             <span>${item.description}</span>
             ${
               item.with_add_info
@@ -627,14 +604,11 @@ function generateItin(itinerary = []) {
         </div>
       </div>
     `;
-
-    // Menambahkan HTML itinerary ke dalam container
     container.innerHTML += itineraryHtml;
-    n++; // Increment untuk memberikan ID unik pada elemen
+    n++;
   });
 }
 
-// Fungsi untuk mengambil HTML berdasarkan ikon yang dipilih
 function getIconHtml(icon) {
   const icons = {
     utensils:
@@ -645,19 +619,6 @@ function getIconHtml(icon) {
   return icons[icon] || "";
 }
 
-// Fungsi untuk membuka dan menutup konten itinerary
-// function trigger(index) {
-//   const container = document.getElementById(`container-${index}`);
-//   const icon = document.getElementById(`icon-${index}`);
-
-//   if (container.style.maxHeight) {
-//     container.style.maxHeight = null;
-//     icon.style.transform = "rotate(0deg)";
-//   } else {
-//     container.style.maxHeight = container.scrollHeight + "px";
-//     icon.style.transform = "rotate(180deg)";
-//   }
-// }
 // END GENERATE ITINERARY
 
 // total-price-detail
