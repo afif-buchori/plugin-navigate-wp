@@ -5,11 +5,11 @@ function enx_get_page_content($data)
     $error = json_decode(ERROR_DATA);
     $url = API_TOUR_PACKAGE_URL . '/post/data-booking';
     $data->currency = str_replace("currency=", "", checkCurrency());
-    $data_res = fetchPost($url, $data);
+    $data_res = fetchPost($url, $data)->data;
     $rate = $data_res->service->rate;
     $currency = $rate->currency->client_currency;
     ob_start();
-?>
+    ?>
     <div class="enx-container site-wrapper">
         <!-- <php require_once(dirname(__FILE__) . '/../activity/modal-message.php'); ?> -->
         <div class="site-content">
@@ -41,8 +41,9 @@ function enx_get_page_content($data)
                         </div> -->
                         <div class="stepper-wrapper">
                             <?php foreach ($data_res->breadCrumbStep as $key => $value) {
-                            ?>
-                                <div class="stepper-item  <?php echo $value->name != 'Booking Form' &&  $key == 0 ? 'completed' : '' ?>">
+                                ?>
+                                <div
+                                    class="stepper-item  <?php echo $value->name != 'Booking Form' && $key == 0 ? 'completed' : '' ?>">
                                     <div class="step-counter">
                                         <?php if ($value->name == 'Booking Form') { ?>
                                             <p></p>
@@ -50,7 +51,7 @@ function enx_get_page_content($data)
                                     </div>
                                     <div class="step-name"><?php echo $value->name ?></div>
                                 </div>
-                            <?php  } ?>
+                            <?php } ?>
                         </div>
 
                         <form id="form-booking-tourpackage" class="md:grid grid-cols-12 gap-x-16 pt-16 pb-5 xl:py-20">
@@ -58,38 +59,45 @@ function enx_get_page_content($data)
                             <div class="col-span-4">
                                 <div class="mb-5">
                                     <div class="wiget shadow-lg rounded-xl mb-5 bg-white">
-                                        <h5 class="font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
+                                        <h5
+                                            class="font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
                                             Tour Details
                                         </h5>
                                         <div class="py-5 px-7">
                                             <h6 class="font-bold"><?php echo $data_res->service->contents->title ?></h6>
                                             <h6 class="mt-3"><?php
-                                                                $date = new DateTime($data_res->data_session->date);
-                                                                echo date_format($date, "l, d F Y") ?>
+                                            $date = new DateTime($data_res->data_session->date);
+                                            echo date_format($date, "l, d F Y") ?>
                                             </h6>
                                             <div class="flex justify-between mt-4">
                                                 <p class="pl-4">Adult x<?php echo $rate->adult->price_details->qty ?></p>
-                                                <p><?php echo $currency->symbol . " " . number_format($rate->adult->price, $currency->digit) ?></p>
+                                                <p><?php echo $currency->symbol . " " . number_format($rate->adult->price, $currency->digit) ?>
+                                                </p>
                                             </div>
                                             <div class="flex justify-between">
                                                 <p class="pl-4">Child x<?php echo $rate->child->price_details->qty ?></p>
-                                                <p><?php echo $currency->symbol . " " . number_format($rate->child->price, $currency->digit) ?></p>
+                                                <p><?php echo $currency->symbol . " " . number_format($rate->child->price, $currency->digit) ?>
+                                                </p>
                                             </div>
                                             <div class="flex justify-between">
                                                 <p class="pl-4">Infant x<?php echo $rate->infant->price_details->qty ?></p>
-                                                <p><?php echo $currency->symbol . " " . number_format($rate->infant->price, $currency->digit) ?></p>
+                                                <p><?php echo $currency->symbol . " " . number_format($rate->infant->price, $currency->digit) ?>
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="font-bold border-t border-primary border-opacity-10 px-7 py-3 flex justify-between">
+                                        <div
+                                            class="font-bold border-t border-primary border-opacity-10 px-7 py-3 flex justify-between">
                                             <h6 class="font-bold">Total</h6>
-                                            <p><?php echo $currency->symbol . " " . number_format($rate->total->client_currency, $currency->digit) ?></p>
+                                            <p><?php echo $currency->symbol . " " . number_format($rate->total->client_currency, $currency->digit) ?>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="mb-5">
                                     <div class="wiget shadow-lg rounded-xl mb-5 bg-white">
-                                        <h5 class="flex justify-between font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
+                                        <h5
+                                            class="flex justify-between font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
                                             Payment Settings
                                             <div class="text-sm hidden" style="color: rgba(242, 84, 84, 1) !important;"
                                                 id="select_payment_error">
@@ -99,17 +107,22 @@ function enx_get_page_content($data)
                                         <div class="py-5 px-7">
                                             <?php foreach ($data_res->service->payment as $key => $payment) {
                                                 $payment_in_id = strtolower(str_replace(" ", "_", $payment->title)) . "_$key";
-                                            ?>
+                                                ?>
                                                 <div class="<?php echo $key > 0 ? "mt-4" : "" ?>">
-                                                    <input type="radio" name="payment_settings" id="<?php echo $payment_in_id ?>" value='<?php echo json_encode($payment) ?>'
-                                                        data-service-fee="<?php echo (float)$rate->service_fee ?>" data-currency='<?php echo json_encode($currency) ?>'>
-                                                    <label for="<?php echo $payment_in_id ?>" class="pl-4"><?php echo $payment->title ?></label>
+                                                    <input type="radio" name="payment_settings"
+                                                        id="<?php echo $payment_in_id ?>"
+                                                        value='<?php echo json_encode($payment) ?>'
+                                                        data-service-fee="<?php echo (float) $rate->service_fee ?>"
+                                                        data-currency='<?php echo json_encode($currency) ?>'>
+                                                    <label for="<?php echo $payment_in_id ?>"
+                                                        class="pl-4"><?php echo $payment->title ?></label>
                                                     <?php foreach ($payment->detail as $detail) {
                                                         $due_date = date_format(new DateTime($detail->dueDate), "D, d F Y H:i");
-                                                    ?>
+                                                        ?>
                                                         <div class="flex justify-between font-bold">
                                                             <p><?php echo $detail->name ?></p>
-                                                            <p><?php echo $currency->symbol . " " . number_format($detail->amount, $currency->digit) ?></p>
+                                                            <p><?php echo $currency->symbol . " " . number_format($detail->amount, $currency->digit) ?>
+                                                            </p>
                                                         </div>
                                                         <div class="flex justify-between">
                                                             <p>Due Date</p>
@@ -128,19 +141,25 @@ function enx_get_page_content($data)
                                             <h6 class="font-heading text-primary font-bold ">
                                                 Total
                                             </h6>
-                                            <p id="total_booking"><?php echo $currency->symbol . " " . number_format(0, $currency->digit) ?></p>
+                                            <p id="total_booking">
+                                                <?php echo $currency->symbol . " " . number_format(0, $currency->digit) ?>
+                                            </p>
                                         </div>
                                         <div class="flex justify-between px-7 py-3">
                                             <h6 class="font-heading text-primary font-bold">
                                                 Service Fee
                                             </h6>
-                                            <p id="service_fee_booking"><?php echo $currency->symbol . " " . number_format(0, $currency->digit) ?></p>
+                                            <p id="service_fee_booking">
+                                                <?php echo $currency->symbol . " " . number_format(0, $currency->digit) ?>
+                                            </p>
                                         </div>
                                         <div class="flex justify-between px-7 py-3">
                                             <h6 class="font-heading text-primary font-bold">
                                                 Total Pay
                                             </h6>
-                                            <p id="total_pay_booking"><?php echo $currency->symbol . " " . number_format(0, $currency->digit) ?></p>
+                                            <p id="total_pay_booking">
+                                                <?php echo $currency->symbol . " " . number_format(0, $currency->digit) ?>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -244,7 +263,7 @@ function enx_get_page_content($data)
         </div>
     </div>
 
-<?php
+    <?php
     $contents = ob_get_clean();
     return $contents;
 }

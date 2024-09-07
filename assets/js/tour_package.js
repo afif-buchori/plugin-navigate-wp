@@ -93,7 +93,7 @@ if (url_name[0] == "tourpackage" && !url_name[1]) {
       // Fetch
       const res = await fetchingPost(url_booking, body_booking);
       if (res && res.result == "ok") {
-        window.location.href = res.invoice_url;
+        window.location.href = res.data.invoice_url;
       } else if (res && res.result == "no") {
         res.message.forEach((element) => {
           const input =
@@ -346,7 +346,7 @@ if (url_name[0] == "tourpackage" && !url_name[1]) {
                     </span>
                     <span style="background-color: #BBE9FF60;"
                         class="px-2 border border-primary rounded-full text-xs md:text-sm">
-                        ${el.contents.citites_visited} Cities Visited
+                        ${el.contents.cities_visited} Cities Visited
                     </span>
                     <p class="font-bold text-xs md:text-sm ml-auto">${
                       el.rate.currency.client_currency.symbol
@@ -390,6 +390,7 @@ if (url_name[0] == "tourpackage" && !url_name[1]) {
               const select_data = data.filter(
                 (d) => d.travel_period_id == package_selected.value
               );
+              console.log(select_data);
 
               if (select_data.length > 0) {
                 Object.entries(passengers).forEach(([key, value]) => {
@@ -424,6 +425,31 @@ if (url_name[0] == "tourpackage" && !url_name[1]) {
                 // total_price.innerHTML = `${curr.symbol} ${numberFormat(select_data[0].rate.total.client_currency, curr.digit)}`;
                 btnSlectPackage.innerText = select_data[0].contents.title;
                 // modalListPackage.style.display = "none";
+                const detailDescription = document.getElementById(
+                  "detail-tp-description"
+                );
+                const detailDuration =
+                  document.getElementById("detail-tp-duration");
+                const detailCitiesVisited = document.getElementById(
+                  "detail-tp-cities-visited"
+                );
+                const detailTitlePackage = document.getElementById(
+                  "detail-tp-title-package"
+                );
+                const detailItinerary = document.getElementById(
+                  "detail-tp-itinerary"
+                );
+                detailCitiesVisited.innerText =
+                  select_data[0].contents.cities_visited + " Cities Visited";
+                detailDescription.innerText =
+                  select_data[0].contents.description;
+                detailDuration.innerText =
+                  select_data[0].contents.duration + " Days";
+                detailTitlePackage.innerText = `(${select_data[0].contents.title})`;
+                // detailItinerary.innerHTML = generateItin(
+                //   select_data[0].contents.itinerary
+                // );
+                generateItin(select_data[0].contents.itinerary);
               }
             }
           });
@@ -513,6 +539,127 @@ if (url_name[0] == "tourpackage" && !url_name[1]) {
   // End Func Change Minimum & Total
   // End Function Detail
 }
+
+// GENERATE ITINERARY
+function generateItin(itinerary = []) {
+  // Data itinerary
+  // const itinerary = [
+  //   {
+  //     title: "Title Day 1",
+  //     description: "Description for day 1",
+  //     with_add_info: true,
+  //     add_info: [
+  //       { icon: "utensils", description: "Lunch included" },
+  //       { icon: "plane", description: "Flight to destination" },
+  //     ]
+  //   },
+  //   {
+  //     title: "Title Day 2",
+  //     description: "Description for day 2",
+  //     with_add_info: false,
+  //     add_info: []
+  //   },
+  //   // Add more itinerary items as needed
+  // ];
+
+  // Kontainer tempat itinerary akan ditambahkan
+  let container = document.getElementById("detail-tp-itinerary");
+  let n = 0; // Untuk memberikan ID unik
+
+  // Hapus konten HTML di dalam container (jika ada)
+  container.innerHTML = "";
+
+  itinerary.forEach((item, key) => {
+    const hr = key > 0 ? "<hr />" : "";
+    const isLast = key === itinerary.length - 1;
+
+    const itineraryHtml = `
+      ${hr}
+      <div class="md:grid grid-cols-12 md:space-x-4 relative ${
+        isLast ? "smt-4" : key > 0 ? "smy-4" : "smb-4"
+      }">
+        <div class="col-span-12 py-5">
+          ${
+            itinerary.length > 1
+              ? `
+          <span class="absolute left-45px md:left-55px"
+            style="border-left: solid 2px #BBE9FF !important; position: absolute; top: 0px; left: 58px; 
+            height: ${
+              isLast ? "30px" : key === 0 ? "calc(100% - 30px)" : "100%"
+            }; 
+            top: ${key === 0 ? "30px" : "0px"};">
+          </span>`
+              : ""
+          }
+          
+          <div class="flex items-center justify-between cursor-pointer" data-x-bind="trigger(${n})">
+            <div class="flex gap-2 text-xs md:text-base">
+              <strong style="opacity: 0.6;" class="whitespace-nowrap">Day ${
+                key + 1
+              }</strong>
+              <span class="mt-0.5 md:mt-1.5"
+                style="width: 12px; height: 12px; border-radius: 99px; background-color: #BBE9FF;"></span>
+              <strong class="flex-1">${item.title}</strong>
+            </div>
+            <span class="iconify -mt-1 transition-all duration-500 inline"
+              data-icon="fluent:chevron-down-12-regular" data-width="20" data-height="20"
+              data-x-bind="icon-${n}">
+            </span>
+          </div>
+          
+          <div class="relative overflow-hidden transition-all max-h-0 duration-700 inner-text-sm ml-14 md:ml-72px mt-2" 
+            data-x-ref="container-${n}" data-x-bind="containerStyle${n}">
+            <span>${item.description}</span>
+            ${
+              item.with_add_info
+                ? item.add_info
+                    .map(
+                      (info, index) => `
+              <div class="flex gap-2 ${index === 0 ? "mt-4" : ""}">
+                ${getIconHtml(info.icon)}
+                <p>${info.description}</p>
+              </div>`
+                    )
+                    .join("")
+                : ""
+            }
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Menambahkan HTML itinerary ke dalam container
+    container.innerHTML += itineraryHtml;
+    n++; // Increment untuk memberikan ID unik pada elemen
+  });
+}
+
+// Fungsi untuk mengambil HTML berdasarkan ikon yang dipilih
+function getIconHtml(icon) {
+  const icons = {
+    utensils:
+      '<span class="iconify mt-1 inline" data-icon="fa6-solid:utensils" data-width="16" data-height="16"></span>',
+    plane:
+      '<span class="iconify mt-1 inline" data-icon="ri:plane-fill" data-width="16" data-height="16"></span>',
+  };
+  return icons[icon] || "";
+}
+
+// Fungsi untuk membuka dan menutup konten itinerary
+// function trigger(index) {
+//   const container = document.getElementById(`container-${index}`);
+//   const icon = document.getElementById(`icon-${index}`);
+
+//   if (container.style.maxHeight) {
+//     container.style.maxHeight = null;
+//     icon.style.transform = "rotate(0deg)";
+//   } else {
+//     container.style.maxHeight = container.scrollHeight + "px";
+//     icon.style.transform = "rotate(180deg)";
+//   }
+// }
+// END GENERATE ITINERARY
+
 // total-price-detail
 // min-price-detail
 // Fetch Post

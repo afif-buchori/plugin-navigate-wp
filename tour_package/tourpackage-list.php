@@ -1,9 +1,9 @@
 <?php
 function enx_get_page_content($data)
 {
-    $items = $data->data;
+    $items = $data->services;
     ob_start();
-?>
+    ?>
     <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="relative bg-cover bg-center h-tour"
@@ -12,7 +12,8 @@ function enx_get_page_content($data)
                     <div class="container text-center h-full flex flex-col justify-center">
                         <div>
                             <span
-                                class="bg-primary uppercase font-base rounded px-3 py-1 text-white text-xs md:text-sm tracking-widest">Tour Package</span>
+                                class="bg-primary uppercase font-base rounded px-3 py-1 text-white text-xs md:text-sm tracking-widest">Tour
+                                Package</span>
 
                             <h1
                                 class="font-heading text-primary text-3xl md:text-5xl lg:text-6xl xl:text-6xl mb-14 mt-5 lg:leading-15 xl:px-10">
@@ -82,7 +83,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-<?php
+    <?php
     $contents = ob_get_clean();
     return $contents;
 }

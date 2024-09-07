@@ -77,6 +77,7 @@ function enx_get_page_content($data)
                                     <h1 class="col-span-3 md:text-2xl font-bold">
                                         <?php echo $data_res->contents->title ?>
                                     </h1>
+                                    <p id="detail-tp-title-package" class="col-span-3 md:text-2xl font-bold italic"></p>
                                     <p>
                                         <span class="iconify inline" data-icon="mdi:location" data-width="20"
                                             data-height="20"></span>
@@ -89,15 +90,19 @@ function enx_get_page_content($data)
                                         <div class="flex gap-2 items-center">
                                             <span class="iconify inline" data-icon="mingcute:time-duration-fill"
                                                 data-width="20" data-height="20"></span>
-                                            <p><?php echo $contents->duration->first . " ~ " . $contents->duration->last ?>
-                                                Days</p>
+                                            <p id="detail-tp-duration">
+                                                <?php echo $contents->duration->first . " ~ " . $contents->duration->last ?>
+                                                Days
+                                            </p>
                                         </div>
                                         <span style="width: 2px; background-color: #45474B50;"></span>
                                         <div class="flex gap-2 items-center">
                                             <span class="iconify inline" data-icon="mdi:home-city-outline" data-width="20"
                                                 data-height="20"></span>
-                                            <p><?php echo $contents->cities_visited->first . " ~ " . $contents->cities_visited->last ?>
-                                                Cities Visited</p>
+                                            <p id="detail-tp-cities-visited">
+                                                <?php echo $contents->cities_visited->first . " ~ " . $contents->cities_visited->last ?>
+                                                Cities Visited
+                                            </p>
                                         </div>
                                         <span style="width: 2px; background-color: #45474B50;"></span>
                                         <div class="flex gap-2 items-center">
@@ -107,31 +112,33 @@ function enx_get_page_content($data)
                                         </div>
                                     </div>
                                     <!-- LIST ICON -->
-                                    <p style="text-align: justify;" class="mt-10 mb-10">
+                                    <p id="detail-tp-description" style="text-align: justify;" class="mt-10 mb-10">
                                         <?php echo $data_res->contents->description ?>
                                     </p>
 
                                     <!-- BLOCK DATE -->
-                                    <div style="background-color: #EB367810;" class="widget shadow-lg rounded-xl mb-10">
-                                        <p class="font-bold text-lg p-4 border-b-2 border-primary border-opacity-10">Close
-                                            Date
-                                        </p>
-                                        <div class="p-4 pt-0">
-                                            <?php foreach ($close_dates as $key => $data_dates) { ?>
-                                                <p style="opacity: 0.4; <?php echo $key > 0 ? "border-top: solid 1px #45474B60 !important;" : "" ?>"
-                                                    class="font-bold <?php echo $key > 0 ? "mt-4" : "" ?> pt-4">
-                                                    <?php echo $data_dates['monthly'] ?>
-                                                </p>
-                                                <div class="flex flex-wrap gap-x-4 px-2">
-                                                    <?php foreach ($data_dates['dates'] as $kd => $c_date) { ?>
-                                                        <p style="width: 140px;">
-                                                            <?php echo date_format(new DateTime($c_date), "d M Y") ?>
-                                                        </p>
-                                                    <?php } ?>
-                                                </div>
-                                            <?php } ?>
+                                    <?php if (count($close_dates) > 0) { ?>
+                                        <div style="background-color: #EB367810;" class="widget shadow-lg rounded-xl mb-10">
+                                            <p class="font-bold text-lg p-4 border-b-2 border-primary border-opacity-10">Close
+                                                Date
+                                            </p>
+                                            <div class="p-4 pt-0">
+                                                <?php foreach ($close_dates as $key => $data_dates) { ?>
+                                                    <p style="opacity: 0.4; <?php echo $key > 0 ? "border-top: solid 1px #45474B60 !important;" : "" ?>"
+                                                        class="font-bold <?php echo $key > 0 ? "mt-4" : "" ?> pt-4">
+                                                        <?php echo $data_dates['monthly'] ?>
+                                                    </p>
+                                                    <div class="flex flex-wrap gap-x-4 px-2">
+                                                        <?php foreach ($data_dates['dates'] as $kd => $c_date) { ?>
+                                                            <p style="width: 140px;">
+                                                                <?php echo date_format(new DateTime($c_date), "d M Y") ?>
+                                                            </p>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php } ?>
                                     <!-- END BLOCK DATE -->
 
 
@@ -145,7 +152,7 @@ function enx_get_page_content($data)
                                                     name="addon_<php echo $contents->itinerary ?>" value="notset"
                                                     checked="checked" />
                                             </h5>
-                                            <div class="px-2 md:px-8">
+                                            <div id="detail-tp-itinerary" class="px-2 md:px-8">
 
                                                 <?php
                                                 $n = 0;

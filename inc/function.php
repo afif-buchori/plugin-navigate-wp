@@ -127,6 +127,12 @@ function fetchPost($url, $body)
     }
     return json_decode(json_encode($response));
 }
+
+function dd($val)
+{
+    var_dump($val);
+    die();
+}
 // KITA
 // function fetchGet($url)
 // {

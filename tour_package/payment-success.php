@@ -17,7 +17,7 @@ function enx_get_page_content($data)
     $total = 0;
     $grand_total = 0;
     ob_start();
-?>
+    ?>
     <div class="enx-container site-wrapper" id="page-addon">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -43,12 +43,14 @@ function enx_get_page_content($data)
                                                     <div class="pl-4 border-b border-primary border-opacity-10">
                                                         <h6 class="font-bold">
                                                             <?php
-                                                            echo $key > 0 ?  "Payment #" . $key : (count($payments) > 1 ? 'Down Payment' : 'Full Payment')  ?>
+                                                            echo $key > 0 ? "Payment #" . $key : (count($payments) > 1 ? 'Down Payment' : 'Full Payment') ?>
                                                         </h6>
                                                     </div>
-                                                    <div class="pl-4 flex justify-between border-b border-primary border-opacity-10">
+                                                    <div
+                                                        class="pl-4 flex justify-between border-b border-primary border-opacity-10">
                                                         <h6>
-                                                            Payment Status : <?php echo $value->status ? $value->status : ($key == 0 ? null : ($payments[$key - 1]->status == "PAID" ? "Waiting" : ($key == 1 ? "Waiting Down Payment" : "Waiting Payment " . $key))) ?>
+                                                            Payment Status :
+                                                            <?php echo $value->status ? $value->status : ($key == 0 ? null : ($payments[$key - 1]->status == "PAID" ? "Waiting" : ($key == 1 ? "Waiting Down Payment" : "Waiting Payment " . $key))) ?>
                                                         </h6>
 
                                                         <?php if (($key == 0 && $value->status != "PAID") || ($key > 0 && $payments[$key - 1]->status == "PAID") && $value->status != "PAID") { ?>
@@ -60,7 +62,8 @@ function enx_get_page_content($data)
                                                         $amoun_pay = $value->status != null && $value->status == "PAID" ? $value->paid_amount : $value->amount;
                                                         ?>
                                                         <h6>
-                                                            Amount Due : <?php echo $curr->symbol . " " . number_format($amoun_pay, $curr->digit) ?>
+                                                            Amount Due :
+                                                            <?php echo $curr->symbol . " " . number_format($amoun_pay, $curr->digit) ?>
                                                         </h6>
                                                     </div>
                                                     <div class="pl-4">
@@ -73,24 +76,21 @@ function enx_get_page_content($data)
 
                                             <div class="mb-4 mt-4 border-t border-primary border-opacity-10">
                                                 <label class="text-primary font-semibold block" for="email">Name:</label>
-                                                <span
-                                                    class="font-numbers font-medium text-primary/90 text-sm">
+                                                <span class="font-numbers font-medium text-primary/90 text-sm">
                                                     <?php echo $order->first_name . " " . $order->last_name ?>
                                                 </span>
                                             </div>
 
                                             <div class="mb-4 border-t border-primary border-opacity-10">
                                                 <label class="text-primary font-semibold block" for="email">Email:</label>
-                                                <span
-                                                    class="font-numbers font-medium text-primary/90 text-sm">
+                                                <span class="font-numbers font-medium text-primary/90 text-sm">
                                                     <?php echo $order->email ?>
                                                 </span>
                                             </div>
 
                                             <div class="border-t border-primary border-opacity-10">
                                                 <label class="text-primary font-semibold block" for="email">Phone:</label>
-                                                <span
-                                                    class="font-numbers font-medium text-primary/90 text-sm">
+                                                <span class="font-numbers font-medium text-primary/90 text-sm">
                                                     <?php echo $order->phone ?>
                                                 </span>
                                             </div>
@@ -107,10 +107,12 @@ function enx_get_page_content($data)
                                     </h5>
                                     <div class="py-5 px-7">
                                         <div class="mb-4 border-b-2 border-primary border-opacity-10">
-                                            <label class="text-primary block">Status : <span class="font-bold"><?php echo $order->status == "DP" ? "Down Payment" : $order->status ?></span></label>
+                                            <label class="text-primary block">Status : <span
+                                                    class="font-bold"><?php echo $order->status == "DP" ? "Down Payment" : $order->status ?></span></label>
                                         </div>
                                         <div class="mb-4 border-b-2 border-primary border-opacity-10">
-                                            <label class="text-primary block">Booking Id : <span class="font-bold"><?php echo $order->booking_id ?></span></label>
+                                            <label class="text-primary block">Booking Id : <span
+                                                    class="font-bold"><?php echo $order->booking_id ?></span></label>
                                         </div>
 
                                         <?php foreach ($details as $key => $value) {
@@ -132,11 +134,12 @@ function enx_get_page_content($data)
 
                                             $total += $price_item;
                                             $grand_total += $total;
-                                        ?>
+                                            ?>
                                             <div class="mb-4">
                                                 <div class="flex justify-between ">
                                                     <p>
-                                                        <?php echo $value->item_name ?> <span class="font-bold">(x<?php echo $qty_item ?>)</span>
+                                                        <?php echo $value->item_name ?> <span
+                                                            class="font-bold">(x<?php echo $qty_item ?>)</span>
                                                     </p>
                                                     <p>
                                                         <?php echo $curr->symbol . " " . number_format($price_item, $curr->digit) ?>
@@ -155,23 +158,23 @@ function enx_get_page_content($data)
                                                     Sub Total:
                                                 </p>
                                                 <p>
-                                                    <?php echo $curr->symbol . " " .  number_format($total, $curr->digit) ?>
+                                                    <?php echo $curr->symbol . " " . number_format($total, $curr->digit) ?>
                                                 </p>
                                             </div>
                                             <?php
                                             if (count($order->costs) > 0) {
                                                 foreach ($order->costs as $key => $v) {
                                                     $grand_total += $v->value;
-                                            ?>
+                                                    ?>
                                                     <div class=" flex gap-10">
                                                         <p class="ml-auto">
                                                             <?php echo $v->name ?> :
                                                         </p>
                                                         <p>
-                                                            <?php echo $curr->symbol . " " .  number_format($v->value, $curr->digit) ?>
+                                                            <?php echo $curr->symbol . " " . number_format($v->value, $curr->digit) ?>
                                                         </p>
                                                     </div>
-                                            <?php }
+                                                <?php }
                                             } ?>
 
                                             <div class=" flex gap-10">
@@ -179,7 +182,7 @@ function enx_get_page_content($data)
                                                     Total:
                                                 </p>
                                                 <p>
-                                                    <?php echo $curr->symbol . " " .  number_format($grand_total, $curr->digit) ?>
+                                                    <?php echo $curr->symbol . " " . number_format($grand_total, $curr->digit) ?>
                                                 </p>
                                             </div>
 
@@ -189,7 +192,7 @@ function enx_get_page_content($data)
                                                         Balance:
                                                     </p>
                                                     <p>
-                                                        <?php echo $curr->symbol . " " .  number_format($order->balance, $curr->digit) ?>
+                                                        <?php echo $curr->symbol . " " . number_format($order->balance, $curr->digit) ?>
                                                     </p>
                                                 </div>
                                             <?php } ?>
@@ -206,7 +209,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-<?php
+    <?php
     $contents = ob_get_clean();
     return $contents;
 }

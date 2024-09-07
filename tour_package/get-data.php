@@ -40,7 +40,7 @@ function enx_get_detail_data_tour_package()
 function enx_create_list_tour_package($items)
 {
     foreach ($items as $item) {
-?>
+        ?>
         <div data-x-data data-x-ref="losAngeles"
             data-x-intersect="anime({ targets: $refs.losAngeles, translateY: [100, 0], opacity: [0, 1], duration: 500 ,easing: 'easeOutQuad' })"
             style="flex: 1 1 0">
@@ -48,7 +48,7 @@ function enx_create_list_tour_package($items)
                 class="group flex-1 flex flex-col block relative bg-cover rounded-2xl xl:my-0 overflow-hidden w-full"
                 style="min-height: 410px">
                 <div class="bg-cover bg-center origin-top w-full rounded-2xl transition duration-500 transform translate-y-[-10px] group-hover:scale-110"
-                    style="background-image: url(<?php echo  $item->image ?>); aspect-ratio: 16/10">
+                    style="background-image: url(<?php echo $item->image ?>); aspect-ratio: 16/10">
                 </div>
                 <div class="flex-1 flex flex-col h-full w-full bg-secondary transition duration-500 group-hover:bg-primary py-5 px-4 rounded-2xl"
                     style="z-index: 1; margin-top: -32px;">
@@ -82,7 +82,8 @@ function enx_create_list_tour_package($items)
                                 </div>
                             <php } ?> -->
                             <label class="flex items-center" for="peopleBooked">
-                                <span class="iconify inline-block text-primary mr-1 transition duration-500 group-hover:text-white"
+                                <span
+                                    class="iconify inline-block text-primary mr-1 transition duration-500 group-hover:text-white"
                                     data-icon="mdi:timer-outline" data-width="15" data-height="15"></span>
                                 <?= $item->durations->first == $item->durations->last ? $item->durations->first : $item->durations->first . " ~ " . $item->durations->last ?>
                                 <?= $item->durations->first > 1 || $item->durations->last > 1 ? " Days" : " Day" ?>
@@ -100,6 +101,6 @@ function enx_create_list_tour_package($items)
             </a>
         </div>
 
-<?php
+        <?php
     }
 }

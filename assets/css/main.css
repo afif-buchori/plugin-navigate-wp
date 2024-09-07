@@ -5173,6 +5173,9 @@ div:before {
 }
 
 /* new */
+.enx-container .italic {
+  font-style: italic !important;
+}
 .enx-container .error-message {
   color: E4003A !important;
   font-style: italic !important;
