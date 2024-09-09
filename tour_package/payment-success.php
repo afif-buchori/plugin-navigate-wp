@@ -24,6 +24,20 @@ function enx_get_page_content($data)
 
                 <section>
                     <div class="container">
+                        <div class="stepper-wrapper">
+                            <?php foreach ($data->breadCrumbStep as $key => $value) {
+                            ?>
+                                <div
+                                    class="stepper-item  <?php echo $value->name != 'Result' ? 'completed' : '' ?>">
+                                    <div class="step-counter">
+                                        <?php if ($value->name == 'Result') { ?>
+                                            <p></p>
+                                        <?php } ?>
+                                    </div>
+                                    <div class="step-name"><?php echo $value->name ?></div>
+                                </div>
+                            <?php } ?>
+                        </div>
                         <div class="flex flex-col-reverse xl:grid grid-cols-12 gap-x-16 pt-16 pb-5 xl:py-20">
                             <div class="col-span-6">
                                 <div class="mb-10 top-10">

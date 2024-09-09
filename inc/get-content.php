@@ -165,8 +165,9 @@ function enx_get_global_page()
             $data_meta = $data->meta ?? null;
         } elseif ($url[1] == 'addons') {
             session_start();
-            $data = $_SESSION['SESSION_TOUR_PACKAGE'] ?? [];
-            dd($data);
+            require_once(dirname(__FILE__) . '/../tour_package/addon.php');
+            $data = enx_get_data_addontp()->data;
+            $head_title = "Additional";
         } elseif ($url[1] == 'booking') {
             session_start();
             require_once(dirname(__FILE__) . '/../tour_package/form-booking.php');

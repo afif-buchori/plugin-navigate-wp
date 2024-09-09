@@ -36,7 +36,7 @@ function enx_get_page_content($data)
     $close_dates = groupDatesByMonth($data_res->close_date_time);
     // var_dump(json_encode($close_dates));
     ob_start();
-    ?>
+?>
     <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -67,7 +67,7 @@ function enx_get_page_content($data)
                                         if ($idx < 3) { ?>
                                             <img src="<?php echo $media ?>" width="100%" class="rounded-lg"
                                                 style="aspect-ratio: 16/9; object-fit: cover;">
-                                        <?php }
+                                    <?php }
                                     } ?>
                                 </div>
                             </div>
@@ -91,7 +91,11 @@ function enx_get_page_content($data)
                                             <span class="iconify inline" data-icon="mingcute:time-duration-fill"
                                                 data-width="20" data-height="20"></span>
                                             <p id="detail-tp-duration">
-                                                <?php echo $contents->duration->first . " ~ " . $contents->duration->last ?>
+                                                <?php
+                                                $duration_first = $contents->duration->first;
+                                                $duration_last = $contents->duration->last;
+                                                echo $duration_first == $duration_last ? $duration_first : $duration_first . " ~ " . $duration_last
+                                                ?>
                                                 Days
                                             </p>
                                         </div>
@@ -100,7 +104,11 @@ function enx_get_page_content($data)
                                             <span class="iconify inline" data-icon="mdi:home-city-outline" data-width="20"
                                                 data-height="20"></span>
                                             <p id="detail-tp-cities-visited">
-                                                <?php echo $contents->cities_visited->first . " ~ " . $contents->cities_visited->last ?>
+                                                <?php
+                                                $cities_visited_first = $contents->cities_visited->first;
+                                                $cities_visited_last = $contents->cities_visited->last;
+                                                echo $cities_visited_first == $cities_visited_last  ? $cities_visited_first : $cities_visited_first . " ~ " . $cities_visited_last
+                                                ?>
                                                 Cities Visited
                                             </p>
                                         </div>
@@ -160,7 +168,7 @@ function enx_get_page_content($data)
                                                 foreach ($contents->itinerary as $key => $item) {
                                                     if ($i > 0)
                                                         echo "<hr />";
-                                                    ?>
+                                                ?>
                                                     <div
                                                         class="md:grid grid-cols-12 md:space-x-4 relative <?php echo ($i == (count($contents->itinerary) - 1) ? 'smt-4' : ($i > 0 ? 'smy-4' : 'smb-4')) ?>">
                                                         <div class="col-span-12 py-5">
@@ -200,18 +208,18 @@ function enx_get_page_content($data)
                                                                                     data-width="16" data-height="16"></span>'
                                                                     ];
                                                                     foreach ($item->add_info as $key => $info) {
-                                                                        ?>
+                                                                ?>
                                                                         <div class="flex gap-2 <?php echo $key == 0 ? "mt-4" : "" ?>">
                                                                             <?php echo $icon[$info->icon] ?? "" ?>
                                                                             <p><?php echo $info->description ?></p>
                                                                         </div>
-                                                                    <?php }
+                                                                <?php }
                                                                 } ?>
                                                             </div>
                                                         </div>
 
                                                     </div>
-                                                    <?php
+                                                <?php
                                                     $n++;
                                                     $i++;
                                                 } ?>
@@ -226,27 +234,31 @@ function enx_get_page_content($data)
                                                 <h2 style="border-bottom: solid 2px black !important; width: fit-content;"
                                                     class="font-bold">
                                                     Include:</h2>
-                                                <?php foreach ($data_res->contents->include as $key => $incl) { ?>
-                                                    <div class="text-sm md:text-base flex gap-2">
-                                                        <span class="iconify inline-block text-green-success"
-                                                            data-icon="akar-icons:circle-check" data-width="20" data-height="20"
-                                                            style="margin-top: 0.125rem"></span>
-                                                        <p class="flex-1"><?php echo $incl ?></p>
-                                                    </div>
-                                                <?php } ?>
+                                                <div id="content_includes">
+                                                    <?php foreach ($data_res->contents->include as $key => $incl) { ?>
+                                                        <div class="text-sm md:text-base flex gap-2">
+                                                            <span class="iconify inline-block text-green-success"
+                                                                data-icon="akar-icons:circle-check" data-width="20" data-height="20"
+                                                                style="margin-top: 0.125rem"></span>
+                                                            <p class="flex-1"><?php echo $incl ?></p>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
                                             </div>
                                             <div class="flex-1 flex flex-col gap-2">
                                                 <h2 style="border-bottom: solid 2px black !important; width: fit-content;"
                                                     class="font-bold">
                                                     Exclude:</h2>
-                                                <?php foreach ($data_res->contents->exclude as $key => $excl) { ?>
-                                                    <div class="text-sm md:text-base flex gap-2">
-                                                        <span class="iconify inline-block text-red-error"
-                                                            data-icon="radix-icons:cross-circled" data-width="20"
-                                                            data-height="20" style="margin-top: 0.12rem"></span>
-                                                        <p class="flex-1"><?php echo $excl ?></p>
-                                                    </div>
-                                                <?php } ?>
+                                                <div id="content_excludes">
+                                                    <?php foreach ($data_res->contents->exclude as $key => $excl) { ?>
+                                                        <div class="text-sm md:text-base flex gap-2">
+                                                            <span class="iconify inline-block text-red-error"
+                                                                data-icon="radix-icons:cross-circled" data-width="20"
+                                                                data-height="20" style="margin-top: 0.12rem"></span>
+                                                            <p class="flex-1"><?php echo $excl ?></p>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -294,9 +306,9 @@ function enx_get_page_content($data)
                                             <p class="text-sm">Date:</p>
                                             <input type="date" name="date" min="<?php echo date('Y-m-d\TH:i') ?>"
                                                 id="tp_date_detail" data-service='<?= json_encode([
-                                                    'slug' => $data_res->slug,
-                                                    'slug_country' => $data_res->country->slug
-                                                ]) ?>'
+                                                                                        'slug' => $data_res->slug,
+                                                                                        'slug_country' => $data_res->country->slug
+                                                                                    ]) ?>'
                                                 class="w-full form-input bg-gray-light4/60 border-none rounded py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm mb-4" />
 
                                             <div id="btn-slc-package-detail" class="hidden">
@@ -366,7 +378,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-    <?php
+<?php
     $contents = ob_get_clean();
     return $contents;
 }

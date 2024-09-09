@@ -27,6 +27,8 @@ function enx_get_data_api_post()
     } elseif ($url[2] == "booking-tp") {
         session_start();
         $data = enx_post_booking();
+    } elseif ($url[2] == "generate-urlpayment") {
+        $data = enx_post_generate_urlpayment();
     }
 
     return $data;
@@ -59,11 +61,17 @@ function enx_post_booking()
     return $data;
 }
 
+function enx_post_generate_urlpayment()
+{
+    $url = API_TOUR_PACKAGE_URL . "/post/generate-urlpayment";
+    $req = json_decode(file_get_contents("php://input"));
+    $data = fetchPost($url, $req);
+    return $data;
+}
+
 function enx_generate_tp_session()
 {
     session_start();
     $_SESSION['SESSION_TOUR_PACKAGE'] = json_decode(file_get_contents("php://input"));
     return true;
-    // return '/' . ACTIVITY_LINK . '/booking';
-    // return $_SESSION['CART_ACTIVITY'];
 }
