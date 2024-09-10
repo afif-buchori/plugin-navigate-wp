@@ -15,11 +15,14 @@ if (url_name[0] == main_url && !url_name[1]) {
   const addonSelected = document.querySelector("textarea[name='addon_selected']");
   const data_sel_service = document.querySelector("[additional-service-body]");
   const data_total = document.querySelector("[additional-service-total]");
-  // const buttonNext = document.querySelector("[button-next-step]");
+  const dataGrandtotal = document.querySelector("[additional-grandtotal]");
+  const totalPriceService = document.querySelector("input[name='total_price_service']");
+  const buttonNext = document.querySelector("[button-next-step]");
 
   selectAddons.forEach((input) => {
-    input.addEventListener("change", () => {
-      let oldData = JSON.parse(addonSelected.value) || [];
+    input.addEventListener("change", async () => {
+      const dataSession = JSON.parse(addonSelected.value);
+      let oldData = dataSession.addon_selected || [];
       const attrDataType = input.dataset.type ?? null;
       const { id, title, price, price_detail } = JSON.parse(input.dataset.addonSelect);
 
@@ -27,29 +30,38 @@ if (url_name[0] == main_url && !url_name[1]) {
       const qty = parseInt(input.value);
       if (qty > 0) oldData.push({ id, name: title, qty, price: price * qty, subQty: null });
 
-      addonSelected.value = JSON.stringify(oldData);
-      const totalPrice = oldData.reduce((sum, item) => sum + item.price, 0);
+      const body = { ...dataSession, addon_selected: oldData };
 
-      if (oldData.length > 0) {
-        let selService = '<label class="text-primary font-semibold block" for="email">Selected Service:</label><ul class="style-1">';
-        oldData.map((item) => {
-          selService += "<li>" + item.name + " x" + item.qty + "</li>";
-        });
-        selService += "</ul>";
-        data_sel_service.innerHTML = selService;
-        data_total.innerHTML = "Total: " + price_detail.currency.symbol + " " + numberFormat(totalPrice, price_detail.currency.digit);
-        // buttonNext.classList.remove("btn-disable");
-      } else {
-        data_sel_service.innerHTML = '<label class="text-primary font-semibold block">No service selected</label>';
-        data_total.innerHTML = "Total: -";
-        // buttonNext.classList.add("btn-disable");
+      const res = await fetchingPost(API_TP_URL + "/generate-tp-session", body);
+      if (res) {
+        addonSelected.value = JSON.stringify(body);
+        const totalPrice = oldData.reduce((sum, item) => sum + item.price, 0);
+
+        if (oldData.length > 0) {
+          let selService = '<label class="text-primary font-semibold block" for="email">Selected Service:</label><ul class="style-1">';
+          oldData.map((item) => {
+            selService += "<li>" + item.name + " x" + item.qty + "</li>";
+          });
+          selService += "</ul>";
+          data_sel_service.innerHTML = selService;
+          data_total.innerHTML = price_detail.currency.symbol + " " + numberFormat(totalPrice, price_detail.currency.digit);
+          dataGrandtotal.innerHTML = price_detail.currency.symbol + " " + numberFormat(totalPrice + parseFloat(totalPriceService.value), price_detail.currency.digit);
+          buttonNext.classList.remove("btn-disable");
+          buttonNext.removeAttribute("disabled");
+        } else {
+          data_sel_service.innerHTML = '<label class="text-primary font-semibold block">No service selected</label>';
+          data_total.innerHTML = "-";
+          dataGrandtotal.innerHTML = price_detail.currency.symbol + " " + numberFormat(totalPriceService.value, price_detail.currency.digit);
+          buttonNext.classList.add("btn-disable");
+          buttonNext.setAttribute("disabled", "");
+        }
       }
     });
+  });
 
-    formAddons.addEventListener("submit", async function (event) {
-      event.preventDefault();
-      console.log(JSON.parse(addonSelected.value) ?? []);
-    });
+  formAddons.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    return (window.location.href = "/tourpackage/booking");
   });
 
   // function addonSetLoading(state) {

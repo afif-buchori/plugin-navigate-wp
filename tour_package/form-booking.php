@@ -9,7 +9,7 @@ function enx_get_page_content($data)
     $rate = $data_res->service->rate;
     $currency = $rate->currency->client_currency;
     ob_start();
-    ?>
+?>
     <div class="enx-container site-wrapper">
         <!-- <php require_once(dirname(__FILE__) . '/../activity/modal-message.php'); ?> -->
         <div class="site-content">
@@ -41,7 +41,7 @@ function enx_get_page_content($data)
                         </div> -->
                         <div class="stepper-wrapper">
                             <?php foreach ($data_res->breadCrumbStep as $key => $value) {
-                                ?>
+                            ?>
                                 <div
                                     class="stepper-item  <?php echo $value->name != 'Booking Form' && $key == 0 ? 'completed' : '' ?>">
                                     <div class="step-counter">
@@ -66,8 +66,8 @@ function enx_get_page_content($data)
                                         <div class="py-5 px-7">
                                             <h6 class="font-bold"><?php echo $data_res->service->contents->title ?></h6>
                                             <h6 class="mt-3"><?php
-                                            $date = new DateTime($data_res->data_session->date);
-                                            echo date_format($date, "l, d F Y") ?>
+                                                                $date = new DateTime($data_res->data_session->date);
+                                                                echo date_format($date, "l, d F Y") ?>
                                             </h6>
                                             <div class="flex justify-between mt-4">
                                                 <p class="pl-4">Adult x<?php echo $rate->adult->price_details->qty ?></p>
@@ -87,12 +87,54 @@ function enx_get_page_content($data)
                                         </div>
                                         <div
                                             class="font-bold border-t border-primary border-opacity-10 px-7 py-3 flex justify-between">
-                                            <h6 class="font-bold">Total</h6>
+                                            <h6 class="font-bold"><?php echo isset($data_res->service->addon_selected) && count($data_res->service->addon_selected) > 0 ? "Sub Total" : "Total" ?></h6>
                                             <p><?php echo $currency->symbol . " " . number_format($rate->total->client_currency, $currency->digit) ?>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
+
+                                <?php if (isset($data_res->service->addon_selected) && count($data_res->service->addon_selected) > 0) { ?>
+                                    <div class="mb-5">
+                                        <div class="wiget shadow-lg rounded-xl mb-5 bg-white">
+                                            <h5
+                                                class="font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
+                                                Additional
+                                            </h5>
+                                            <div class="py-5 px-7">
+                                                <?php foreach ($data_res->service->addon_selected as $key => $value) { ?>
+                                                    <div class="flex justify-between mt-4">
+                                                        <p><?php echo $value->title . " x" . (int)$value->qty ?></p>
+                                                        <p><?php echo $currency->symbol . " " . number_format($value->price, $currency->digit) ?></p>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                            <div
+                                                class="font-bold border-t border-primary border-opacity-10 px-7 py-3 flex justify-between">
+                                                <h6 class="font-bold">Sub Total</h6>
+                                                <p>
+                                                    <?php
+                                                    $total_price_addon = array_sum(array_values(array_column($data_res->service->addon_selected, 'price')));
+                                                    echo $currency->symbol . " " . number_format($total_price_addon, $currency->digit)
+                                                    ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-5">
+                                        <div class="wiget shadow-lg rounded-xl mb-5 bg-white">
+                                            <div
+                                                class="font-bold px-7 py-3 flex justify-between">
+                                                <h6 class="font-bold">Total</h6>
+                                                <p>
+                                                    <?php
+                                                    echo $currency->symbol . " " . number_format($rate->total->client_currency + $total_price_addon, $currency->digit)
+                                                    ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
 
                                 <div class="mb-5">
                                     <div class="wiget shadow-lg rounded-xl mb-5 bg-white">
@@ -107,7 +149,7 @@ function enx_get_page_content($data)
                                         <div class="py-5 px-7">
                                             <?php foreach ($data_res->service->payment as $key => $payment) {
                                                 $payment_in_id = strtolower(str_replace(" ", "_", $payment->title)) . "_$key";
-                                                ?>
+                                            ?>
                                                 <div class="<?php echo $key > 0 ? "mt-4" : "" ?>">
                                                     <input type="radio" name="payment_settings"
                                                         id="<?php echo $payment_in_id ?>"
@@ -118,7 +160,7 @@ function enx_get_page_content($data)
                                                         class="pl-4"><?php echo $payment->title ?></label>
                                                     <?php foreach ($payment->detail as $detail) {
                                                         $due_date = date_format(new DateTime($detail->dueDate), "D, d F Y H:i");
-                                                        ?>
+                                                    ?>
                                                         <div class="flex justify-between font-bold">
                                                             <p><?php echo $detail->name ?></p>
                                                             <p><?php echo $currency->symbol . " " . number_format($detail->amount, $currency->digit) ?>
@@ -263,7 +305,7 @@ function enx_get_page_content($data)
         </div>
     </div>
 
-    <?php
+<?php
     $contents = ob_get_clean();
     return $contents;
 }

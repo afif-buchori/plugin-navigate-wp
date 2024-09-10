@@ -10,10 +10,13 @@ function enx_get_data_addontp()
 
 function enx_get_page_content($data)
 {
+    $data_session = $_SESSION['SESSION_TOUR_PACKAGE'] ?? [];
     $service = $data->service;
+    $rate = $service->rate;
     $breadCrumbStep = $data->breadCrumbStep;
     $addons = $service->addons ?? [];
     $total_pax = $service->rate->total->total_pax ?? 0;
+    $curr = $service->rate->currency->client_currency;
     ob_start();
 ?>
     <div class="enx-container site-wrapper" id="page-addon">
@@ -46,35 +49,55 @@ function enx_get_page_content($data)
                                             Service Details
                                         </h5>
                                         <div class="py-5 px-7">
-                                            <input type="hidden" name="sid" value="">
+                                            <input type="hidden" name="total_price_service" value="<?php echo $rate->total->client_currency ?>">
                                             <div class="mb-4">
                                                 <label class="text-primary font-semibold block" for="email">Service Name:</label>
-                                                <!-- <span class="font-numbers font-medium text-primary/90  text-sm"><php echo $service->title ?></span> -->
+                                                <span class="font-numbers font-medium text-primary/90  text-sm"><?php echo $service->contents->title ?></span>
                                             </div>
 
                                             <div class="mb-4">
-                                                <label class="text-primary font-semibold block" for="email">Flight Date:</label>
-                                                <!-- <span class="font-numbers font-medium text-primary/90  text-sm"><php echo $cart->date ?></span> -->
+                                                <label class="text-primary font-semibold block" for="email">Service Date:</label>
+                                                <span class="font-numbers font-medium text-primary/90  text-sm"><?php echo date_format(new DateTime($data_session->date), "l, d F Y") ?></span>
                                             </div>
 
                                             <div>
                                                 <label class="text-primary font-semibold block" for="email">Traveler:</label>
-                                                <div class="font-numbers font-medium text-primary/90 text-sm flex justify-start">
-                                                    <span>
-                                                        <span class="grid">Adult: </span>
-                                                        <span class="grid">Child: </span>
-                                                        <span class="grid">Infant: </span>
-                                                    </span>
-                                                    <span>
-                                                        <span class="grid font-bold">1 pax</span>
-                                                        <span class="grid font-bold">0 pax</span>
-                                                        <span class="grid font-bold">0 pax</span>
-                                                    </span>
+                                                <div class="flex justify-between font-numbers font-medium text-primary/90 text-sm">
+                                                    <div class="flex justify-start">
+                                                        <span class="grid">Adult:</span>
+                                                        <span class="grid font-bold"><?php echo $rate->adult->price_details->qty ?> pax</span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="grid font-bold"><?php echo $curr->symbol . " " . number_format($rate->adult->price, $curr->digit) ?></span>
+                                                    </div>
                                                 </div>
+                                                <?php if ($rate->with_child_rate) { ?>
+                                                    <div class="flex justify-between font-numbers font-medium text-primary/90 text-sm">
+                                                        <div class="flex justify-start">
+                                                            <span class="grid">Child:</span>
+                                                            <span class="grid font-bold"><?php echo $rate->child->price_details->qty ?> pax</span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="grid font-bold"><?php echo $curr->symbol . " " . number_format($rate->child->price, $curr->digit) ?></span>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+                                                <?php if ($rate->with_infant_rate) { ?>
+                                                    <div class="flex justify-between font-numbers font-medium text-primary/90 text-sm">
+                                                        <div class="flex justify-start">
+                                                            <span class="grid">Infant:</span>
+                                                            <span class="grid font-bold"><?php echo $rate->infant->price_details->qty ?> pax</span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="grid font-bold"><?php echo $curr->symbol . " " . number_format($rate->infant->price, $curr->digit) ?></span>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
                                             </div>
                                         </div>
-                                        <div class="py-5 px-7 border-t border-primary border-opacity-10 text-xl font-bold">
-                                            <!-- Total: <php echo $serviceSum->currency->symbol . number_format($serviceSum->total, $serviceSum->currency->digit) ?> -->
+                                        <div class="flex justify-between py-5 px-7 border-t border-primary border-opacity-10 text-xl font-bold">
+                                            <span>Sub Total: </span>
+                                            <span><?php echo $curr->symbol . " " . number_format($rate->total->client_currency, $curr->digit) ?></span>
                                         </div>
                                     </div>
 
@@ -87,14 +110,45 @@ function enx_get_page_content($data)
                                                 <span loader class="loader mb-4"></span>
                                             </div>
                                         </div>
-                                        <div class="py-5 px-7" additional-service-body>
-                                            <div>
-                                                <label class="text-primary font-semibold block" for="email">No service selected</label>
+                                        <?php if (isset($data_session->addon_selected) && count($data_session->addon_selected) > 0) { ?>
+                                            <div class="py-5 px-7" additional-service-body>
+                                                <label class="text-primary font-semibold block" for="email">Selected Service:</label>
+                                                <ul class="style-1">
+                                                    <?php foreach ($data_session->addon_selected as $key => $value) { ?>
+                                                        <li><?php echo $value->name . " x" . $value->qty ?></li>
+                                                    <?php } ?>
+                                                </ul>
                                             </div>
-                                        </div>
-                                        <div class="py-5 px-7 border-t border-primary border-opacity-10 text-xl font-bold" additional-service-total>
-                                            Total: -
-                                        </div>
+                                            <div class="flex justify-between py-5 px-7 border-t border-primary border-opacity-10 text-xl font-bold">
+                                                <span>Sub Total:</span>
+                                                <span additional-service-total>
+                                                    <?php
+                                                    $total_addon = array_sum(array_values(array_column($data_session->addon_selected, 'price')));
+                                                    echo $curr->symbol . " " . number_format($total_addon, $curr->digit);
+                                                    ?>
+                                                </span>
+                                            </div>
+                                        <?php } else { ?>
+                                            <div class="py-5 px-7" additional-service-body>
+                                                <div>
+                                                    <label class="text-primary font-semibold block" for="email">No service selected</label>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-between py-5 px-7 border-t border-primary border-opacity-10 text-xl font-bold">
+                                                <span>Sub Total:</span>
+                                                <span additional-service-total>-</span>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+
+                                    <div class="flex justify-between widget shadow-lg rounded-xl mb-10 bg-white py-5 px-7 text-xl font-bold">
+                                        <span>Total</span>
+                                        <span additional-grandtotal>
+                                            <?php
+                                            $grandtotal = $rate->total->client_currency + ($total_addon ?? 0);
+                                            echo $curr->symbol . " " . number_format($grandtotal, $curr->digit);
+                                            ?>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -107,9 +161,16 @@ function enx_get_page_content($data)
 
                                     <div class="mt-10">
                                         <div class="widget shadow-lg rounded-xl mb-10 bg-white">
-                                            <textarea name="addon_selected" hidden><?php echo json_encode([]) ?></textarea>
+                                            <textarea name="addon_selected" hidden><?php echo json_encode($data_session ?? []) ?></textarea>
                                             <?php $n = 0;
                                             foreach ($addons as $key => $item) {
+                                                $addon_selected = [];
+                                                if (isset($data_session->addon_selected) && count($data_session->addon_selected) > 0) {
+                                                    $addon_selected = array_values(array_filter($data_session->addon_selected, function ($ad) use ($item) {
+                                                        return $item->id == $ad->id;
+                                                    }));
+                                                }
+
                                                 $i = 0; ?>
                                                 <!-- <h5 class="font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
                                                     Name
@@ -236,7 +297,7 @@ function enx_get_page_content($data)
                                                                     Qty
                                                                 </div>
                                                                 <div>
-                                                                    <?php renderSelect("qty_addon", 0, $item->qty ?? 0, $item->qty_max ?? $total_pax, true, "data-addon-select='" . json_encode($item) . "'") ?>
+                                                                    <?php renderSelect("qty_addon", $addon_selected[0]->qty ?? 0, $item->qty ?? 0, $item->qty_max ?? $total_pax, true, "data-addon-select='" . json_encode($item) . "'") ?>
                                                                 </div>
                                                             </div>
                                                         <?php } elseif ($item->type_select_qty == 'SAME_AS_PRIMARY') { ?>
@@ -284,7 +345,7 @@ function enx_get_page_content($data)
                                                                         Qty
                                                                     </div>
                                                                     <div>
-                                                                        <?php renderSelect("qty_addon", 0, $item->qty ?? 0, $item->qty_max ?? $total_pax, true, "data-addon-select='" . json_encode($item) . "'") ?>
+                                                                        <?php renderSelect("qty_addon", $addon_selected[0]->qty ?? 0, $item->qty ?? 0, $item->qty_max ?? $total_pax, true, "data-addon-select='" . json_encode($item) . "'") ?>
                                                                     </div>
                                                                 </div>
                                                             <?php } else { ?>
@@ -330,7 +391,10 @@ function enx_get_page_content($data)
                                     <!-- <a href="/<php echo AIRPORT_SERVICE_LINK . '/checkout' ?>" class="btn ">Skip</a> -->
                                     <!-- <form method="POST" action="/<php echo AIRPORT_SERVICE_LINK . '/postdata/addon' ?>"> -->
                                     <input type="hidden" name="selected_service" input-selected-services />
-                                    <button type="submit" class="btn btn-primary btn-disable" button-next-step disabled>Next</button>
+                                    <button type="submit" class="btn btn-primary 
+                                    <?php echo isset($data_session->addon_selected) &&  count($data_session->addon_selected) > 0 ? "" : "btn-disable" ?>"
+                                        <?php echo isset($data_session->addon_selected) &&  count($data_session->addon_selected) > 0 ? "" : "disabled" ?>
+                                        button-next-step>Next</button>
                                     <!-- </form> -->
                                 </div>
                             </form>
