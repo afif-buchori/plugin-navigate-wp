@@ -5263,4 +5263,106 @@ div:before {
   transition: max-height 0.6s ease !important; /* Smooth accordion effect */
 }
 
+.enx-container .carousel-654-container {
+  width: 100% !important;
+  margin: auto !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.enx-container .carousel-654 {
+  display: flex !important;
+  transition: transform 0.5s ease-in-out !important;
+}
+
+.enx-container .carousel-654-item {
+  min-width: 100% !important;
+  box-sizing: border-box !important;
+  aspect-ratio: 16/9 !important;
+  display: flex !important;
+}
+
+.enx-container .carousel-654 img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.enx-container .carousel-654-prev,
+.enx-container .carousel-654-next {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  color: white !important;
+  border: none !important;
+  padding: 10px !important;
+  cursor: pointer !important;
+}
+
+.enx-container .carousel-654-prev {
+  left: 10px !important;
+}
+
+.enx-container .carousel-654-next {
+  right: 10px !important;
+}
+
+.enx-container .nav-carsl-654-item {
+  min-width: 100px !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+  opacity: 0.5 !important;
+  transition: opacity 0.3s ease !important;
+  background-color: black !important;
+}
+
+.enx-container .nav-carsl-654-item.active {
+  opacity: 1 !important;
+}
+.enx-container .nav-carsl-654 {
+  display: flex !important;
+}
+.enx-container .nav-carsl-654 img {
+  width: 100px !important;
+  height: auto !important;
+  aspect-ratio: 16/9 !important;
+  object-fit: cover !important;
+}
+.enx-container .nav-carsl-654-container {
+  /* margin: 1rem 0 !important; */
+  padding: 0.5rem !important;
+  overflow: auto !important;
+  z-index: 1 !important;
+  background-color: white !important;
+}
+.enx-container #scrollbar-mystyle::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); */
+  border-radius: 0px !important;
+  /* border-left: solid 1px #fff; */
+  background-color: #fff6d0 !important;
+  /* background-color: #fff; */
+}
+.enx-container #scrollbar-mystyle::-webkit-scrollbar {
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 0px !important;
+  background-color: #fff6d0 !important;
+  /* background-color: #fff; */
+}
+.enx-container #scrollbar-mystyle::-webkit-scrollbar-thumb {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); */
+  /* width: 10px; */
+  border-radius: 7px !important;
+  border-width: 2px 3px !important;
+  /* border-width: 2px 2px 2px 4px; */
+  border-style: solid !important;
+  background-clip: content-box !important;
+  border-color: #fff6d0 !important;
+  /* border-color: transparent; */
+  /* border-color: #fff; */
+  /* background-color: #c4c4c4; */
+  background-color: var(--swiper-theme-color);
+}
+
 /* end new */

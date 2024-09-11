@@ -36,7 +36,7 @@ function enx_get_page_content($data)
     $close_dates = groupDatesByMonth($data_res->close_date_time);
     // var_dump(json_encode($close_dates));
     ob_start();
-?>
+    ?>
     <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -44,33 +44,68 @@ function enx_get_page_content($data)
                 <section>
                     <div class="container">
                         <div class="pt-16 pb-5 xl:py-20">
-                            <div class="md:hidden w-full flex" style="overflow-x: auto;">
+                            <!-- SLIDER -->
+
+                            <div style="z-index: 0;" class="carousel-654-container">
+                                <div class="carousel-654">
+                                    <?php foreach ([$data_res->image, ...$data_res->images] as $key => $img) { ?>
+                                        <div class="carousel-654-item"><img src="<?php echo $img ?>"
+                                                alt="Image <?php echo $key ?>">
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <button class="carousel-654-prev">
+                                    <span style="margin-top: -4px;" class="iconify inline"
+                                        data-icon="fluent:chevron-left-12-filled" data-width="20" data-height="20"></span>
+                                </button>
+                                <button class="carousel-654-next">
+                                    <span style="margin-top: -4px;" class="iconify inline"
+                                        data-icon="fluent:chevron-right-12-filled" data-width="20" data-height="20"></span>
+                                </button>
+                            </div>
+                            <div style="width: fit-content; max-width: 100%; margin-top: -2.5rem; z-index: 1;"
+                                class="hidden md:flex overflow-hidden rounded-lg mx-auto">
+                                <div id="scrollbar-mystyle" class="nav-carsl-654-container shadow-lg">
+                                    <div class="nav-carsl-654">
+                                        <?php foreach ([$data_res->image, ...$data_res->images] as $key => $img) { ?>
+                                            <div style="background-color: black;">
+                                                <div class="nav-carsl-654-item"><img src="<?php echo $img ?>"
+                                                        alt="Image <?php echo $key ?>">
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END SLIDER -->
+
+                            <!-- <div class="md:hidden w-full flex" style="overflow-x: auto;">
                                 <div class="flex gap-2" style="padding-bottom: 8px;">
-                                    <img src="<?php echo $data_res->image ?>" width="320px" class="rounded-lg"
-                                        style="aspect-ratio: 16/9; border: solid 1px black;">
-                                    <!-- <php foreach ($data_res->media as $idx => $media) {
+                                    <img src="<php echo $data_res->image ?>" width="320px" class="rounded-lg"
+                                        style="aspect-ratio: 16/9; border: solid 1px black;"> -->
+                            <!-- <php foreach ($data_res->media as $idx => $media) {
                                                 if ($idx < 3) { ?>
                                             <img src="<php echo $data->imageUrl . $media->path ?>" width="320px" class="rounded-lg"
                                                 style="aspect-ratio: 16/9; object-fit: cover;">
                                         <php }
                                             } ?> -->
-                                </div>
-                            </div>
-                            <div class="hidden md:grid grid-cols-4 gap-2">
+                            <!-- </div>
+                            </div> -->
+                            <!-- <div class="hidden md:grid grid-cols-4 gap-2">
                                 <div
-                                    class="<?php echo count($data_res->images) > 0 ? " md:col-span-3" : "md:col-span-4" ?> ">
-                                    <img src="<?php echo $data_res->image ?>" width="100%" class="rounded-lg"
+                                    class="<php echo count($data_res->images) > 0 ? " md:col-span-3" : "md:col-span-4" ?> ">
+                                    <img src="<php echo $data_res->image ?>" width="100%" class="rounded-lg"
                                         style="aspect-ratio: 16/9;">
                                 </div>
                                 <div class="col-span-1 w-full h-full hidden md:flex flex-col justify-between">
-                                    <?php foreach ($data_res->images as $idx => $media) {
+                                    <php foreach ($data_res->images as $idx => $media) {
                                         if ($idx < 3) { ?>
-                                            <img src="<?php echo $media ?>" width="100%" class="rounded-lg"
+                                            <img src="<php echo $media ?>" width="100%" class="rounded-lg"
                                                 style="aspect-ratio: 16/9; object-fit: cover;">
-                                    <?php }
+                                        <php }
                                     } ?>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="grid grid-cols-10 gap-4 pt-7">
                                 <div class="col-span-12 md:col-span-7">
@@ -95,7 +130,7 @@ function enx_get_page_content($data)
                                                 $duration_first = $contents->duration->first;
                                                 $duration_last = $contents->duration->last;
                                                 echo $duration_first == $duration_last ? $duration_first : $duration_first . " ~ " . $duration_last
-                                                ?>
+                                                    ?>
                                                 Days
                                             </p>
                                         </div>
@@ -107,8 +142,8 @@ function enx_get_page_content($data)
                                                 <?php
                                                 $cities_visited_first = $contents->cities_visited->first;
                                                 $cities_visited_last = $contents->cities_visited->last;
-                                                echo $cities_visited_first == $cities_visited_last  ? $cities_visited_first : $cities_visited_first . " ~ " . $cities_visited_last
-                                                ?>
+                                                echo $cities_visited_first == $cities_visited_last ? $cities_visited_first : $cities_visited_first . " ~ " . $cities_visited_last
+                                                    ?>
                                                 Cities Visited
                                             </p>
                                         </div>
@@ -119,7 +154,7 @@ function enx_get_page_content($data)
                                             <p>E-ticket</p>
                                         </div>
                                     </div>
-                                    <!-- LIST ICON -->
+                                    <!-- END LIST ICON -->
                                     <p id="detail-tp-description" style="text-align: justify;" class="mt-10 mb-10">
                                         <?php echo $data_res->contents->description ?>
                                     </p>
@@ -149,83 +184,21 @@ function enx_get_page_content($data)
                                     <?php } ?>
                                     <!-- END BLOCK DATE -->
 
-
-                                    <div id="" class="w" data-x-data="accordionInit()">
-
-                                        <div class="widget shadow-lg rounded-xl mb-10 bg-white">
-                                            <h5
-                                                class="font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
-                                                Itinerary
-                                                <input type="radio" class="hidden"
-                                                    name="addon_<php echo $contents->itinerary ?>" value="notset"
-                                                    checked="checked" />
-                                            </h5>
-                                            <div id="detail-tp-itinerary" class="px-2 md:px-8">
-
-                                                <?php
-                                                $n = 0;
-                                                $i = 0;
-                                                foreach ($contents->itinerary as $key => $item) {
-                                                    if ($i > 0)
-                                                        echo "<hr />";
-                                                ?>
-                                                    <div
-                                                        class="md:grid grid-cols-12 md:space-x-4 relative <?php echo ($i == (count($contents->itinerary) - 1) ? 'smt-4' : ($i > 0 ? 'smy-4' : 'smb-4')) ?>">
-                                                        <div class="col-span-12 py-5">
-                                                            <?php if (count($contents->itinerary) > 1) { ?>
-                                                                <span class="absolute left-45px md:left-55px"
-                                                                    style="border-left: solid 2px #BBE9FF !important; position: absolute; top: 0px; left: 58px; 
-                                                                    height: <?php echo count($contents->itinerary) === $key + 1 ? "30px" : ($key === 0 ? 'calc(100% - 30px)' : '100%'); ?>; 
-                                                                    top: <?php echo $key === 0 ? "30px" : "0px" ?> ;"></span>
-                                                            <?php } ?>
-                                                            <div class="flex items-center justify-between cursor-pointer"
-                                                                data-x-bind="trigger(<?php echo $n; ?>)">
-                                                                <div class="flex gap-2 text-xs md:text-base">
-                                                                    <strong style="opacity: 0.6;" class="whitespace-nowrap">Day
-                                                                        <?php echo $key ?>
-                                                                    </strong>
-                                                                    <span class="mt-0.5 md:mt-1.5"
-                                                                        style="width: 12px; height: 12px; border-radius: 99px; background-color: #BBE9FF;"></span>
-                                                                    <strong class="flex-1"><?php echo $item->title ?></strong>
-                                                                </div>
-                                                                <span class="iconify -mt-1 transition-all duration-500 inline"
-                                                                    data-icon="fluent:chevron-down-12-regular" data-width="20"
-                                                                    data-height="20"
-                                                                    data-x-bind="iconStyle(<?php echo $n; ?>)"></span>
-                                                            </div>
-                                                            <div class="relative overflow-hidden transition-all max-h-0 duration-700 inner-text-sm ml-14 md:ml-72px mt-2"
-                                                                data-x-ref="container-<?php echo $n; ?>"
-                                                                data-x-bind="containerStyle(<?php echo $n; ?>)">
-                                                                <span>
-                                                                    <?php echo $item->description ?>
-                                                                </span>
-                                                                <?php if ($item->with_add_info) {
-                                                                    $icon = [
-                                                                        'utensils' => '<span class="iconify mt-1 inline"
-                                                                                    data-icon="fa6-solid:utensils" data-width="16"
-                                                                                    data-height="16"></span>',
-                                                                        'plane' => '<span class="iconify mt-1 inline" data-icon="ri:plane-fill"
-                                                                                    data-width="16" data-height="16"></span>'
-                                                                    ];
-                                                                    foreach ($item->add_info as $key => $info) {
-                                                                ?>
-                                                                        <div class="flex gap-2 <?php echo $key == 0 ? "mt-4" : "" ?>">
-                                                                            <?php echo $icon[$info->icon] ?? "" ?>
-                                                                            <p><?php echo $info->description ?></p>
-                                                                        </div>
-                                                                <?php }
-                                                                } ?>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                <?php
-                                                    $n++;
-                                                    $i++;
-                                                } ?>
+                                    <!-- ITINERARY -->
+                                    <p class="mt-6 mb-2">What To Expect</p>
+                                    <div style="border: solid 1px #D1E9F6 !important; background-color: #fff !important;"
+                                        class="p-4 flex flex-col gap-4 md:flex-row rounded-lg bg-gray-light3 shadow-lg">
+                                        <div id="scrollbar-mystyle" style="overflow-x: auto; overflow-y: hidden;"
+                                            class="flex">
+                                            <div class="flex">
+                                                <?php foreach ($contents->itinerary as $key_day => $itin_day) { ?>
+                                                    <button class="whitespace-nowrap p-4 border-b-2 rounded-none">Day
+                                                        <?php echo $key_day + 1 ?></button>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- END ITINERARY -->
 
                                     <div class="bg-white rounded-lg">
                                         <div style="border: solid 1px #D1E9F6 !important; background-color: #D1E9F660 !important;"
@@ -238,8 +211,8 @@ function enx_get_page_content($data)
                                                     <?php foreach ($data_res->contents->include as $key => $incl) { ?>
                                                         <div class="text-sm md:text-base flex gap-2">
                                                             <span class="iconify inline-block text-green-success"
-                                                                data-icon="akar-icons:circle-check" data-width="20" data-height="20"
-                                                                style="margin-top: 0.125rem"></span>
+                                                                data-icon="akar-icons:circle-check" data-width="20"
+                                                                data-height="20" style="margin-top: 0.125rem"></span>
                                                             <p class="flex-1"><?php echo $incl ?></p>
                                                         </div>
                                                     <?php } ?>
@@ -306,9 +279,9 @@ function enx_get_page_content($data)
                                             <p class="text-sm">Date:</p>
                                             <input type="date" name="date" min="<?php echo date('Y-m-d\TH:i') ?>"
                                                 id="tp_date_detail" data-service='<?= json_encode([
-                                                                                        'slug' => $data_res->slug,
-                                                                                        'slug_country' => $data_res->country->slug
-                                                                                    ]) ?>'
+                                                    'slug' => $data_res->slug,
+                                                    'slug_country' => $data_res->country->slug
+                                                ]) ?>'
                                                 class="w-full form-input bg-gray-light4/60 border-none rounded py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm mb-4" />
 
                                             <div id="btn-slc-package-detail" class="hidden">
@@ -378,7 +351,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-<?php
+    <?php
     $contents = ob_get_clean();
     return $contents;
 }
