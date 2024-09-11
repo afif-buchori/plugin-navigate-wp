@@ -2,7 +2,6 @@
 
 function enx_get_list_data_tour_package()
 {
-
     $country = $_GET['country'] ?? COUNTRY_TOUR_PACKAGE;
     $country = str_replace(' ', '%20', $country);
     // $search = $_GET['q'] ?? '';
@@ -11,9 +10,11 @@ function enx_get_list_data_tour_package()
     // $paramsPage = $page != '' ? "&page=$page" : '';
     // $url = API_ACTIVITY_URL . "/get/data-activitys" . CreateParams() . "&country=$country$paramsPage$paramsSearch";
     $url = API_TOUR_PACKAGE_URL . "/get/data-list" . CreateParams() . "&slug_country=$country";
-    // var_dump($url);
-    // $url = API_ACTIVITY_URL . "/get/data-activitys" . CreateParams();
-    return fetchGet($url);
+    try {
+        return fetchGet($url);
+    } catch (\Throwable $th) {
+        return null;
+    }
 }
 
 function enx_get_detail_data_tour_package()
@@ -22,7 +23,11 @@ function enx_get_detail_data_tour_package()
     $country = str_replace(' ', '%20', $country);
     $query = explode("/", $_SERVER['REQUEST_URI']);
     $url = API_TOUR_PACKAGE_URL . "/get/data-detail" . CreateParams() . "&slug_country=" . $country . "&slug=" . $query[2];
-    return fetchGet($url);
+    try {
+        return fetchGet($url);
+    } catch (\Throwable $th) {
+        return null;
+    }
 }
 
 // function enx_service_have_addon($id)
@@ -40,7 +45,7 @@ function enx_get_detail_data_tour_package()
 function enx_create_list_tour_package($items)
 {
     foreach ($items as $item) {
-        ?>
+?>
         <div data-x-data data-x-ref="losAngeles"
             data-x-intersect="anime({ targets: $refs.losAngeles, translateY: [100, 0], opacity: [0, 1], duration: 500 ,easing: 'easeOutQuad' })"
             style="flex: 1 1 0">
@@ -101,6 +106,6 @@ function enx_create_list_tour_package($items)
             </a>
         </div>
 
-        <?php
+<?php
     }
 }

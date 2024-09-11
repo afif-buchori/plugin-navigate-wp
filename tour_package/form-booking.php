@@ -4,8 +4,14 @@ function enx_get_page_content($data)
     $old = json_decode(OLD);
     $error = json_decode(ERROR_DATA);
     $url = API_TOUR_PACKAGE_URL . '/post/data-booking';
-    $data->currency = str_replace("currency=", "", checkCurrency());
-    $data_res = fetchPost($url, $data)->data;
+    if ($data) $data->currency = str_replace("currency=", "", checkCurrency());
+    try {
+        $res = fetchPost($url, $data);
+    } catch (\Throwable $th) {
+        $res = null;
+    }
+    $data_res = $res && isset($res->result) && $res->result == "ok" ? $res->data : null;
+    $breadCrumbStep = $data_res->breadCrumbStep ?? [];
     $rate = $data_res->service->rate;
     $currency = $rate->currency->client_currency;
     ob_start();
@@ -16,31 +22,8 @@ function enx_get_page_content($data)
             <div class="bg-gray-light3">
                 <section>
                     <div class="container">
-
-                        <!-- <div class="stepper-wrapper">
-                            <div class="stepper-item completed">
-                                <div class="step-counter">
-                                    <p></p>
-                                </div>
-                                <div class="step-name">Select Package</div>
-                            </div>
-                            <div class="stepper-item active">
-                                <div class="step-counter">
-                                    <p></p>
-                                </div>
-                                <div class="step-name">Form Booking</div>
-                            </div>
-                            <div class="stepper-item">
-                                <div class="step-counter"></div>
-                                <div class="step-name">Payments</div>
-                            </div>
-                            <div class="stepper-item">
-                                <div class="step-counter"></div>
-                                <div class="step-name">Payment Info</div>
-                            </div>
-                        </div> -->
                         <div class="stepper-wrapper">
-                            <?php foreach ($data_res->breadCrumbStep as $key => $value) {
+                            <?php foreach ($breadCrumbStep as $key => $value) {
                             ?>
                                 <div
                                     class="stepper-item  <?php echo $value->name != 'Booking Form' && $key == 0 ? 'completed' : '' ?>">
@@ -292,7 +275,7 @@ function enx_get_page_content($data)
                                 </div>
 
                                 <div class="flex flex-col items-end ml-auto mt-14 mb-5" style="max-width: 292px">
-                                    <button type="submit" class="btn btn-primary w-full">Continue To Payment</button>
+                                    <button type="submit" class="btn btn-primary w-full <?php if (!$data_res) echo "btn-disable" ?>" <?php if (!$data_res) echo "disabled" ?>>Continue To Payment</button>
                                     <p class="text-xs mt-4">Click 'Continue to Payment' to securely proceed to Tondest.com,
                                         our trusted payment partner, for a seamless checkout experience.</p>
                                 </div>

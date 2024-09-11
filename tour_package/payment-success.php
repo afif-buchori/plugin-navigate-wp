@@ -2,7 +2,12 @@
 function enx_get_payment_success()
 {
     $url = API_TOUR_PACKAGE_URL . "/post/data-order";
-    $order = fetchPost($url, ['id' => $_GET['orderId']]);
+    try {
+        $res = fetchPost($url, ['id' => ($_GET['orderId'] ?? null)]);
+    } catch (\Throwable $th) {
+        $res = null;
+    }
+    $order = $res && isset($res->result) && $res->result == "ok" ? $res->data : [];
     return $order;
 }
 function enx_get_page_content($data)
@@ -10,10 +15,8 @@ function enx_get_page_content($data)
     $order = $data->order;
     $details = $data->details;
     $payments = $data->payments;
-    $travelers = $data->travelers;
     $curr = $data->currency_detail;
-    $breadCrumbStep = $data->breadCrumbStep;
-    // var_dump(json_encode($order->payments[0]->pay_before));
+    $breadCrumbStep = $data->breadCrumbStep ?? [];
     $total = 0;
     $grand_total = 0;
     ob_start();
@@ -25,7 +28,7 @@ function enx_get_page_content($data)
                 <section>
                     <div class="container">
                         <div class="stepper-wrapper">
-                            <?php foreach ($data->breadCrumbStep as $key => $value) {
+                            <?php foreach ($breadCrumbStep as $key => $value) {
                             ?>
                                 <div
                                     class="stepper-item  <?php echo $value->name != 'Result' ? 'completed' : '' ?>">
@@ -176,7 +179,7 @@ function enx_get_page_content($data)
                                                 </p>
                                             </div>
                                             <?php
-                                            if (count($order->costs) > 0) {
+                                            if (isset($order->costs) && count($order->costs) > 0) {
                                                 foreach ($order->costs as $key => $v) {
                                                     $grand_total += $v->value;
                                             ?>
