@@ -5365,4 +5365,57 @@ div:before {
   background-color: var(--swiper-theme-color);
 }
 
+.enx-container .indicator-itin {
+  width: 1rem !important;
+  height: 1rem !important;
+  font-size: 10px !important;
+  border-radius: 99px !important;
+  background-color: #81dae3 !important;
+  display: grid !important;
+  place-content: center !important;
+}
+.enx-container .indicator-itin p {
+  z-index: 1 !important;
+}
+.enx-container .with-before::before {
+  display: block !important;
+  height: 100% !important;
+}
+.enx-container .indicator-itin::before {
+  z-index: 0 !important;
+  content: "" !important;
+  /* display: block !important; */
+  position: absolute !important;
+  left: 7px !important;
+  width: 2px !important;
+  background: #81dae3 !important;
+}
+/* .enx-container #container-itin-inday:first-child .indicator-itin::before {
+  top: 8px !important;
+  height: calc(100% - 8px) !important;
+}
+.enx-container #container-itin-inday:last-child .indicator-itin::before {
+  top: 0px !important;
+  height: 4px !important;
+}
+.enx-container
+  #container-itin-inday:not(:first-child):not(:last-child)
+  .indicator-itin::before {
+  top: 4px !important;
+  height: 100% !important;
+}
+.enx-container #container-itin-inday:only-child .indicator-itin::before {
+  display: none !important;
+  content: none !important;
+} */
+@media (min-width: 768px) {
+  .enx-container .indicator-itin {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    font-size: 14px !important;
+  }
+  .enx-container .indicator-itin::before {
+    left: 11px !important;
+  }
+}
 /* end new */

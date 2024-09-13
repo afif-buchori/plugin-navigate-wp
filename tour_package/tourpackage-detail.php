@@ -125,27 +125,27 @@ function enx_get_page_content($data)
                                         <div class="flex gap-2 items-center">
                                             <span class="iconify inline" data-icon="mingcute:time-duration-fill"
                                                 data-width="20" data-height="20"></span>
-                                            <p id="detail-tp-duration">
-                                                <?php
+                                            <!-- <p id="detail-tp-duration">
+                                                <php
                                                 $duration_first = $contents->duration->first;
                                                 $duration_last = $contents->duration->last;
                                                 echo $duration_first == $duration_last ? $duration_first : $duration_first . " ~ " . $duration_last
                                                     ?>
                                                 Days
-                                            </p>
+                                            </p> -->
                                         </div>
                                         <span style="width: 2px; background-color: #45474B50;"></span>
                                         <div class="flex gap-2 items-center">
                                             <span class="iconify inline" data-icon="mdi:home-city-outline" data-width="20"
                                                 data-height="20"></span>
-                                            <p id="detail-tp-cities-visited">
-                                                <?php
+                                            <!-- <p id="detail-tp-cities-visited">
+                                                <php
                                                 $cities_visited_first = $contents->cities_visited->first;
                                                 $cities_visited_last = $contents->cities_visited->last;
                                                 echo $cities_visited_first == $cities_visited_last ? $cities_visited_first : $cities_visited_first . " ~ " . $cities_visited_last
                                                     ?>
                                                 Cities Visited
-                                            </p>
+                                            </p> -->
                                         </div>
                                         <span style="width: 2px; background-color: #45474B50;"></span>
                                         <div class="flex gap-2 items-center">
@@ -186,17 +186,57 @@ function enx_get_page_content($data)
 
                                     <!-- ITINERARY -->
                                     <p class="mt-6 mb-2">What To Expect</p>
-                                    <div style="border: solid 1px #D1E9F6 !important; background-color: #fff !important;"
-                                        class="p-4 flex flex-col gap-4 md:flex-row rounded-lg bg-gray-light3 shadow-lg">
+                                    <div data-intineray='<?php echo json_encode($contents->itinerary) ?>'
+                                        id="detail-container-itinerary"
+                                        style="border: solid 1px #D1E9F6 !important; background-color: #fff !important;"
+                                        class="p-4 flex flex-col gap-4 rounded-lg shadow-lg mb-5">
                                         <div id="scrollbar-mystyle" style="overflow-x: auto; overflow-y: hidden;"
                                             class="flex">
                                             <div class="flex">
                                                 <?php foreach ($contents->itinerary as $key_day => $itin_day) { ?>
-                                                    <button class="whitespace-nowrap p-4 border-b-2 rounded-none">Day
+                                                    <button
+                                                        class="whitespace-nowrap p-4 border-b-2 rounded-none text-sm md:text-base font-bold">Day
                                                         <?php echo $key_day + 1 ?></button>
                                                 <?php } ?>
                                             </div>
                                         </div>
+                                        <?php foreach ($contents->itinerary as $key => $itin_day) { ?>
+                                            <div id="detail-itin-inday" data-intineray
+                                                class="<?php echo $key === 0 ? "flex" : "hidden" ?> flex-col text-sm md:text-base">
+                                                <div id="list-icon-itin-parrent-day" class="flex flex-wrap gap-4 mb-2">
+                                                    <div class="flex gap-2 items-center">
+                                                        <?php foreach ($itin_day->add_info as $info_icon) { ?>
+                                                            <!-- <i data-lucide="<php echo $info_icon->icon ?>"></i> -->
+                                                            <p><?php echo $info_icon->description ?></p>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                                <?php foreach ($itin_day->itinerary as $idx => $detail_itin_day) { ?>
+                                                    <div id="container-itin-inday"
+                                                        class="flex gap-2 relative detail-container-itinerary"
+                                                        data-total="<?php echo count($itin_day->itinerary) ?>"
+                                                        data-day="<?php echo $key ?>">
+                                                        <span class="indicator-itin font-bold mt-0.5">
+                                                            <p><?php echo $idx + 1 ?></p>
+                                                        </span>
+                                                        <div class="flex-1 flex flex-col gap-2">
+                                                            <p class="font-bold"><?php echo $detail_itin_day->title ?></p>
+                                                            <div id="list-icon-itin-inday" class="flex flex-wrap gap-4">
+                                                                <div class="flex gap-2 items-center">
+                                                                    <?php foreach ($detail_itin_day->add_info as $info_icon) { ?>
+                                                                        <!-- <i data-lucide="<php echo $info_icon->icon ?>"></i> -->
+                                                                        <p><?php echo $info_icon->description ?></p>
+                                                                    <?php } ?>
+                                                                </div>
+                                                            </div>
+                                                            <p><?php echo $detail_itin_day->description ?></p>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        <?php } ?>
+                                        <button id="btn-show-itin-detail" data-count="2" class="btn-primary">Show
+                                            All</button>
                                     </div>
                                     <!-- END ITINERARY -->
 

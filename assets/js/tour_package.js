@@ -695,73 +695,203 @@ if (url_name[0] == main_url && !url_name[1]) {
   // End Function Detail
 
   // GENERATE ITINERARY
-  function generateItin(itinerary = []) {
-    let container = document.getElementById("detail-tp-itinerary");
-    let n = 0;
-    container.innerHTML = "";
+  const containerItins =
+    document.getElementById("detail-container-itinerary") ?? null;
+  const dataItinerary = JSON.parse(containerItins.dataset.intineray) ?? [];
+  console.log(dataItinerary[1]);
+  generateAllItin(dataItinerary, 2);
 
-    itinerary.forEach((item, key) => {
-      const hr = key > 0 ? "<hr />" : "";
-      const isLast = key === itinerary.length - 1;
+  function generateBtnDays(itin, active = 0) {
+    if (itin) {
+      return `
+        <div id="scrollbar-mystyle" style="overflow-x: auto; overflow-y: hidden;" class="flex">
+            <div class="flex">
+            ${itin
+              .map(
+                (_, idx) => `
+                    <button
+                        class="whitespace-nowrap p-4 border-b-2 ${
+                          active == idx ? "border-primary" : ""
+                        } rounded-none text-sm md:text-base font-bold">
+                        Day ${idx + 1}
+                    </button>`
+              )
+              .join("")}
+            </div>
+        </div>`;
+    }
+  }
 
-      const itineraryHtml = `
-        ${hr}
-        <div class="md:grid grid-cols-12 md:space-x-4 relative ${
-          isLast ? "smt-4" : key > 0 ? "smy-4" : "smb-4"
-        }">
-          <div class="col-span-12 py-5">
-            ${
-              itinerary.length > 1
-                ? `
-            <span class="absolute left-45px md:left-55px"
-              style="border-left: solid 2px #BBE9FF !important; position: absolute; top: 0px; left: 58px; 
-              height: ${
-                isLast ? "30px" : key === 0 ? "calc(100% - 30px)" : "100%"
-              }; 
-              top: ${key === 0 ? "30px" : "0px"};">
-            </span>`
-                : ""
-            }
-            
-            <div class="flex items-center justify-between cursor-pointer" data-x-bind="trigger(${n})">
-              <div class="flex gap-2 text-xs md:text-base">
-                <strong style="opacity: 0.6;" class="whitespace-nowrap">Day ${
-                  key + 1
-                }</strong>
-                <span class="mt-0.5 md:mt-1.5"
-                  style="width: 12px; height: 12px; border-radius: 99px; background-color: #BBE9FF;"></span>
-                <strong class="flex-1">${item.title}</strong>
-              </div>
-              <span class="iconify -mt-1 transition-all duration-500 inline"
-                data-icon="fluent:chevron-down-12-regular" data-width="20" data-height="20"
-                data-x-bind="iconStyle(${n})">
-              </span>
+  function generateItin(itin, count) {
+    if (itin) {
+      return `
+        ${itin
+          .map(
+            (itin, idx) => `
+            <div id="detail-itin-inday" class="${
+              idx === 0 ? "flex" : "hidden"
+            } flex-col text-sm md:text-base">
+                <div id="list-icon-itin-parrent-day" class="flex flex-wrap gap-4 mb-2">
+                ${itin.add_info
+                  .map(
+                    (infoIcn) =>
+                      `<div class="flex gap-2 items-center">
+                      <i data-lucide='${infoIcn.icon}'></i>
+                      <p>${infoIcn.description}</p>
+                    </div>`
+                  )
+                  .join("")}
+                </div>
+                ${itin.itinerary
+                  .map((itinDay, id) => {
+                    if (id < count)
+                      return `
+                      <div id="container-itin-inday"
+                      class="flex gap-2 relative detail-container-itinerary">
+                      <span class="indicator-itin font-bold mt-0.5 ${
+                        id < count - 1 ? "with-before" : ""
+                      }">
+                          <p>${id + 1}</p>
+                      </span>
+                      <div class="flex-1 flex flex-col gap-2">
+                          <p class="font-bold">${itinDay.title}</p>
+                          <div id="list-icon-itin-inday" class="flex flex-wrap gap-4">
+                            ${itinDay.add_info
+                              .map(
+                                (infoIcn) =>
+                                  `<div class="flex gap-2 items-center">
+                                  <i data-lucide='${infoIcn.icon}' class"w-4 h-4"></i>
+                                  <p>${infoIcn.description}</p>
+                                </div>`
+                              )
+                              .join("")}
+                          </div>
+                          <p>${itinDay.description}</p>
+                      </div>
+                  </div>`;
+                  })
+                  .join("")}
             </div>
-            
-            <div class="relative overflow-hidden transition-all max-h-0 duration-700 inner-text-sm ml-14 md:ml-72px mt-2" 
-              data-x-ref="container-${n}" data-x-bind="containerStyle(${n})">
-              <span>${item.description}</span>
-              ${
-                item.with_add_info
-                  ? item.add_info
-                      .map(
-                        (info, index) => `
-                <div class="flex gap-2 ${index === 0 ? "mt-4" : ""}">
-                  ${getIconHtml(info.icon)}
-                  <p>${info.description}</p>
-                </div>`
-                      )
-                      .join("")
-                  : ""
-              }
-            </div>
-          </div>
-        </div>
-      `;
-      container.innerHTML += itineraryHtml;
-      n++;
+            `
+          )
+          .join("")}
+        </div>`;
+    }
+  }
+
+  function generateAllItin(itin, c) {
+    containerItins.innerHTML = `${generateBtnDays(itin)}${generateItin(itin, c)}
+      <button style="width: 240px;" id="btn-show-itin-detail" data-count="${c}" class="btn-primary ml-auto">
+        ${c == 2 ? `Show All (${itin.length - 1})` : "Show Less"}
+      </button>
+    `;
+    const btnShowItin = document.getElementById("btn-show-itin-detail") ?? null;
+    btnShowItin.addEventListener("click", () => {
+      const count = parseInt(btnShowItin.dataset.count);
+      const newCount = count == 2 ? dataItinerary.length + 1 : 2;
+      generateAllItin(dataItinerary, newCount);
     });
   }
+
+  // const containerItins =
+  //   document.querySelectorAll(".container-itinerary") ?? [];
+  // let countShow = 1;
+  // let day = 0;
+  // const dataListInitDay = (prm) =>
+  //   Array.from(containerItins).filter((data) => data.dataset.day == prm);
+  // console.log(dataListInitDay());
+
+  // const btnShowItin = document.getElementById("btn-show-itin-detail") ?? null;
+  // if (btnShowItin) {
+  //   // btnShowItin.innerHTML = containerItins.length - countShow || "";
+  //   btnShowItin.addEventListener("click", () => {
+  //     countShow =
+  //       countShow === dataListInitDay.length ? 1 : dataListInitDay.length;
+  //     renderItins(countShow);
+  //   });
+  // }
+  // function renderItins(count) {
+  //   const dataList = dataListInitDay(day);
+  //   dataList.forEach((el, idx) => {
+  //     console.log(idx, count);
+  //     const nextEl = el.querySelector(".indicator-itin");
+  //     nextEl.classList.remove("with-before");
+  //     el.classList.remove("hidden");
+  //     if (idx < count) nextEl.classList.add("with-before");
+  //     if (idx == count) nextEl.classList.remove("with-before");
+  //     if (idx == count) console.log(nextEl);
+  //     if (idx > count) el.classList.add("hidden");
+  //   });
+  // }
+  // renderItins(countShow);
+
+  // function generateItin(itinerary = []) {
+  //   let container = document.getElementById("detail-tp-itinerary");
+  //   let n = 0;
+  //   container.innerHTML = "";
+
+  //   itinerary.forEach((item, key) => {
+  //     const hr = key > 0 ? "<hr />" : "";
+  //     const isLast = key === itinerary.length - 1;
+
+  //     const itineraryHtml = `
+  //       ${hr}
+  //       <div class="md:grid grid-cols-12 md:space-x-4 relative ${
+  //         isLast ? "smt-4" : key > 0 ? "smy-4" : "smb-4"
+  //       }">
+  //         <div class="col-span-12 py-5">
+  //           ${
+  //             itinerary.length > 1
+  //               ? `
+  //           <span class="absolute left-45px md:left-55px"
+  //             style="border-left: solid 2px #BBE9FF !important; position: absolute; top: 0px; left: 58px;
+  //             height: ${
+  //               isLast ? "30px" : key === 0 ? "calc(100% - 30px)" : "100%"
+  //             };
+  //             top: ${key === 0 ? "30px" : "0px"};">
+  //           </span>`
+  //               : ""
+  //           }
+
+  //           <div class="flex items-center justify-between cursor-pointer" data-x-bind="trigger(${n})">
+  //             <div class="flex gap-2 text-xs md:text-base">
+  //               <strong style="opacity: 0.6;" class="whitespace-nowrap">Day ${
+  //                 key + 1
+  //               }</strong>
+  //               <span class="mt-0.5 md:mt-1.5"
+  //                 style="width: 12px; height: 12px; border-radius: 99px; background-color: #BBE9FF;"></span>
+  //               <strong class="flex-1">${item.title}</strong>
+  //             </div>
+  //             <span class="iconify -mt-1 transition-all duration-500 inline"
+  //               data-icon="fluent:chevron-down-12-regular" data-width="20" data-height="20"
+  //               data-x-bind="iconStyle(${n})">
+  //             </span>
+  //           </div>
+
+  //           <div class="relative overflow-hidden transition-all max-h-0 duration-700 inner-text-sm ml-14 md:ml-72px mt-2"
+  //             data-x-ref="container-${n}" data-x-bind="containerStyle(${n})">
+  //             <span>${item.description}</span>
+  //             ${
+  //               item.with_add_info
+  //                 ? item.add_info
+  //                     .map(
+  //                       (info, index) => `
+  //               <div class="flex gap-2 ${index === 0 ? "mt-4" : ""}">
+  //                 ${getIconHtml(info.icon)}
+  //                 <p>${info.description}</p>
+  //               </div>`
+  //                     )
+  //                     .join("")
+  //                 : ""
+  //             }
+  //           </div>
+  //         </div>
+  //       </div>
+  //     `;
+  //     container.innerHTML += itineraryHtml;
+  //     n++;
+  //   });
+  // }
 
   function getIconHtml(icon) {
     const icons = {
