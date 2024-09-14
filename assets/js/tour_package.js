@@ -697,19 +697,20 @@ if (url_name[0] == main_url && !url_name[1]) {
   // GENERATE ITINERARY
   const containerItins =
     document.getElementById("detail-container-itinerary") ?? null;
-  const dataItinerary = JSON.parse(containerItins.dataset.intineray) ?? [];
-  console.log(dataItinerary[1]);
-  generateAllItin(dataItinerary, 2);
+  const allDataItinerary = JSON.parse(containerItins.dataset.intineray) ?? [];
+  let dataItinerary = allDataItinerary[0];
+  generateAllItin(allDataItinerary, dataItinerary, 2, 0);
 
   function generateBtnDays(itin, active = 0) {
     if (itin) {
       return `
         <div id="scrollbar-mystyle" style="overflow-x: auto; overflow-y: hidden;" class="flex">
-            <div class="flex">
+            <div class="flex mb-4">
             ${itin
               .map(
                 (_, idx) => `
                     <button
+                        id="btn-day-itin-detail"
                         class="whitespace-nowrap p-4 border-b-2 ${
                           active == idx ? "border-primary" : ""
                         } rounded-none text-sm md:text-base font-bold">
@@ -725,71 +726,79 @@ if (url_name[0] == main_url && !url_name[1]) {
   function generateItin(itin, count) {
     if (itin) {
       return `
-        ${itin
-          .map(
-            (itin, idx) => `
-            <div id="detail-itin-inday" class="${
-              idx === 0 ? "flex" : "hidden"
-            } flex-col text-sm md:text-base">
-                <div id="list-icon-itin-parrent-day" class="flex flex-wrap gap-4 mb-2">
-                ${itin.add_info
-                  .map(
-                    (infoIcn) =>
-                      `<div class="flex gap-2 items-center">
-                      <i data-lucide='${infoIcn.icon}'></i>
-                      <p>${infoIcn.description}</p>
-                    </div>`
-                  )
-                  .join("")}
+      <div id="list-icon-itin-parrent-day" class="flex flex-wrap gap-4 mb-2">
+      ${itin.add_info
+        .map(
+          (infoIcn) =>
+            `<div class="flex gap-2 items-center">
+            <i data-lucide='${infoIcn.icon}'></i>
+            <p>${infoIcn.description}</p>
+          </div>`
+        )
+        .join("")}
+      </div>
+      ${itin.itinerary
+        .map((itinDay, id) => {
+          if (id < count)
+            return `
+            <div id="container-itin-inday"
+            class="flex gap-2 relative detail-container-itinerary">
+            <span class="indicator-itin font-bold mt-0.5 ${
+              itin.itinerary.length > 1 && id < count - 1 ? "with-before" : ""
+            }">
+                <p>${id + 1}</p>
+            </span>
+            <div class="flex-1 flex flex-col gap-2">
+                <p class="font-bold">${itinDay.title}</p>
+                <div id="list-icon-itin-inday" class="flex flex-wrap gap-4">
+                  ${itinDay.add_info
+                    .map(
+                      (infoIcn) =>
+                        `<div class="flex gap-2 items-center">
+                        <i data-lucide='${infoIcn.icon}' class"w-4 h-4"></i>
+                        <p>${infoIcn.description}</p>
+                      </div>`
+                    )
+                    .join("")}
                 </div>
-                ${itin.itinerary
-                  .map((itinDay, id) => {
-                    if (id < count)
-                      return `
-                      <div id="container-itin-inday"
-                      class="flex gap-2 relative detail-container-itinerary">
-                      <span class="indicator-itin font-bold mt-0.5 ${
-                        id < count - 1 ? "with-before" : ""
-                      }">
-                          <p>${id + 1}</p>
-                      </span>
-                      <div class="flex-1 flex flex-col gap-2">
-                          <p class="font-bold">${itinDay.title}</p>
-                          <div id="list-icon-itin-inday" class="flex flex-wrap gap-4">
-                            ${itinDay.add_info
-                              .map(
-                                (infoIcn) =>
-                                  `<div class="flex gap-2 items-center">
-                                  <i data-lucide='${infoIcn.icon}' class"w-4 h-4"></i>
-                                  <p>${infoIcn.description}</p>
-                                </div>`
-                              )
-                              .join("")}
-                          </div>
-                          <p>${itinDay.description}</p>
-                      </div>
-                  </div>`;
-                  })
-                  .join("")}
+                <p>${itinDay.description}</p>
             </div>
-            `
-          )
-          .join("")}
         </div>`;
+        })
+        .join("")}
+      `;
     }
   }
 
-  function generateAllItin(itin, c) {
-    containerItins.innerHTML = `${generateBtnDays(itin)}${generateItin(itin, c)}
+  function generateAllItin(all, itin, c, idxDay) {
+    containerItins.innerHTML = `${generateBtnDays(all, idxDay)}${generateItin(
+      itin,
+      c
+    )}
+    ${
+      itin.itinerary.length > 2
+        ? `
       <button style="width: 240px;" id="btn-show-itin-detail" data-count="${c}" class="btn-primary ml-auto">
-        ${c == 2 ? `Show All (${itin.length - 1})` : "Show Less"}
+        ${c == 2 ? `Show All (${itin.itinerary.length - c})` : "Show Less"}
       </button>
+      `
+        : ""
+    }
     `;
     const btnShowItin = document.getElementById("btn-show-itin-detail") ?? null;
-    btnShowItin.addEventListener("click", () => {
-      const count = parseInt(btnShowItin.dataset.count);
-      const newCount = count == 2 ? dataItinerary.length + 1 : 2;
-      generateAllItin(dataItinerary, newCount);
+    if (btnShowItin) {
+      btnShowItin.addEventListener("click", () => {
+        const count = parseInt(btnShowItin.dataset.count);
+        const newCount = count == 2 ? dataItinerary.itinerary.length : 2;
+        generateAllItin(all, dataItinerary, newCount, idxDay);
+      });
+    }
+
+    const allBtnDays = document.querySelectorAll("#btn-day-itin-detail");
+    allBtnDays.forEach((allItin, idx) => {
+      allItin.addEventListener("click", () => {
+        generateAllItin(all, all[idx], 2, idx);
+      });
     });
   }
 

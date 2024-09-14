@@ -189,7 +189,7 @@ function enx_get_page_content($data)
                                     <div data-intineray='<?php echo json_encode($contents->itinerary) ?>'
                                         id="detail-container-itinerary"
                                         style="border: solid 1px #D1E9F6 !important; background-color: #fff !important;"
-                                        class="p-4 flex flex-col gap-4 rounded-lg shadow-lg mb-5">
+                                        class="p-4 flex flex-col rounded-lg shadow-lg mb-5">
                                         <div id="scrollbar-mystyle" style="overflow-x: auto; overflow-y: hidden;"
                                             class="flex">
                                             <div class="flex">
