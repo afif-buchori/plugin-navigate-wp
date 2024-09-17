@@ -8,6 +8,7 @@ function enx_get_page_content($data)
     $data_res = $data->service;
     $contents = $data_res->contents;
     $currency = $data_res->minimum_price->price_detail->currency;
+    $global_information = $contents->global_information ?? null;
     function groupDatesByMonth($dates)
     {
         $grouped_dates = [];
@@ -36,7 +37,7 @@ function enx_get_page_content($data)
     $close_dates = groupDatesByMonth($data_res->close_date_time);
     // var_dump(json_encode($close_dates));
     ob_start();
-    ?>
+?>
     <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -125,6 +126,18 @@ function enx_get_page_content($data)
                                         <div class="flex gap-2 items-center">
                                             <span class="iconify inline" data-icon="mingcute:time-duration-fill"
                                                 data-width="20" data-height="20"></span>
+                                            <?php
+                                            if ($global_information) {
+                                                $duration = $global_information->duration;
+                                                $day = $duration->day;
+                                                $hour = $duration->hour;
+                                                $minute = $duration->minute;
+                                            ?>
+                                                <?php if ($day > 0) echo ($hour > 0 ? $day + 1 : $day) . " Day" ?>
+                                                <?php if ($day <= 0 && $hour > 0) echo $hour . " Hour" ?>
+                                                <?php if ($day <= 0 && $minute > 0) echo $minute . " Minute" ?>
+                                                <?php if ($duration->approx) echo " (approx.)" ?>
+                                            <?php } ?>
                                             <!-- <p id="detail-tp-duration">
                                                 <php
                                                 $duration_first = $contents->duration->first;
@@ -134,11 +147,11 @@ function enx_get_page_content($data)
                                                 Days
                                             </p> -->
                                         </div>
-                                        <span style="width: 2px; background-color: #45474B50;"></span>
+                                        <!-- <span style="width: 2px; background-color: #45474B50;"></span>
                                         <div class="flex gap-2 items-center">
                                             <span class="iconify inline" data-icon="mdi:home-city-outline" data-width="20"
-                                                data-height="20"></span>
-                                            <!-- <p id="detail-tp-cities-visited">
+                                                data-height="20"></span> -->
+                                        <!-- <p id="detail-tp-cities-visited">
                                                 <php
                                                 $cities_visited_first = $contents->cities_visited->first;
                                                 $cities_visited_last = $contents->cities_visited->last;
@@ -146,14 +159,48 @@ function enx_get_page_content($data)
                                                     ?>
                                                 Cities Visited
                                             </p> -->
-                                        </div>
-                                        <span style="width: 2px; background-color: #45474B50;"></span>
-                                        <div class="flex gap-2 items-center">
-                                            <span class="iconify inline" data-icon="ion:ticket-outline" data-width="20"
-                                                data-height="20"></span>
-                                            <p>E-ticket</p>
-                                        </div>
+                                        <!-- </div> -->
+                                        <?php if ($global_information && $global_information->pickupOffered) { ?>
+                                            <span style="width: 2px; background-color: #45474B50;"></span>
+                                            <div class="flex gap-2 items-center">
+                                                <span class="iconify inline" data-icon="ion:car-outline" data-width="20" data-height="20"></span>
+                                                <p>Pickup Offered</p>
+                                            </div>
+                                        <?php } ?>
+
+                                        <?php if ($global_information && $global_information->mobileTicket) { ?>
+                                            <span style="width: 2px; background-color: #45474B50;"></span>
+                                            <div class="flex gap-2 items-center">
+                                                <span class="iconify inline" data-icon="ion:ticket-outline" data-width="20"
+                                                    data-height="20"></span>
+                                                <p>E-ticket</p>
+                                            </div>
+                                        <?php } ?>
+
+                                        <?php if ($global_information && $global_information->language) { ?>
+                                            <span style="width: 2px; background-color: #45474B50;"></span>
+                                            <div class="flex gap-2 items-center">
+                                                <span class="iconify inline" data-icon="ion:language-outline" data-width="20" data-height="20"></span>
+                                                <p>
+                                                    Offered in:
+                                                    <?php echo $global_information->language[0] ?? "" ?>
+                                                    <?php if (count($global_information->language) > 1) { ?>
+                                                        <span class="italic more_lang">
+                                                            (+<?php echo count($global_information->language) - 1 ?>)
+                                                        </span>
+                                                <div style="background-color: #81dae3 !important;" class="hidden all_lang">
+                                                    <?php
+                                                        $lang = $global_information->language;
+                                                        unset($lang[0]);
+                                                        echo implode(', ', $lang);
+                                                    ?>
+                                                </div>
+                                            <?php } ?>
+                                            </p>
+                                            </div>
+                                        <?php } ?>
                                     </div>
+
                                     <!-- END LIST ICON -->
                                     <p id="detail-tp-description" style="text-align: justify;" class="mt-10 mb-10">
                                         <?php echo $data_res->contents->description ?>
@@ -186,6 +233,19 @@ function enx_get_page_content($data)
 
                                     <!-- ITINERARY -->
                                     <p class="mt-6 mb-2">What To Expect</p>
+
+                                    <?php foreach (($data_res->contents->all_icon ?? []) as $value) { ?>
+                                        <div class="all_icon" data-name="<?php echo $value ?>" hidden>
+                                            <?php if ($value == "MapPin") { ?>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin stroke-[2] w-5 h-5 stroke-[1.5] !w-4 !h-4 sm:!w-5 sm:!h-5">
+                                                    <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
+                                                    <circle cx="12" cy="10" r="3"></circle>
+                                                </svg>
+                                            <?php } else { ?>
+                                                <i data-lucide="<?php echo $value ?>"></i>
+                                            <?php } ?>
+                                        </div>
+                                    <?php } ?>
                                     <div data-intineray='<?php echo json_encode($contents->itinerary) ?>'
                                         id="detail-container-itinerary"
                                         style="border: solid 1px #D1E9F6 !important; background-color: #fff !important;"
@@ -319,9 +379,9 @@ function enx_get_page_content($data)
                                             <p class="text-sm">Date:</p>
                                             <input type="date" name="date" min="<?php echo date('Y-m-d\TH:i') ?>"
                                                 id="tp_date_detail" data-service='<?= json_encode([
-                                                    'slug' => $data_res->slug,
-                                                    'slug_country' => $data_res->country->slug
-                                                ]) ?>'
+                                                                                        'slug' => $data_res->slug,
+                                                                                        'slug_country' => $data_res->country->slug
+                                                                                    ]) ?>'
                                                 class="w-full form-input bg-gray-light4/60 border-none rounded py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm mb-4" />
 
                                             <div id="btn-slc-package-detail" class="hidden">
@@ -391,7 +451,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-    <?php
+<?php
     $contents = ob_get_clean();
     return $contents;
 }
