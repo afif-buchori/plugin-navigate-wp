@@ -5485,4 +5485,9 @@ div:before {
   margin-left: 24px !important;
 }
 
+.testing-font {
+  font-weight: 600;
+  color: red;
+}
+
 /* end new */

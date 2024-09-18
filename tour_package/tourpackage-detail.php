@@ -142,13 +142,14 @@ function enx_get_page_content($data)
                                                 $day = $duration->day;
                                                 $hour = $duration->hour;
                                                 $minute = $duration->minute;
+
                                                 ?>
                                                 <?php if ($day > 0)
-                                                    echo ($hour > 0 ? $day + 1 : $day) . " Day" ?>
+                                                    echo ($hour > 0 ? $day + 1 : $day) . ($day > 1 || $hour > 0 ? " Days" : " Day") ?>
                                                 <?php if ($day <= 0 && $hour > 0)
-                                                    echo $hour . " Hour" ?>
+                                                    echo $hour . ($hour > 1 ? " Hours" : " Hour") ?>
                                                 <?php if ($day <= 0 && $minute > 0)
-                                                    echo $minute . " Minute" ?>
+                                                    echo $minute . ($minute > 1 ? " Minutes" : " Minute") ?>
                                                 <?php if ($duration->approx)
                                                     echo " (approx.)" ?>
                                             <?php } ?>

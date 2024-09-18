@@ -22,7 +22,10 @@
     ">
         <div class="flex justify-between" style="padding-bottom: 8px;">
             <p class="text-xl font-bold flex-1">Term and Conditions</p>
-            <button id="close-modal-term-condition-tourpackage" type="button" class="btn-close">✕</button>
+            <button id="close-modal-term-condition-tourpackage"
+                onclick="document.getElementById('modal-term-condition-tourpackage').style.display = 'none'"
+                type="button" class="btn-close">✕</button>
+
         </div>
         <div style="
             display: flex;

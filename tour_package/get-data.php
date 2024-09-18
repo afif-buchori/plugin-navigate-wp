@@ -45,7 +45,7 @@ function enx_get_detail_data_tour_package()
 function enx_create_list_tour_package($items)
 {
     foreach ($items as $item) {
-?>
+        ?>
         <div data-x-data data-x-ref="losAngeles"
             data-x-intersect="anime({ targets: $refs.losAngeles, translateY: [100, 0], opacity: [0, 1], duration: 500 ,easing: 'easeOutQuad' })"
             style="flex: 1 1 0">
@@ -90,8 +90,24 @@ function enx_create_list_tour_package($items)
                                 <span
                                     class="iconify inline-block text-primary mr-1 transition duration-500 group-hover:text-white"
                                     data-icon="mdi:timer-outline" data-width="15" data-height="15"></span>
-                                <?= $item->durations->first == $item->durations->last ? $item->durations->first : $item->durations->first . " ~ " . $item->durations->last ?>
-                                <?= $item->durations->first > 1 || $item->durations->last > 1 ? " Days" : " Day" ?>
+                                <?php
+                                $global_information = $item->contents->global_information ?? null;
+                                if ($global_information) {
+                                    $duration = $global_information->duration;
+                                    $day = $duration->day;
+                                    $hour = $duration->hour;
+                                    $minute = $duration->minute;
+
+                                    ?>
+                                    <?php if ($day > 0)
+                                        echo ($hour > 0 ? $day + 1 : $day) . ($day > 1 || $hour > 0 ? " Days" : " Day") ?>
+                                    <?php if ($day <= 0 && $hour > 0)
+                                        echo $hour . ($hour > 1 ? " Hours" : " Hour") ?>
+                                    <?php if ($day <= 0 && $minute > 0)
+                                        echo $minute . ($minute > 1 ? " Minutes" : " Minute") ?>
+                                    <?php if ($duration->approx)
+                                        echo " (approx.)" ?>
+                                <?php } ?>
                             </label>
                         </div>
                         <div class="text-right text-primary transition duration-500 group-hover:text-white">
@@ -106,6 +122,6 @@ function enx_create_list_tour_package($items)
             </a>
         </div>
 
-<?php
+        <?php
     }
 }

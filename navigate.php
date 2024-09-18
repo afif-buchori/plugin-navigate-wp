@@ -503,3 +503,23 @@ function initialize_654_select2()
   <?php
 }
 add_action('wp_footer', 'initialize_654_select2');
+
+function custom_list_shortcode()
+{
+  // Contoh daftar item
+  $list_items = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+  ];
+
+  // Membuat HTML untuk daftar
+  require_once(dirname(__FILE__) . '/tour_package/list_card/template.php');
+  $output = huhu($list_items);
+
+  return $output;
+}
+// Mendaftarkan shortcode
+add_shortcode('custom_list', 'custom_list_shortcode');
+
