@@ -27,6 +27,7 @@
         <div style="
             display: flex;
             flex-direction: column;
+            min-width: 320px;
             width: 100%;
             height: 100%;
             overflow-y: auto;
@@ -37,7 +38,7 @@
             <!-- END CONTENTS -->
         </div>
         <div class="p-4 pb-0 flex justify-end">
-            <button id="confirm-button" class="btn-primary">Confirm</button>
+            <button id="confirm-button-modal-tc" class="btn-primary hidden">Confirm</button>
         </div>
     </div>
 </div>

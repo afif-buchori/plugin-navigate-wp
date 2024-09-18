@@ -861,11 +861,11 @@ Add the correct display in Chrome and Safari.
   }
 }
 
-@media (min-width: 1536px) {
+/* @media (min-width: 1536px) {
   .container {
     max-width: 1536px !important;
   }
-}
+} */
 
 .enx-container .prose {
   color: #374151 !important;
@@ -1370,6 +1370,22 @@ Add the correct display in Chrome and Safari.
   transition-duration: 150ms !important;
   transition-duration: 300ms !important;
 }
+.enx-container .btn-xs {
+  display: inline-block !important;
+  border-radius: 9999px !important;
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+  font-family: Raleway, sans-serif !important;
+  font-size: 0.75rem !important;
+  line-height: 0.75rem !important;
+  font-weight: 600 !important;
+  transition-property: background-color, border-color, color, fill, stroke !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-duration: 150ms !important;
+  transition-duration: 300ms !important;
+}
 
 .enx-container .btn-primary:hover {
   --tw-bg-opacity: 1 !important;
@@ -1667,6 +1683,10 @@ Add the correct display in Chrome and Safari.
 
 .enx-container .mt-10 {
   margin-top: 2.5rem !important;
+}
+
+.enx-container .ml-4 {
+  margin-left: 1rem !important;
 }
 
 .enx-container .ml-auto {
@@ -2250,6 +2270,14 @@ Add the correct display in Chrome and Safari.
   row-gap: 2rem !important;
 }
 
+.enx-container .gap-x-2 {
+  column-gap: 0.5rem !important;
+}
+
+.enx-container .gap-x-4 {
+  column-gap: 1rem !important;
+}
+
 .enx-container .gap-x-8 {
   column-gap: 2rem !important;
 }
@@ -2580,6 +2608,10 @@ Add the correct display in Chrome and Safari.
   object-fit: cover !important;
 }
 
+.enx-container .p-2 {
+  padding: 0.5rem !important;
+}
+
 .enx-container .p-4 {
   padding: 1rem !important;
 }
@@ -2596,6 +2628,11 @@ Add the correct display in Chrome and Safari.
 .enx-container .py-5 {
   padding-top: 1.25rem !important;
   padding-bottom: 1.25rem !important;
+}
+
+.enx-container .py-2 {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
 }
 
 .enx-container .py-20 {
@@ -2782,6 +2819,10 @@ Add the correct display in Chrome and Safari.
 
 .enx-container .pb-4 {
   padding-bottom: 1rem !important;
+}
+
+.enx-container .pb-20 {
+  padding-bottom: 5rem !important;
 }
 
 .enx-container .pr-3 {
@@ -4850,14 +4891,14 @@ span[data-select2-id] {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
   position: relative !important;
 }
-.enx-container #animate-pulse::after {
+/* .enx-container #animate-pulse::after {
   content: "...";
   position: absolute !important;
   bottom: 6px !important;
   right: -28px !important;
   font-size: 32px;
   animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
-}
+} */
 .enx-container .doted-process::after {
   display: none !important;
 }
@@ -5177,7 +5218,7 @@ div:before {
   font-style: italic !important;
 }
 .enx-container .error-message {
-  color: E4003A !important;
+  color: #e4003a !important;
   font-style: italic !important;
   font-weight: 400 !important;
   line-height: 16px !important;
@@ -5249,8 +5290,12 @@ div:before {
 .enx-container .checked-icon {
   display: none !important;
 }
-.enx-container input[type="radio"]:checked + p + div .checked-icon {
+.enx-container input[type="radio"]:checked + p + div .checked-icon,
+.enx-container input[type="radio"]:checked + div .checked-icon {
   display: block !important;
+}
+.enx-container input[type="radio"]:checked + div + p {
+  opacity: 1 !important;
 }
 .enx-container .line-clamp-4 {
   overflow: hidden !important;
@@ -5418,4 +5463,26 @@ div:before {
     left: 11px !important;
   }
 }
+
+.detail-paysetting {
+  height: 0px;
+  overflow: hidden;
+  transition: height 0.3s ease;
+}
+
+.enx-container .reset-tw ul,
+.enx-container .reset-tw ul li,
+.enx-container .reset-tw li,
+.enx-container .reset-tw li {
+  list-style-type: disc !important;
+  list-style-position: outside !important;
+  margin-left: 24px !important;
+}
+.enx-container .reset-tw ol,
+.enx-container .reset-tw ol li {
+  list-style-type: decimal !important;
+  list-style-position: outside !important;
+  margin-left: 24px !important;
+}
+
 /* end new */

@@ -330,39 +330,6 @@ document.addEventListener("alpine:init", () => {
   }));
 });
 
-// NEW SLIDER
-const carousel = document.querySelector(".carousel-654") ?? null;
-const items = document.querySelectorAll(".carousel-654-item") ?? null;
-const prevBtn = document.querySelector(".carousel-654-prev") ?? null;
-const nextBtn = document.querySelector(".carousel-654-next") ?? null;
-const navItems = document.querySelectorAll(".nav-carsl-654-item") ?? null;
-
-let currentIndex = 0;
-const totalItems = items.length;
-function updateCarousel(index) {
-  const offset = -index * 100;
-  carousel.style.transform = `translateX(${offset}%)`;
-  navItems.forEach((navItem, i) => {
-    navItem.classList.toggle("active", i === index);
-  });
-}
-nextBtn.addEventListener("click", () => {
-  currentIndex = (currentIndex + 1) % totalItems;
-  updateCarousel(currentIndex);
-});
-prevBtn.addEventListener("click", () => {
-  currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-  updateCarousel(currentIndex);
-});
-navItems.forEach((navItem, index) => {
-  navItem.addEventListener("click", () => {
-    currentIndex = index;
-    updateCarousel(currentIndex);
-  });
-});
-updateCarousel(currentIndex);
-// END NEW SLIDER
-
 function isInt(n) {
   return Number(n) === n && n % 1 === 0;
 }

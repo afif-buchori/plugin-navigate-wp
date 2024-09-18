@@ -20,7 +20,7 @@ function enx_get_page_content($data)
     $total = 0;
     $grand_total = 0;
     ob_start();
-?>
+    ?>
     <div class="enx-container site-wrapper" id="page-addon">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -29,9 +29,8 @@ function enx_get_page_content($data)
                     <div class="container">
                         <div class="stepper-wrapper">
                             <?php foreach ($breadCrumbStep as $key => $value) {
-                            ?>
-                                <div
-                                    class="stepper-item  <?php echo $value->name != 'Result' ? 'completed' : '' ?>">
+                                ?>
+                                <div class="stepper-item  <?php echo $value->name != 'Result' ? 'completed' : '' ?>">
                                     <div class="step-counter">
                                         <?php if ($value->name == 'Result') { ?>
                                             <p></p>
@@ -57,35 +56,43 @@ function enx_get_page_content($data)
                                                             Detail Payment :
                                                         </h6>
                                                     </div>
-                                                    <div class="pl-4 border-b border-primary border-opacity-10">
+                                                    <div class="ml-4 py-1 border-b border-primary border-opacity-10">
                                                         <h6 class="font-bold">
                                                             <?php
                                                             echo $key > 0 ? "Payment #" . $key : (count($payments) > 1 ? 'Down Payment' : 'Full Payment') ?>
                                                         </h6>
                                                     </div>
                                                     <div
-                                                        class="pl-4 flex justify-between border-b border-primary border-opacity-10">
+                                                        class="ml-4 py-1 flex justify-between border-b border-primary border-opacity-10">
                                                         <h6>
                                                             Payment Status :
-                                                            <?php echo $value->status ? $value->status : ($key == 0 ? null : ($payments[$key - 1]->status == "PAID" ? "Waiting" : ($key == 1 ? "Waiting Down Payment" : "Waiting Payment " . $key))) ?>
+                                                            <span
+                                                                style='color: <?php echo $value->status == "PAID" ? "seagreen" : "chocolate" ?>;'
+                                                                class="font-bold">
+                                                                <?php echo $value->status ? $value->status : ($key == 0 ? null : ($payments[$key - 1]->status == "PAID" ? "Waiting" : ($key == 1 ? "Waiting Down Payment" : "Waiting Payment " . $key))) ?>
+                                                            </span>
                                                         </h6>
 
                                                         <?php if (($key == 0 && $value->status != "PAID") || ($key > 0 && $payments[$key - 1]->status == "PAID") && $value->status != "PAID") { ?>
-                                                            <button class="btn btn-primary generate_payment" data-payment='<?php echo json_encode($value) ?>'>Payment Now</button>
+                                                            <button class="btn-xs btn-primary generate_payment"
+                                                                data-payment='<?php echo json_encode($value) ?>'>Payment
+                                                                Now</button>
                                                         <?php } ?>
                                                     </div>
-                                                    <div class="pl-4 border-b border-primary border-opacity-10">
+                                                    <div class="ml-4 py-1 border-b border-primary border-opacity-10">
                                                         <?php
                                                         $amoun_pay = $value->status != null && $value->status == "PAID" ? $value->paid_amount : $value->amount;
                                                         ?>
                                                         <h6>
-                                                            Amount Due :
+                                                            <?php echo $value->status == "PAID" ? "Total Amount" : "Amount Due" ?>
+                                                            :
                                                             <?php echo $curr->symbol . " " . number_format($amoun_pay, $curr->digit) ?>
                                                         </h6>
                                                     </div>
-                                                    <div class="pl-4">
+                                                    <div class="ml-4 py-1">
                                                         <h6>
-                                                            Due Date : <?php echo $value->pay_before ?>
+                                                            <?php echo $value->status == "PAID" ? "Paid at" : "Due Date" ?>
+                                                            : <?php echo $value->pay_before ?>
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -151,7 +158,7 @@ function enx_get_page_content($data)
 
                                             $total += $price_item;
                                             $grand_total += $total;
-                                        ?>
+                                            ?>
                                             <div class="mb-4">
                                                 <div class="flex justify-between ">
                                                     <p>
@@ -182,7 +189,7 @@ function enx_get_page_content($data)
                                             if (isset($order->costs) && count($order->costs) > 0) {
                                                 foreach ($order->costs as $key => $v) {
                                                     $grand_total += $v->value;
-                                            ?>
+                                                    ?>
                                                     <div class=" flex gap-10">
                                                         <p class="ml-auto">
                                                             <?php echo $v->name ?> :
@@ -191,7 +198,7 @@ function enx_get_page_content($data)
                                                             <?php echo $curr->symbol . " " . number_format($v->value, $curr->digit) ?>
                                                         </p>
                                                     </div>
-                                            <?php }
+                                                <?php }
                                             } ?>
 
                                             <div class=" flex gap-10">
@@ -226,7 +233,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-<?php
+    <?php
     $contents = ob_get_clean();
     return $contents;
 }

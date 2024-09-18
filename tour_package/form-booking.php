@@ -4,7 +4,8 @@ function enx_get_page_content($data)
     $old = json_decode(OLD);
     $error = json_decode(ERROR_DATA);
     $url = API_TOUR_PACKAGE_URL . '/post/data-booking';
-    if ($data) $data->currency = str_replace("currency=", "", checkCurrency());
+    if ($data)
+        $data->currency = str_replace("currency=", "", checkCurrency());
     try {
         $res = fetchPost($url, $data);
     } catch (\Throwable $th) {
@@ -15,7 +16,7 @@ function enx_get_page_content($data)
     $rate = $data_res->service->rate;
     $currency = $rate->currency->client_currency;
     ob_start();
-?>
+    ?>
     <div class="enx-container site-wrapper">
         <!-- <php require_once(dirname(__FILE__) . '/../activity/modal-message.php'); ?> -->
         <div class="site-content">
@@ -24,7 +25,7 @@ function enx_get_page_content($data)
                     <div class="container">
                         <div class="stepper-wrapper">
                             <?php foreach ($breadCrumbStep as $key => $value) {
-                            ?>
+                                ?>
                                 <div
                                     class="stepper-item  <?php echo $value->name != 'Booking Form' && $key == 0 ? 'completed' : '' ?>">
                                     <div class="step-counter">
@@ -49,8 +50,8 @@ function enx_get_page_content($data)
                                         <div class="py-5 px-7">
                                             <h6 class="font-bold"><?php echo $data_res->service->contents->title ?></h6>
                                             <h6 class="mt-3"><?php
-                                                                $date = new DateTime($data_res->data_session->date);
-                                                                echo date_format($date, "l, d F Y") ?>
+                                            $date = new DateTime($data_res->data_session->date);
+                                            echo date_format($date, "l, d F Y") ?>
                                             </h6>
                                             <div class="flex justify-between mt-4">
                                                 <p class="pl-4">Adult x<?php echo $rate->adult->price_details->qty ?></p>
@@ -70,7 +71,9 @@ function enx_get_page_content($data)
                                         </div>
                                         <div
                                             class="font-bold border-t border-primary border-opacity-10 px-7 py-3 flex justify-between">
-                                            <h6 class="font-bold"><?php echo isset($data_res->service->addon_selected) && count($data_res->service->addon_selected) > 0 ? "Sub Total" : "Total" ?></h6>
+                                            <h6 class="font-bold">
+                                                <?php echo isset($data_res->service->addon_selected) && count($data_res->service->addon_selected) > 0 ? "Sub Total" : "Total" ?>
+                                            </h6>
                                             <p><?php echo $currency->symbol . " " . number_format($rate->total->client_currency, $currency->digit) ?>
                                             </p>
                                         </div>
@@ -87,8 +90,9 @@ function enx_get_page_content($data)
                                             <div class="py-5 px-7">
                                                 <?php foreach ($data_res->service->addon_selected as $key => $value) { ?>
                                                     <div class="flex justify-between mt-4">
-                                                        <p><?php echo $value->title . " x" . (int)$value->qty ?></p>
-                                                        <p><?php echo $currency->symbol . " " . number_format($value->price, $currency->digit) ?></p>
+                                                        <p><?php echo $value->title . " x" . (int) $value->qty ?></p>
+                                                        <p><?php echo $currency->symbol . " " . number_format($value->price, $currency->digit) ?>
+                                                        </p>
                                                     </div>
                                                 <?php } ?>
                                             </div>
@@ -99,20 +103,19 @@ function enx_get_page_content($data)
                                                     <?php
                                                     $total_price_addon = array_sum(array_values(array_column($data_res->service->addon_selected, 'price')));
                                                     echo $currency->symbol . " " . number_format($total_price_addon, $currency->digit)
-                                                    ?>
+                                                        ?>
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-5">
                                         <div class="wiget shadow-lg rounded-xl mb-5 bg-white">
-                                            <div
-                                                class="font-bold px-7 py-3 flex justify-between">
+                                            <div class="font-bold px-7 py-3 flex justify-between">
                                                 <h6 class="font-bold">Total</h6>
                                                 <p>
                                                     <?php
                                                     echo $currency->symbol . " " . number_format($rate->total->client_currency + $total_price_addon, $currency->digit)
-                                                    ?>
+                                                        ?>
                                                 </p>
                                             </div>
                                         </div>
@@ -120,7 +123,7 @@ function enx_get_page_content($data)
                                 <?php } ?>
 
                                 <div class="mb-5">
-                                    <div class="wiget shadow-lg rounded-xl mb-5 bg-white">
+                                    <div class="wiget shadow-lg rounded-xl mb-5 bg-white overflow-hidden">
                                         <h5
                                             class="flex justify-between font-heading text-xl text-primary font-bold border-b-2 border-primary border-opacity-10 px-7 py-3">
                                             Payment Settings
@@ -129,33 +132,54 @@ function enx_get_page_content($data)
                                                 Select Payment!
                                             </div>
                                         </h5>
-                                        <div class="py-5 px-7">
+                                        <div class="flex flex-col">
                                             <?php foreach ($data_res->service->payment as $key => $payment) {
-                                                $payment_in_id = strtolower(str_replace(" ", "_", $payment->title)) . "_$key";
-                                            ?>
-                                                <div class="<?php echo $key > 0 ? "mt-4" : "" ?>">
-                                                    <input type="radio" name="payment_settings"
-                                                        id="<?php echo $payment_in_id ?>"
-                                                        value='<?php echo json_encode($payment) ?>'
-                                                        data-service-fee="<?php echo (float) $rate->service_fee ?>"
-                                                        data-currency='<?php echo json_encode($currency) ?>'>
-                                                    <label for="<?php echo $payment_in_id ?>"
-                                                        class="pl-4"><?php echo $payment->title ?></label>
-                                                    <?php foreach ($payment->detail as $detail) {
-                                                        $due_date = date_format(new DateTime($detail->dueDate), "D, d F Y H:i");
-                                                    ?>
-                                                        <div class="flex justify-between font-bold">
-                                                            <p><?php echo $detail->name ?></p>
-                                                            <p><?php echo $currency->symbol . " " . number_format($detail->amount, $currency->digit) ?>
-                                                            </p>
+                                                // $payment_in_id = strtolower(str_replace(" ", "_", $payment->title)) . "_$key";
+                                                ?>
+                                                <div class="<?php echo $key > 0 ? "border-t" : "" ?>">
+                                                    <label class="flex items-center gap-2 p-4">
+                                                        <input type="radio" name="payment_settings"
+                                                            value='<?php echo json_encode($payment) ?>'
+                                                            data-service-fee="<?php echo (float) $rate->service_fee ?>"
+                                                            data-currency='<?php echo json_encode($currency) ?>' hidden>
+
+                                                        <div style="width: 20px; height: 20px;"
+                                                            class="border-2 border-primary rounded-md relative">
+                                                            <span class="iconify checked-icon absolute top-0 left-0"
+                                                                data-icon="mingcute:check-fill" data-width="16"
+                                                                data-height="16"></span>
                                                         </div>
-                                                        <div class="flex justify-between">
-                                                            <p>Due Date</p>
-                                                            <p><?php echo $due_date ?></p>
+                                                        <p style="opacity: 0.6;" class="font-bold"><?php echo $payment->title ?>
+                                                        </p>
+                                                    </label>
+                                                    <div style="background-color: #81dae320;"
+                                                        class="detail-paysetting flex flex-col overflow-hidden transition-all duration-300">
+                                                        <div class="flex flex-col p-4">
+                                                            <?php foreach ($payment->detail as $detail) {
+                                                                $due_date = date_format(new DateTime($detail->dueDate), "D, d F Y H:i");
+                                                                ?>
+                                                                <div class="flex justify-between font-bold">
+                                                                    <p><?php echo $detail->name ?></p>
+                                                                    <p><?php echo $currency->symbol . " " . number_format($detail->amount, $currency->digit) ?>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="flex justify-between">
+                                                                    <p>Due Date</p>
+                                                                    <p><?php echo $due_date ?></p>
+                                                                </div>
+                                                            <?php } ?>
                                                         </div>
-                                                    <?php } ?>
+                                                    </div>
                                                 </div>
                                             <?php } ?>
+                                            <div class="error-info-paysetting">
+                                                <p id="animate-pulse"
+                                                    class="border-t italic text-red-error p-2 text-center">
+                                                    Select
+                                                    one
+                                                    of the following
+                                                    payment systems !</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -275,20 +299,22 @@ function enx_get_page_content($data)
                                 </div>
 
                                 <div class="flex flex-col items-end ml-auto mt-14 mb-5" style="max-width: 292px">
-                                    <button type="submit" class="btn btn-primary w-full <?php if (!$data_res) echo "btn-disable" ?>" <?php if (!$data_res) echo "disabled" ?>>Continue To Payment</button>
-                                    <p class="text-xs mt-4">Click 'Continue to Payment' to securely proceed to Tondest.com,
-                                        our trusted payment partner, for a seamless checkout experience.</p>
+                                    <button type="submit" class="btn btn-primary w-full <?php if (!$data_res)
+                                        echo "btn-disable" ?>" <?php if (!$data_res)
+                                        echo "disabled" ?>>Continue To Payment</button>
+                                        <p class="text-xs mt-4">Click 'Continue to Payment' to securely proceed to Tondest.com,
+                                            our trusted payment partner, for a seamless checkout experience.</p>
+                                    </div>
                                 </div>
-                            </div>
 
-                        </form>
-                    </div>
-                </section>
+                            </form>
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
-    </div>
 
-<?php
-    $contents = ob_get_clean();
-    return $contents;
+        <?php
+                                    $contents = ob_get_clean();
+                                    return $contents;
 }
