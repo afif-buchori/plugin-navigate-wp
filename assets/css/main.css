@@ -3867,6 +3867,10 @@ Add the correct display in Chrome and Safari.
     border-left-width: 1px !important;
   }
 
+  .enx-container .md\:border-t-0 {
+    border-top-width: 0px !important;
+  }
+
   .enx-container .md\:grid-cols-8 {
     grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
   }
@@ -5483,11 +5487,6 @@ div:before {
   list-style-type: decimal !important;
   list-style-position: outside !important;
   margin-left: 24px !important;
-}
-
-.testing-font {
-  font-weight: 600;
-  color: red;
 }
 
 /* end new */

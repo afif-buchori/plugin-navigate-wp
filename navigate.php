@@ -504,15 +504,26 @@ function initialize_654_select2()
 }
 add_action('wp_footer', 'initialize_654_select2');
 
-function custom_list_shortcode()
+
+// SHORTCODE
+function custom_list_shortcode($atts)
 {
+  $atts = shortcode_atts(
+    array(
+      'items' => 'Item 1,Item 2,Item 3,Item 4' // Default items sebagai string
+    ),
+    $atts,
+    'custom_list'
+  );
   // Contoh daftar item
-  $list_items = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-  ];
+  // Ubah string item menjadi array
+  $param_items = explode(',', $atts['items']);
+
+  // Daftar item default
+  $default_items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
+
+  // Gabungkan item default dengan item dari parameter
+  $list_items = array_merge($default_items, $param_items);
 
   // Membuat HTML untuk daftar
   require_once(dirname(__FILE__) . '/tour_package/list_card/template.php');
@@ -522,4 +533,5 @@ function custom_list_shortcode()
 }
 // Mendaftarkan shortcode
 add_shortcode('custom_list', 'custom_list_shortcode');
+// END SHORTCODE
 

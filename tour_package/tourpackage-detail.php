@@ -340,7 +340,8 @@ function enx_get_page_content($data)
                                     <?php include_once plugin_dir_path(__FILE__) . 'contents/modal-termcondition.php'; ?>
                                 </div>
 
-                                <div class="col-span-3 hidden md:flex flex-col relative">
+                                <div
+                                    class="col-span-12 md:col-span-3 flex flex-col relative border-t md:border-t-0 pt-10 md:pt-0">
                                     <form id="form-package-detail-tourpackage" method="post"
                                         class="shadow shadow-lg sticky top-28 right-0" style="
                                         width: 100%;
