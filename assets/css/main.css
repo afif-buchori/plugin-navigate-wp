@@ -2608,6 +2608,10 @@ Add the correct display in Chrome and Safari.
   object-fit: cover !important;
 }
 
+.enx-container .p-1 {
+  padding: 0.25rem !important;
+}
+
 .enx-container .p-2 {
   padding: 0.5rem !important;
 }

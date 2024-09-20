@@ -51,18 +51,20 @@ function enx_create_list_tour_package($items)
             style="flex: 1 1 0">
             <a href="<?php echo "/" . TOUR_PACKAGE_LINK . "/" . $item->slug ?>"
                 class="group flex-1 flex flex-col block relative bg-cover rounded-2xl xl:my-0 overflow-hidden w-full"
-                style="min-height: 410px">
+                style="min-height: 340px">
                 <div class="bg-cover bg-center origin-top w-full rounded-2xl transition duration-500 transform translate-y-[-10px] group-hover:scale-110"
                     style="background-image: url(<?php echo $item->image ?>); aspect-ratio: 16/10">
                 </div>
-                <div class="flex-1 flex flex-col h-full w-full bg-secondary transition duration-500 group-hover:bg-primary py-5 px-4 rounded-2xl"
+                <div class="flex-1 flex flex-col h-full w-full bg-secondary transition duration-500 group-hover:bg-primary p-4 rounded-2xl"
                     style="z-index: 1; margin-top: -32px;">
-                    <h3
+                    <h3 style="line-height: 1.25rem !important;"
                         class="font-heading text-xl text-transform-unset font-medium text-primary transition duration-500 group-hover:text-white">
                         <?php echo ucwords(strtolower($item->contents->title)) ?>
                     </h3>
-                    <div class="w-full flex justify-between">
-                        <p class="text-sm text-primary transition duration-500 group-hover:text-white" style="opacity: 0.7;">
+                    <div style="opacity: 0.7;" class="w-full flex items-center mb-4">
+                        <span class="iconify inline-block text-primary mr-1 transition duration-500 group-hover:text-white"
+                            data-icon="ic:outline-location-on" data-width="15" data-height="15"></span>
+                        <p class="text-sm text-primary transition duration-500 group-hover:text-white">
                             <?php echo $item->country->name ?>
                         </p>
                         <!-- <p class="text-xs text-primary transition duration-500 group-hover:text-white"
@@ -71,9 +73,27 @@ function enx_create_list_tour_package($items)
                         </p> -->
                     </div>
                     <div
-                        class="w-full border-t border-primary border-opacity-40 my-3 transition duration-500 group-hover:border-white/30">
+                        class="mt-auto w-full border-t border-primary border-opacity-40 my-3 transition duration-500 group-hover:border-white/30">
+                        <span style="width: fit-content; margin-top: -9px; margin-left: 4px;"
+                            class="flex font-bold rounded-full bg-white text-white text-xs overflow-hidden">
+                            <?php
+                            $bgColor = "#1F4172"; // Default color
+                    
+                            if ($item->service_sub_type == "FULL DAY") {
+                                $bgColor = "#00712D";
+                            } elseif ($item->service_sub_type == "HALF DAY") {
+                                $bgColor = "#7A1CAC";
+                            } elseif ($item->service_sub_type == "PACKAGE") {
+                                $bgColor = "#E85C0D";
+                            }
+                            ?>
+                            <p style="padding-bottom: 2px; background-color: <?= $bgColor; ?>;" class="flex-1 px-4">
+                                <?php echo $item->service_sub_type ?>
+                            </p>
+
+                        </span>
                     </div>
-                    <div class="flex justify-between mt-auto">
+                    <div class="flex justify-between">
                         <div class="flex items-end text-primary transition duration-500 group-hover:text-white">
                             <!-- <php if ($item->is_instant_confirmation) { ?>
                                 <div class="flex items-center gap-1 mt-auto">
@@ -86,7 +106,7 @@ function enx_create_list_tour_package($items)
                                         confirmation</p>
                                 </div>
                             <php } ?> -->
-                            <label class="flex items-center" for="peopleBooked">
+                            <label class="flex items-center text-sm" for="peopleBooked">
                                 <span
                                     class="iconify inline-block text-primary mr-1 transition duration-500 group-hover:text-white"
                                     data-icon="mdi:timer-outline" data-width="15" data-height="15"></span>

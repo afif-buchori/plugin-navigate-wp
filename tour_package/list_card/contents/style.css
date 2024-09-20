@@ -1,3 +1,57 @@
-.font-bold {
-  font-weight: 600;
+.sct-container-card,
+.sct-container-card ::backdrop,
+.sct-container-card ::after,
+.sct-container-card * {
+  box-sizing: border-box;
+  margin: 0px !important;
+  text-decoration: none;
+  color: black;
+}
+.sct-container-card p {
+  line-height: 1.25rem;
+}
+.sct-container-card {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 1rem !important;
+}
+.sct-card {
+  flex: 1 1 0% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border: solid 1px #cacaca !important;
+  border-radius: 1rem !important;
+  overflow: hidden !important;
+}
+.sct-card-top {
+  width: 100% !important;
+  aspect-ratio: 16/9 !important;
+  display: flex !important;
+}
+.sct-card-top img {
+  width: 100% !important;
+  object-fit: cover !important;
+}
+.sct-card-bottom {
+  flex: 1 1 0% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 1rem !important;
+  background-color: white !important;
+}
+.sct-title {
+  font-weight: 600 !important;
+  font-size: 1.25rem !important;
+}
+.sct-conloc {
+  display: flex !important;
+  gap: 0.25rem !important;
+  opacity: 0.75 !important;
+  font-size: 0.75rem !important;
+}
+.sct-container-info-card {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: end !important;
+  margin-top: auto !important;
 }

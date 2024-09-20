@@ -12,8 +12,7 @@ function enx_get_page_content($data)
                     <div class="container text-center h-full flex flex-col justify-center">
                         <div>
                             <span
-                                class="bg-primary uppercase font-base rounded px-3 py-1 text-white text-xs md:text-sm tracking-widest">Tour
-                                Package</span>
+                                class="bg-primary uppercase font-base rounded px-3 py-1 text-white text-xs md:text-sm tracking-widest">Tour</span>
 
                             <h1
                                 class="font-heading text-primary text-3xl md:text-5xl lg:text-6xl xl:text-6xl mb-14 mt-5 lg:leading-15 xl:px-10">
@@ -41,11 +40,45 @@ function enx_get_page_content($data)
             </div>
 
             <div class="container xl:grid grid-cols-12 xl:gap-12 2xl:gap-16 mt-16">
+                <!-- <div class="col-span-12">
+                    <p class="font-bold text-xl mb-4">Other Country</p>
+                    <div style="max-height: 320px;" class="grid grid-cols-8 gap-1 px-2 overflow-y-auto">
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg overflow-hidden relative">
+                            <img src="https://storage-junk.s3.ap-southeast-1.amazonaws.com/service/opentrip/1725845218-1344450.jpeg"
+                                alt="img-country" class="w-full h-full" style="object-fit: cover;">
+                            <div style="line-height: 0.9rem !important; background-color: #ffffff90;"
+                                class="w-full p-1 absolute bottom-0 left-0 font-bold text-sm">
+                                <p>Title Country / Province / City / Other Name</p>
+                            </div>
+                        </div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                        <div style="aspect-ratio: 4/4;" class="col-span-1 bg-primary rounded-lg p-4"></div>
+                    </div>
+                </div> -->
 
                 <div class="col-span-12">
                     <div class="flex justify-between items-center border-b border-primary border-opacity-20 mb-10 py-5">
                         <p class="text-primary text-sm text-opacity-70 font-medium font-numbers">
-                            Tour Packages
+                            <?php echo count($items) ?> Tour found for <span
+                                class="font-bold"><?php echo COUNTRY_TOUR_PACKAGE ?></span>
                         </p>
                         <!-- <div>
                             <label class="text-primary text-sm text-opacity-70 mr-3 font-medium" for="sortBy">Sort
@@ -58,7 +91,7 @@ function enx_get_page_content($data)
                             </select>
                         </div> -->
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7 gap-y-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 gap-y-2">
 
                         <?php
                         if (!$items) {

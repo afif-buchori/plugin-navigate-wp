@@ -19,7 +19,9 @@ function enx_get_data_api_post()
 {
     $url = explode("/", substr(explode("?", $_SERVER['REQUEST_URI'])[0], 1));
     $data = [];
-    if ($url[2] == "get-package") {
+    if ($url[2] == "list-data") {
+        $data = enx_post_listdata();
+    } elseif ($url[2] == "get-package") {
         $data = enx_post_getpackage();
     } elseif ($url[2] == "generate-tp-session") {
         session_start();
@@ -33,6 +35,27 @@ function enx_get_data_api_post()
 
     return $data;
 }
+
+// GET data
+function enx_post_listdata()
+{
+    $req = json_decode(file_get_contents("php://input"));
+    $params = "?";
+    $index = 0;
+    $total = count((array) $req);
+
+    foreach ($req as $key => $value) {
+        $params .= urlencode($key) . "=" . urlencode($value);
+        if ($index < $total - 1) {
+            $params .= "&";
+        }
+        $index++;
+    }
+    $url = API_TOUR_PACKAGE_URL . '/get/data-list' . $params;
+    $data = fetchGet($url);
+    return $data;
+}
+
 
 //POST data =========
 function enx_post_getpackage()
