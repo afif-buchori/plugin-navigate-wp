@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         const dataRes = await res.json();
-        console.log(dataRes);
+        // console.log(dataRes);
 
         if (dataRes.result === "ok") {
           let output = "";
@@ -64,6 +64,13 @@ document.addEventListener("DOMContentLoaded", function () {
               }
             }
 
+            const colorMap = {
+              "FULL DAY": "#00712D",
+              "HALF DAY": "#7A1CAC",
+              PACKAGE: "#E85C0D",
+            };
+            let bgColor = colorMap[service.service_sub_type] || "#1F4172"; // Default to #1F4172 if not found
+
             output += `
               <div class="sct-card">
                 <a href="/${route}/${service.slug}">
@@ -75,17 +82,26 @@ document.addEventListener("DOMContentLoaded", function () {
                   <div class="sct-card-bottom">
                     <p class="sct-title">${service.contents.title}</p>
                     <div class="sct-conloc">
-                      <span class="iconify" data-icon="ic:outline-location-on" data-width="15" data-height="15"></span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                      </svg>
                       <p>${service.country.name}</p>
                     </div>
-                    <div class="sct-container-info-card">
+                    <div style="border-top: solid 1px ${bgColor}80 !important;" class="sct-container-info-card">
+                      <span style="border: solid 1px ${bgColor}80 !important;" class="sct-type-info">
+                        <p style="background-color: ${bgColor}50 !important;">${
+              service.service_sub_type
+            }</p>
+                      </span>
                       <div class="sct-duration">
-                        <span class="iconify" data-icon="ic:outline-location-on" data-width="15" data-height="15"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-stopwatch-fill" viewBox="0 0 16 16">
+                          <path d="M6.5 0a.5.5 0 0 0 0 1H7v1.07A7.001 7.001 0 0 0 8 16a7 7 0 0 0 5.29-11.584l.013-.012.354-.354.353.354a.5.5 0 1 0 .707-.707l-1.414-1.415a.5.5 0 1 0-.707.707l.354.354-.354.354-.012.012A6.97 6.97 0 0 0 9 2.071V1h.5a.5.5 0 0 0 0-1zm2 5.6V9a.5.5 0 0 1-.5.5H4.5a.5.5 0 0 1 0-1h3V5.6a.5.5 0 1 1 1 0"/>
+                        </svg>
                         <p>${durationText}</p>
                       </div>
                       <div class="sct-info-price">
-                        <p>Start From</p>
-                        <p>${currency} ${numberFormat(
+                        <p class="sct-info">Start From</p>
+                        <p class="sct-price primary-color">${currency} ${numberFormat(
               service.minimum_price,
               service.minimum_price_detail.currency.digit
             )}</p>

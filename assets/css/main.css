@@ -5305,6 +5305,12 @@ div:before {
 .enx-container input[type="radio"]:checked + div + p {
   opacity: 1 !important;
 }
+.enx-container .line-clamp-2 {
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+}
 .enx-container .line-clamp-4 {
   overflow: hidden !important;
   display: -webkit-box !important;

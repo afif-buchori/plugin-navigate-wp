@@ -58,7 +58,7 @@ function enx_create_list_tour_package($items)
                 <div class="flex-1 flex flex-col h-full w-full bg-secondary transition duration-500 group-hover:bg-primary p-4 rounded-2xl"
                     style="z-index: 1; margin-top: -32px;">
                     <h3 style="line-height: 1.25rem !important;"
-                        class="font-heading text-xl text-transform-unset font-medium text-primary transition duration-500 group-hover:text-white">
+                        class="line-clamp-2 font-heading text-xl text-transform-unset font-medium text-primary transition duration-500 group-hover:text-white">
                         <?php echo ucwords(strtolower($item->contents->title)) ?>
                     </h3>
                     <div style="opacity: 0.7;" class="w-full flex items-center mb-4">
