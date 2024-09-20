@@ -3,7 +3,7 @@ function enx_get_page_content($data)
 {
     $items = $data->services;
     ob_start();
-    ?>
+?>
     <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="relative bg-cover bg-center h-tour"
@@ -28,16 +28,16 @@ function enx_get_page_content($data)
                 </div>
             </div>
 
-            <div class="w-full flex relative">
+            <!-- <div class="w-full flex relative">
                 <div class="w-full flex justify-center absolute" style="top: -72px;">
                     <form class="flex-1 flex" style="background-color: white; border-radius: 4px; max-width: 420px;">
-                        <input type="hidden" name="country" value="<?= $_GET['country'] ?? COUNTRY_TOUR_PACKAGE ?>">
-                        <input type="text" name="q" value="<?= $_GET['q'] ?? "" ?>" placeholder="Search Tour Package"
+                        <input type="hidden" name="country" value="<= $_GET['slug'] ?? COUNTRY_TOUR_PACKAGE ?>">
+                        <input type="text" name="q" value="<= $_GET['q'] ?? "" ?>" placeholder="Search Tour Package"
                             class="w-full flex-1 px-4" style="background-color: transparent;">
                         <button type="submit" class="btn-primary">Search</button>
                     </form>
                 </div>
-            </div>
+            </div> -->
 
             <div class="container xl:grid grid-cols-12 xl:gap-12 2xl:gap-16 mt-16">
                 <!-- <div class="col-span-12">
@@ -78,7 +78,7 @@ function enx_get_page_content($data)
                     <div class="flex justify-between items-center border-b border-primary border-opacity-20 mb-10 py-5">
                         <p class="text-primary text-sm text-opacity-70 font-medium font-numbers">
                             <?php echo count($items) ?> Tour found for <span
-                                class="font-bold"><?php echo COUNTRY_TOUR_PACKAGE ?></span>
+                                class="font-bold"><?php echo $_GET['slug'] ?? COUNTRY_TOUR_PACKAGE ?></span>
                         </p>
                         <!-- <div>
                             <label class="text-primary text-sm text-opacity-70 mr-3 font-medium" for="sortBy">Sort
@@ -116,7 +116,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-    <?php
+<?php
     $contents = ob_get_clean();
     return $contents;
 }
