@@ -39,7 +39,9 @@ function enx_create_list($items)
                 style="min-height: 480px">
                 <div class="absolute bg-cover bg-center origin-top w-full rounded-2xl transition duration-500 transform translate-y-[-10px] group-hover:scale-110"
                     style="background-image: url(<?php echo
-                        file_get_contents($item->image_url) !== false ? $item->image_url :
+                        isset($item->image_url) && file_get_contents($item->image_url) !== false ?
+                        $item->image_url
+                        :
                         "https://d3837chlpocfug.cloudfront.net/28338fc3-5be8-4666-9b73-babecc70a467/build/assets/ph-notfound-d1e5c849.png" ?>); height: 80%">
                 </div>
                 <!-- <div class="bg-primary absolute origin-top-right right-5 top-5 rounded text-secondary uppercase px-5 py-1 font-numbers text-xs tracking-wider">
