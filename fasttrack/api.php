@@ -18,7 +18,10 @@ function enx_get_data_api_get()
 function enx_get_data_api_post()
 {
     $url = explode("/", substr(explode("?", $_SERVER['REQUEST_URI'])[0], 1));
-    if ($url[2] == "get-rate") {
+
+    if ($url[2] == 'list-data') {
+        $data = enx_post_listdata();
+    } else if ($url[2] == "get-rate") {
         $data = enx_get_rate_data_api();
     } else if ($url[2] == "get-rate-addon") {
         $data = enx_get_rate_addon_data_api();
@@ -27,7 +30,27 @@ function enx_get_data_api_post()
     } else if ($url[2] == "get-status") {
         $data = enx_get_booking_status_api();
     }
-    
+
+    return $data;
+}
+
+// GET data
+function enx_post_listdata()
+{
+    $req = json_decode(file_get_contents("php://input"));
+    $params = "?";
+    $index = 0;
+    $total = count((array) $req);
+    foreach ($req as $key => $value) {
+        $params .= urlencode($key) . "=" . urlencode($value);
+        if ($index < $total - 1) {
+            $params .= "&";
+        }
+        $index++;
+    }
+
+    $url = API_FASTTRACK_URL . $params;
+    $data = fetchGet($url);
     return $data;
 }
 
@@ -53,7 +76,8 @@ function enx_get_rate_addon_data_api()
     $url = API_FASTTRACK_URL . "/get/rate-addon" . createParamsFromGet();
     $req = json_decode(file_get_contents("php://input"));
     $data = fetchPost($url, $req);
-    if ($data->error) return false;
+    if ($data->error)
+        return false;
     return $data;
 }
 
@@ -68,7 +92,7 @@ function enx_upload_data_api()
     $file_contents = file_get_contents($tempname);
     $mimetype = $_FILES['file']['type'];
 
-    $content =  "--" . $multipart_boundary . "\r\n" .
+    $content = "--" . $multipart_boundary . "\r\n" .
         "Content-Disposition: form-data; name=\"file\"; filename=\"" . $filename . "\"\r\n" .
         "Content-Type: " . $mimetype . "\r\n\r\n" .
         $file_contents . "\r\n";
@@ -81,11 +105,11 @@ function enx_upload_data_api()
 
     $content .= "--" . $multipart_boundary . "\r\n" .
         "Content-Disposition: form-data; name=\"sid\"\r\n\r\n" . $_POST['sid'] . "\r\n";
-    
-        if ($_POST['type'] == 'imei') {
-            $content .= "--" . $multipart_boundary . "\r\n" .
-                "Content-Disposition: form-data; name=\"imei_name\"\r\n\r\n" . $_POST['name'] . "\r\n";
-        }
+
+    if ($_POST['type'] == 'imei') {
+        $content .= "--" . $multipart_boundary . "\r\n" .
+            "Content-Disposition: form-data; name=\"imei_name\"\r\n\r\n" . $_POST['name'] . "\r\n";
+    }
 
     // signal end of request (note the trailing "--")
     $content .= "--" . $multipart_boundary . "--\r\n";
@@ -107,7 +131,8 @@ function enx_upload_data_api()
     }
     $data = json_decode($response);
 
-    if ($data->error || !$data) return ['status' => 'error'];
+    if ($data->error || !$data)
+        return ['status' => 'error'];
     return ['status' => 'success'];
     // return ['status' => $data];
 }

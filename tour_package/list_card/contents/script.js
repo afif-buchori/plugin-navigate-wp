@@ -19,6 +19,27 @@ document.addEventListener("DOMContentLoaded", function () {
       limit,
     };
 
+    let loading = [];
+    for (let i = 0; i < parseInt(limit); i++) {
+      loading.push(`<div class="sct-card">
+                <div class="sct-card-top">
+                </div>
+                <div class="sct-card-bottom">
+                  <p  style="margin-bottom: 4px !important; width: 100%" class="sct-skeleton">...</p>
+                  <p style="width: 80%" class="sct-skeleton">...</p>
+                  <div class="sct-conloc">
+                  </div>
+                  <div class="sct-container-info-card">
+                    <div style="padding-top: 4px; margin-left: auto !important" class="sct-info-price">
+                      <p style="margin-bottom: 4px !important" class="sct-skeleton">start From</p>
+                      <p class="sct-skeleton">USD 123.45</p>
+                    </div>
+                  </div>
+                </div>
+            </div>`);
+    }
+    sctContainerCard.innerHTML = loading.join("");
+
     const testing = async () => {
       try {
         const res = await fetch(url, {

@@ -506,6 +506,8 @@ add_action('wp_footer', 'initialize_654_select2');
 
 
 // SHORTCODE
+
+// Tours
 function tour_shortcode($atts)
 {
   $atts = shortcode_atts(
@@ -521,6 +523,26 @@ function tour_shortcode($atts)
 
   return $output;
 }
-// Mendaftarkan shortcode
 add_shortcode('tour', 'tour_shortcode');
+// End Tours
+
+// Airport Services
+function airport_services_shortcode($atts)
+{
+  $atts = shortcode_atts(
+    array(
+      'code' => '',
+      'limit' => '',
+    ),
+    $atts,
+    'airport_services'
+  );
+  require_once(dirname(__FILE__) . '/fasttrack/list_card/template.php');
+  $output = get_contents_as($atts);
+
+  return $output;
+}
+add_shortcode('airport_services', 'airport_services_shortcode');
+// End Airport Services
+
 // END SHORTCODE
