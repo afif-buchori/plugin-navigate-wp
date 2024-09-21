@@ -5,7 +5,7 @@
   "author_profile": "http://navigate.id",
   "version": "0.6",
   "download_url": "https://tondest.oladimhospitality.com/wp-content/plugins/navigate.id/plugin-navigate-wp.zip",
-  "requires": "3.0",
+  "requires": "0.5",
   "tested": "5.8",
   "requires_php": "5.3",
   "last_updated": "2024-09-09 12:10:00",
