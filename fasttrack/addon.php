@@ -243,12 +243,12 @@ function enx_get_page_content($data)
                                                                         </div>
                                                                     <?php } elseif ($item->qty_type == 'SAME_AS_PRIMARY') { ?>
                                                                         <input type="checkbox" name="select_<?php echo $item->id ?>" value="on" class="hidden" <?php echo 'data-addon-select="' . $item->id . '" data-type="same_as_primary"' ?> data-adult="<?php echo  $cart->adult ?>" data-child="<?php echo  $cart->child ?? 0 ?>" data-infant="<?php echo  $cart->infant ?? 0 ?>" />
-                                                                        <div class="md:grid md:space-x-4" data-btn-key="<?php echo $item->id ?>">
+                                                                        <div class="md:space-x-4" data-btn-key="<?php echo $item->id ?>">
                                                                             <div class="mb-4">
                                                                                 <button type="button" class="btn btn-primary" select-multiple data-select-key="<?php echo $item->id ?>">select</button>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="md:grid hidden" data-input-key="<?php echo $item->id ?>">
+                                                                        <div class="hidden" data-input-key="<?php echo $item->id ?>">
                                                                             <div class="md:grid md:space-x-4">
                                                                                 <div class="mb-4">
                                                                                     <button type="button" class="btn btn-danger" select-multiple data-remove-key="<?php echo $item->id ?>">remove</button>

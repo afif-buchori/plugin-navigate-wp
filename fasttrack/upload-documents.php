@@ -30,6 +30,8 @@ function enx_get_page_content($data)
     }
     $has_sim_addon = hasSimAddon($order->details);
     // var_dump($has_sim_addon);
+    // dd($order->flight_type);
+    // dd($order->travelers->adult[0]->{'flight_ticket_arrival'});
 
     ob_start();
 ?>

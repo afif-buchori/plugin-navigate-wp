@@ -41,15 +41,14 @@ function enx_create_list_activity($items, $imgUrl, $currency)
             data-x-intersect="anime({ targets: $refs.losAngeles, translateY: [100, 0], opacity: [0, 1], duration: 500 ,easing: 'easeOutQuad' })"
             style="flex: 1 1 0">
             <a href="<?php echo "/" . ACTIVITY_LINK . "/" . $item->slug ?>"
-                class="group flex-1 flex flex-col block relative bg-cover rounded-2xl xl:my-0 overflow-hidden w-full"
-                style="min-height: 410px">
-                <div class="bg-cover bg-center origin-top w-full rounded-2xl transition duration-500 transform translate-y-[-10px] group-hover:scale-110"
+                class="group flex-1 flex flex-col block relative bg-cover rounded-2xl xl:my-0 overflow-hidden w-full">
+                <div class="bg-cover bg-center origin-top w-full transition duration-500 transform translate-y-[-10px] group-hover:scale-110"
                     style="background-image: url(<?php echo $imgUrl . $item->image ?>); aspect-ratio: 16/10">
                 </div>
                 <div class="flex-1 flex flex-col h-full w-full bg-secondary transition duration-500 group-hover:bg-primary py-5 px-4 rounded-2xl"
-                    style="z-index: 1; margin-top: -32px;">
+                    style="z-index: 1; margin-top: -1.5rem; min-height: 194px;">
                     <h3
-                        class="font-heading text-xl text-transform-unset font-medium text-primary transition duration-500 group-hover:text-white">
+                        class="line-clamp-2 font-heading text-xl text-transform-unset font-medium text-primary transition duration-500 group-hover:text-white">
                         <?php echo ucwords(strtolower($item->name)) ?>
                     </h3>
                     <div class="w-full flex justify-between">
@@ -62,9 +61,9 @@ function enx_create_list_activity($items, $imgUrl, $currency)
                         </p>
                     </div>
                     <div
-                        class="w-full border-t border-primary border-opacity-40 my-3 transition duration-500 group-hover:border-white/30">
+                        class="w-full border-t border-primary border-opacity-40 mb-2 transition duration-500 group-hover:border-white/30 mt-auto">
                     </div>
-                    <div class="flex justify-between mt-auto">
+                    <div class="flex justify-between">
                         <div class="flex items-end">
                             <?php if ($item->is_instant_confirmation) { ?>
                                 <div class="flex items-center gap-1 mt-auto">
