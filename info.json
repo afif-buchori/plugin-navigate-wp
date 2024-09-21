@@ -1,0 +1,21 @@
+{
+  "name": "Navigate ID",
+  "slug": "navigate-id",
+  "author": "<a href='https://navigate.id'>Navigate ID</a>",
+  "author_profile": "http://navigate.id",
+  "version": "0.6",
+  "download_url": "https://tondest.oladimhospitality.com/wp-content/plugins/navigate.id/plugin-navigate-wp.zip",
+  "requires": "3.0",
+  "tested": "5.8",
+  "requires_php": "5.3",
+  "last_updated": "2024-09-09 12:10:00",
+  "sections": {
+    "description": "Add Tour",
+    "installation": "Click the activate button and that's it.",
+    "changelog": "<h4>0.6 –  1 august 2021</h4><ul><li>Bug fixes.</li><li>Initital release.</li></ul>"
+  },
+  "banners": {
+    "low": "https://rudrastyh.com/wp-content/uploads/updater/banner-772x250.jpg",
+    "high": "https://rudrastyh.com/wp-content/uploads/updater/banner-1544x500.jpg"
+  }
+}
