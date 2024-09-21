@@ -3,16 +3,16 @@
   "slug": "navigate-id",
   "author": "<a href='https://navigate.id'>Navigate ID</a>",
   "author_profile": "http://navigate.id",
-  "version": "0.6",
+  "version": "0.7",
   "download_url": "https://tondest.oladimhospitality.com/wp-content/plugins/navigate.id/plugin-navigate-wp.zip",
   "requires": "5.0",
   "tested": "6.0",
-  "requires_php": "5.3",
-  "last_updated": "2024-09-09 12:10:00",
+  "requires_php": "7.4",
+  "last_updated": "2024-09-21 12:10:00",
   "sections": {
-    "description": "Add Tour",
-    "installation": "Click the activate button and that's it.",
-    "changelog": "<h4>0.6 –  1 august 2021</h4><ul><li>Bug fixes.</li><li>Initital release testing.</li></ul>"
+    "description": "Add Tour functionality to your WordPress site",
+    "installation": "Simply upload and activate the plugin to begin.",
+    "changelog": "<h4>0.7 – 21 September 2024</h4><ul><li>Improved performance and fixed bugs.</li><li>Tested with WordPress 6.0</li></ul>"
   },
   "banners": {
     "low": "https://rudrastyh.com/wp-content/uploads/updater/banner-772x250.jpg",
