@@ -23,7 +23,6 @@ function get_contents_as($datas)
             </div>
             ';
     return $output;
-
 }
 
 // With PHP

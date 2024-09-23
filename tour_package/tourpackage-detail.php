@@ -37,9 +37,12 @@ function enx_get_page_content($data)
     $close_dates = groupDatesByMonth($data_res->close_date_time);
     // var_dump(json_encode($close_dates));
     // $itinerary =  json_encode($contents->itinerary);
-    $itinerary = str_replace("'", '&apos;', json_encode($contents->itinerary));
+    // $itinerary = str_replace("'", '&apos;', json_encode($contents->itinerary));
     ob_start();
 ?>
+    <script>
+        const itin = <?php echo json_encode($contents->itinerary) ?>;
+    </script>
     <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -279,14 +282,12 @@ function enx_get_page_content($data)
                                     <!-- END RENDER ICON -->
 
                                     <!-- <div data-intineray='<php echo json_encode($contents->itinerary) ?>' -->
-                                    <div data-intineray='<?php echo $itinerary ?>'
+                                    <!-- <div data-intineray='<php echo $itinerary ?>' -->
+                                    <div
                                         id="detail-container-itinerary"
                                         style="border: solid 1px #D1E9F6 !important; background-color: #fff !important;"
                                         class="p-4 flex flex-col rounded-lg shadow-lg mb-5">
                                     </div>
-                                    <!-- <script>
-                                        console.log('<php echo $itinerary ?>')
-                                    </script> -->
                                     <!-- END ITINERARY -->
 
                                     <!-- INCLUDE EXCLUDE -->

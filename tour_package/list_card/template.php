@@ -24,7 +24,6 @@ function get_contents($datas)
             <div class="sct-container-card" data-url="' . $url . '" data-route="' . $route . '" data-slug-country="' . $slug . '" data-limit="' . $limit . '">
             </div>';
     return $output;
-
 }
 
 // With PHP
@@ -103,14 +102,14 @@ function get_contents($datas)
 // }
 // End With PHP
 
-function fetchCardGet($url)
-{
-    $context = stream_context_create(array('http' => array('ignore_errors' => true)));
-    $response = json_decode(file_get_contents($url, false, $context), true);
-    $response_code = substr($http_response_header[0], 9, 3);
+// function fetchCardGet($url)
+// {
+//     $context = stream_context_create(array('http' => array('ignore_errors' => true)));
+//     $response = json_decode(file_get_contents($url, false, $context), true);
+//     $response_code = substr($http_response_header[0], 9, 3);
 
-    if ($response_code != 200) {
-        return json_decode(json_encode(['error' => true, 'code' => $response_code, ...$response]));
-    }
-    return json_decode(json_encode($response));
-}
+//     if ($response_code != 200) {
+//         return json_decode(json_encode(['error' => true, 'code' => $response_code, ...$response]));
+//     }
+//     return json_decode(json_encode($response));
+// }

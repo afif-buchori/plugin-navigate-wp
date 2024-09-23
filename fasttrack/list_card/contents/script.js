@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const scasContainerCard =
-    document.querySelector(".scas-container-card") ?? null;
+  const scasContainerCard = document.querySelector(".scas-container-card") ?? null;
 
   if (scasContainerCard) {
     // const url = (API_TP_URL = "/api/tour-package/list-data");
@@ -8,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const code = scasContainerCard.dataset.code.toUpperCase();
     const currency = checkCurrency();
     // const currency = scasContainerCard.dataset.currency;
-    const limit = scasContainerCard.dataset.limit || 4;
+    const limit = scasContainerCard.dataset.limit;
     const route = scasContainerCard.dataset.route;
 
     let body = {
@@ -59,11 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <div class="scas-card">
                 <a href="/${route}/${service.slug}">
                   <div class="scas-card-top">
-                    <img id="scas-img-card-${service.slug}" src="${
-              service.image_url
-            }" onerror="testimg('scas-img-card-${
-              service.slug
-            }')" alt="img-airport-service" class="scas-img-card">
+                    <img id="scas-img-card-${service.slug}" src="${service.image_url}" onerror="testimg('scas-img-card-${service.slug}')" alt="img-airport-service" class="scas-img-card">
                   </div>
                   <div class="scas-card-bottom">
                     <p class="scas-title">${service.title}</p>
@@ -79,10 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       </div>
                       <div class="scas-info-price">
                         <p class="scas-info">Start From</p>
-                        <p class="scas-price primary-color">${currency} ${numberFormat(
-              service.rate,
-              service.currency.digit
-            )}</p>
+                        <p class="scas-price primary-color">${currency} ${numberFormat(service.rate, service.currency.digit)}</p>
                       </div>
                     </div>
                   </div>
@@ -104,8 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function testimg(id) {
   const img = document.getElementById(id) ?? null;
   if (img) {
-    img.src =
-      "https://d3837chlpocfug.cloudfront.net/28338fc3-5be8-4666-9b73-babecc70a467/build/assets/ph-notfound-d1e5c849.png";
+    img.src = "https://d3837chlpocfug.cloudfront.net/28338fc3-5be8-4666-9b73-babecc70a467/build/assets/ph-notfound-d1e5c849.png";
   }
 }
 // function isInt(n) {
