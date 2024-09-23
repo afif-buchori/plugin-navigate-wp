@@ -111,9 +111,9 @@ function enx_create_list_tour_package($items)
                                 $global_information = $item->contents->global_information ?? null;
                                 if ($global_information) {
                                     $duration = $global_information->duration;
-                                    $day = $duration->day;
-                                    $hour = $duration->hour;
-                                    $minute = $duration->minute;
+                                    $day = $duration->day ?? 0;
+                                    $hour = $duration->hour ?? 0;
+                                    $minute = $duration->minute ?? 0;
 
                                 ?>
                                     <?php if ($day > 0)
