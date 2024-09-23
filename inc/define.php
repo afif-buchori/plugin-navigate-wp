@@ -12,7 +12,7 @@ define("COUNTRY_TOUR_PACKAGE", "bali");
 // define("API_URL", "https://dd11-59-153-131-75.ngrok-free.app");
 // define("API_URL", "https://indigo-fern-3sxv44dajhcf.vapor-farm-f1.com");
 // define("API_URL", "https://snowy-desert-qioyjsoygqwg.vapor-farm-g1.com"); //STAGING PAYMENT
-// define("API_URL", "https://70ba-182-253-51-98.ngrok-free.app"); //ngrok
+// define("API_URL", "https://4718-182-253-51-98.ngrok-free.app"); //ngrok
 // define("API_URL", "https://fancy-cliff-3uhjbxauhri2.vapor-farm-b1.com"); //STAGING
 define("API_URL", "https://tondest.com"); //PRODUCTION
 
