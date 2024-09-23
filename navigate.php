@@ -3,7 +3,7 @@
 Plugin Name: Navigate ID
 Plugin URI: https://navigate.id/plugins
 Description: A plugin that fetches data from an API and displays it on a page.
-Version: 0.5
+Version: 0.6
 Author: navigate.id
 Author URI: https://navigate.id
 */
@@ -25,7 +25,7 @@ if (!class_exists('navigateIdUpdate')) {
       // Inisialisasi plugin
       $this->plugin_slug = plugin_basename(__DIR__);
       // $this->plugin_slug = 'navigate-id';
-      $this->version = '0.5'; // Versi saat ini, versi baru ada di info.json
+      $this->version = '0.6'; // Versi saat ini, versi baru ada di info.json
       $this->cache_key = 'navigate_update';
       $this->cache_allowed = false;
 
