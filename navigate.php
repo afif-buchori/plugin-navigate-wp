@@ -3,7 +3,7 @@
 Plugin Name: Navigate ID
 Plugin URI: https://navigate.id/plugins
 Description: A plugin that fetches data from an API and displays it on a page.
-Version: 0.5
+Version: 0.6
 Author: navigate.id
 Author URI: https://navigate.id
 */

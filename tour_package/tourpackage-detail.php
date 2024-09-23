@@ -36,8 +36,10 @@ function enx_get_page_content($data)
 
     $close_dates = groupDatesByMonth($data_res->close_date_time);
     // var_dump(json_encode($close_dates));
+    // $itinerary =  json_encode($contents->itinerary);
+    $itinerary = str_replace("'", '&apos;', json_encode($contents->itinerary));
     ob_start();
-    ?>
+?>
     <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -143,7 +145,7 @@ function enx_get_page_content($data)
                                                 $hour = $duration->hour;
                                                 $minute = $duration->minute;
 
-                                                ?>
+                                            ?>
                                                 <?php if ($day > 0)
                                                     echo ($hour > 0 ? $day + 1 : $day) . ($day > 1 || $hour > 0 ? " Days" : " Day") ?>
                                                 <?php if ($day <= 0 && $hour > 0)
@@ -205,20 +207,20 @@ function enx_get_page_content($data)
                                                         <span class="italic">
                                                             (+<?php echo count($global_information->language) - 1 ?>)
                                                         </span>
-                                                    <div style="background-color: #81dae3 !important; top: 2rem; left: 1rem"
-                                                        class="hidden all_lang p-2 rounded-lg absolute">
-                                                        <?php
+                                                <div style="background-color: #81dae3 !important; top: 2rem; left: 1rem"
+                                                    class="hidden all_lang p-2 rounded-lg absolute">
+                                                    <?php
                                                         $lang = $global_information->language;
                                                         unset($lang[0]);
                                                         echo implode(', ', $lang);
-                                                        ?>
-                                                    </div>
-                                                    <div style="width: 12px; height: 12px; transform: rotate(45deg); background-color: #81dae3; position: absolute; top: 28px; left: 40px;"
-                                                        class="hidden all_lang">
-                                                    </div>
+                                                    ?>
+                                                </div>
+                                                <div style="width: 12px; height: 12px; transform: rotate(45deg); background-color: #81dae3; position: absolute; top: 28px; left: 40px;"
+                                                    class="hidden all_lang">
+                                                </div>
 
-                                                <?php } ?>
-                                                </p>
+                                            <?php } ?>
+                                            </p>
                                             </div>
                                         <?php } ?>
                                     </div>
@@ -276,11 +278,15 @@ function enx_get_page_content($data)
                                     <?php } ?>
                                     <!-- END RENDER ICON -->
 
-                                    <div data-intineray='<?php echo json_encode($contents->itinerary) ?>'
+                                    <!-- <div data-intineray='<php echo json_encode($contents->itinerary) ?>' -->
+                                    <div data-intineray='<?php echo $itinerary ?>'
                                         id="detail-container-itinerary"
                                         style="border: solid 1px #D1E9F6 !important; background-color: #fff !important;"
                                         class="p-4 flex flex-col rounded-lg shadow-lg mb-5">
                                     </div>
+                                    <!-- <script>
+                                        console.log('<php echo $itinerary ?>')
+                                    </script> -->
                                     <!-- END ITINERARY -->
 
                                     <!-- INCLUDE EXCLUDE -->
@@ -365,9 +371,9 @@ function enx_get_page_content($data)
                                             <p class="text-sm">Date:</p>
                                             <input type="date" name="date" min="<?php echo date('Y-m-d\TH:i') ?>"
                                                 id="tp_date_detail" data-service='<?= json_encode([
-                                                    'slug' => $data_res->slug,
-                                                    'slug_country' => $data_res->country->slug
-                                                ]) ?>'
+                                                                                        'slug' => $data_res->slug,
+                                                                                        'slug_country' => $data_res->country->slug
+                                                                                    ]) ?>'
                                                 class="w-full form-input bg-gray-light4/60 border-none rounded py-2 px-5 w-auto font-numbers font-medium text-center text-primary/90 focus:ring-2 focus:ring-primary placeholder-gray-400 text-sm mb-4" />
 
                                             <div id="btn-slc-package-detail" class="hidden">
@@ -440,7 +446,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-    <?php
+<?php
     $contents = ob_get_clean();
     return $contents;
 }

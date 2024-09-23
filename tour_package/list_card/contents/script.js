@@ -1,8 +1,7 @@
 const CURRENCY_COOKIE = "currency-navigate";
 
 document.addEventListener("DOMContentLoaded", function () {
-  const sctContainerCard =
-    document.querySelector(".sct-container-card") ?? null;
+  const sctContainerCard = document.querySelector(".sct-container-card") ?? null;
 
   if (sctContainerCard) {
     // const url = (API_TP_URL = "/api/tour-package/list-data");
@@ -58,8 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
           let output = "";
 
           dataRes.data.services.forEach((service) => {
-            const globalInformation =
-              service.contents.global_information ?? null;
+            const globalInformation = service.contents.global_information ?? null;
             let durationText = "";
 
             if (globalInformation) {
@@ -67,9 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
               const { day, hour, minute } = duration;
 
               if (day > 0) {
-                durationText =
-                  (hour > 0 ? day + 1 : day) +
-                  (day > 1 || hour > 0 ? " Days" : " Day");
+                durationText = (hour > 0 ? day + 1 : day) + (day > 1 || hour > 0 ? " Days" : " Day");
               }
 
               if (day <= 0 && hour > 0) {
@@ -96,9 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <div class="sct-card">
                 <a href="/${route}/${service.slug}">
                   <div class="sct-card-top">
-                    <img src="${
-                      service.image
-                    }" alt="img-tour" class="sct-img-card">
+                    <img src="${service.image}" alt="img-tour" class="sct-img-card">
                   </div>
                   <div class="sct-card-bottom">
                     <p class="sct-title">${service.contents.title}</p>
@@ -110,9 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                     <div style="border-top: solid 1px ${bgColor}80 !important;" class="sct-container-info-card">
                       <span style="border: solid 1px ${bgColor}80 !important;" class="sct-type-info">
-                        <p style="background-color: ${bgColor}50 !important;">${
-              service.service_sub_type
-            }</p>
+                        <p style="background-color: ${bgColor}50 !important;">${service.service_sub_type}</p>
                       </span>
                       <div class="sct-duration">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-stopwatch-fill" viewBox="0 0 16 16">
@@ -122,10 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       </div>
                       <div class="sct-info-price">
                         <p class="sct-info">Start From</p>
-                        <p class="sct-price primary-color">${currency} ${numberFormat(
-              service.minimum_price,
-              service.minimum_price_detail.currency.digit
-            )}</p>
+                        <p class="sct-price primary-color">${currency} ${numberFormat(service.minimum_price, service.minimum_price_detail.currency.digit)}</p>
                       </div>
                     </div>
                   </div>
@@ -165,6 +154,12 @@ function numberFormat(num, digit = 0) {
     x1 = x1.replace(rgx, "$1" + "," + "$2");
   }
   return x1 + x2;
+}
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+  let expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
 function checkCurrency() {
