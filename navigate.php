@@ -41,7 +41,7 @@ Author URI: https://navigate.id
 
 //       if (false === $remote || !$this->cache_allowed) {
 //         $remote = wp_remote_get(
-//           'https://raw.githubusercontent.com/afif-buchori/plugin-navigate-wp/refs/heads/master/info.json', // Ganti dengan URL info.json
+//           'https://tondest.oladimhospitality.com/wp-content/uploads/updater/info.json', // Ganti dengan URL info.json
 //           array(
 //             'timeout' => 10,
 //             'headers' => array('Accept' => 'application/json')
