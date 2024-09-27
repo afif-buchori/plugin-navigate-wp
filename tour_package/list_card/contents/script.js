@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             output += `
               <div class="sct-card">
-                <a href="/${route}/${service.slug}">
+                <a href="/${route}/${service.country.slug}/${service.slug}">
                   <div class="sct-card-top">
                     <img src="${service.image}" alt="img-tour" class="sct-img-card">
                   </div>

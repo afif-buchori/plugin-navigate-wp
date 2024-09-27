@@ -77,8 +77,16 @@ function enx_get_page_content($data)
                 <div class="col-span-12">
                     <div class="flex justify-between items-center border-b border-primary border-opacity-20 mb-10 py-5">
                         <p class="text-primary text-sm text-opacity-70 font-medium font-numbers">
-                            <?php echo count($items) ?> Tour found for <span
-                                class="font-bold"><?php echo $_GET['slug'] ?? COUNTRY_TOUR_PACKAGE ?></span>
+                            <?php echo count($items) ?> Tour found for
+                            <span
+                                class="font-bold">
+                                <?php
+                                $query = array_values(array_filter(explode("/", $_SERVER['REQUEST_URI'])));
+                                $country = $_GET['slug'] ?? COUNTRY_TOUR_PACKAGE;
+                                if (isset($query[1])) $country = $query[1];
+                                echo $country;
+                                ?>
+                            </span>
                         </p>
                         <!-- <div>
                             <label class="text-primary text-sm text-opacity-70 mr-3 font-medium" for="sortBy">Sort
