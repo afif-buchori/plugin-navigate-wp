@@ -186,6 +186,8 @@ if (packageOptActivity !== "") {
 
         templateForm += data.ticketType
           .map((type) => {
+            console.log(data);
+
             return `
             ${Array.from({ length: type.ticketQty })
               .map((_, idx) => {

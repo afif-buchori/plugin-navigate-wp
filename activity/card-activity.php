@@ -1,5 +1,4 @@
 <?php
-
 function enx_mapping_card($data, $data_res, $currency)
 {
     foreach ($data as $idx => $ticket) { ?>
@@ -95,7 +94,10 @@ function enx_mapping_card($data, $data_res, $currency)
                 <input type="hidden" id='<?= "total-qty-package$idx" ?>' value="0">
                 <div id="ticket-type-act" class="flex-1 flex flex-col gap-1"
                     data-ticket="<?php echo count($ticket->ticketType) ?>">
-                    <?php foreach ($ticket->ticketType as $key_tick => $tick_type) { ?>
+                    <?php foreach ($ticket->ticketType as $key_tick => $tick_type) {
+                        $slot_times = json_encode($ticket->timeSlot);
+                        // $slot_times = str_replace('"', "`", $slot_times);
+                        ?>
                         <div class="flex items-center justify-between w-full rounded-full px-4 py-2 gap-4"
                             style="background-color: #dadada;" id="new-ticket-type-act"
                             data-qty-package-act='<?= "total-qty-package$idx" ?>'
@@ -118,7 +120,8 @@ function enx_mapping_card($data, $data_res, $currency)
                             data-all-ticket="data-all-ticket<?php echo $idx ?>" data-id-ticket-type="<?php echo $tick_type->id ?>"
                             data-form-quest="form-quest<?= $idx ?>" data-confirm-btn="confirm-btn<?= $idx ?>"
                             data-time-slot="input-type-slot<?= $idx ?>" data-questions='<?= json_encode($ticket->questions) ?>'>
-                            <input type="hidden" id="input-type-slot<?= $idx ?>" value='<?= json_encode($ticket->timeSlot) ?>'>
+                            <!-- <input type="hidden" id="input-type-slot<= $idx ?>" value='<= json_encode($ticket->timeSlot) ?>'> -->
+                            <input type="hidden" id="input-type-slot<?= $idx ?>" value='<?= $slot_times ?>'>
                             <p class=" font-bold"><?php echo $tick_type->name ?></p>
                             <p class="text-xs md:text-sm ml-auto" style="opacity: 0.7;">
                                 <?php $currency->symbol ?>
