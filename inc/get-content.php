@@ -159,7 +159,8 @@ function enx_get_global_page()
         }
     } elseif ($url[0] == TOUR_PACKAGE_LINK) {
         require_once(dirname(__FILE__) . '/../tour_package/get-data.php');
-        if ($url[1] == null || $url[2] == (null || "")) {
+        $pages = ['addons', 'booking', 'payment'];
+        if ($url[1] == null || ($url[2] == (null || "") && !in_array($url[1], $pages))) {
             require_once(dirname(__FILE__) . '/../tour_package/tourpackage-list.php');
             $data = enx_get_list_data_tour_package();
             if ($data && isset($data->result) && $data->result == "ok")

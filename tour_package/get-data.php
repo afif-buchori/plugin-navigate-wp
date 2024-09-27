@@ -5,7 +5,7 @@ function enx_get_list_data_tour_package()
     $query = array_values(array_filter(explode("/", $_SERVER['REQUEST_URI'])));
     $country = strtolower($_GET['slug'] ?? COUNTRY_TOUR_PACKAGE);
     $country = str_replace(' ', '%20', $country);
-    if (isset($query[1])) $country = $query[1];
+    if (isset($query[1]) && !str_contains($query[1], 'slug')) $country = $query[1];
     $url = API_TOUR_PACKAGE_URL . "/get/data-list" . CreateParams() . "&slug_country=$country";
     try {
         return fetchGet($url);
