@@ -97,7 +97,7 @@ function enx_mapping_card($data, $data_res, $currency)
                     <?php foreach ($ticket->ticketType as $key_tick => $tick_type) {
                         $slot_times = json_encode($ticket->timeSlot);
                         // $slot_times = str_replace('"', "`", $slot_times);
-                        ?>
+                    ?>
                         <div class="flex items-center justify-between w-full rounded-full px-4 py-2 gap-4"
                             style="background-color: #dadada;" id="new-ticket-type-act"
                             data-qty-package-act='<?= "total-qty-package$idx" ?>'
@@ -221,5 +221,5 @@ function enx_mapping_card($data, $data_res, $currency)
                 </div>
             </div>
         </div>
-    <?php }
+<?php }
 } ?>

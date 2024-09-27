@@ -1,12 +1,10 @@
 const API_ACT_URL = "/api/activity";
 
-const packageOptActivity =
-  document.getElementById("package-opt-activity") || "";
+const packageOptActivity = document.getElementById("package-opt-activity") || "";
 if (packageOptActivity !== "") {
   const countPackage = packageOptActivity.getAttribute("data-package");
   for (let i = 0; i < parseInt(countPackage); i++) {
-    const btnDetailPkt =
-      document.getElementById("btn-details-package" + i) || "";
+    const btnDetailPkt = document.getElementById("btn-details-package" + i) || "";
     const modalComp = document.getElementById("modal-detail-act" + i) || "";
     const btnCloseModal = document.getElementById("close-modal" + i) || "";
 
@@ -29,11 +27,8 @@ if (packageOptActivity !== "") {
       dateSelected.addEventListener("change", function (e) {
         const idTicket = dateSelected.getAttribute("data-id-ticket");
         const msgCheckDate = document.getElementById("msg-error" + i);
-        const elementQtyPackages = document.getElementById(
-          "total-qty-package" + i
-        );
-        const btnSubmitPackage =
-          document.getElementById("submit-package" + i) || "";
+        const elementQtyPackages = document.getElementById("total-qty-package" + i);
+        const btnSubmitPackage = document.getElementById("submit-package" + i) || "";
 
         getAvailDate(
           {
@@ -45,12 +40,7 @@ if (packageOptActivity !== "") {
           btnSubmitPackage
         );
         // console.log(parseInt(elementQtyPackages.value));
-        if (
-          parseInt(elementQtyPackages.value) > 0 &&
-          msgCheckDate.innerText &&
-          msgCheckDate.innerText != "checking date..."
-        )
-          return (btnSubmitPackage.disabled = false);
+        if (parseInt(elementQtyPackages.value) > 0 && msgCheckDate.innerText && msgCheckDate.innerText != "checking date...") return (btnSubmitPackage.disabled = false);
         return (btnSubmitPackage.disabled = true);
       });
     }
@@ -79,9 +69,7 @@ if (packageOptActivity !== "") {
       const attAllticket = element.getAttribute("data-all-ticket");
       const attIdTicketType = element.getAttribute("data-id-ticket-type");
       const elDataBookingTicket = document.getElementById(attDataBookingTicket);
-      const elAllTicket = JSON.parse(
-        document.getElementById(attAllticket).value
-      );
+      const elAllTicket = JSON.parse(document.getElementById(attAllticket).value);
 
       document.getElementById(btnDecrement).onclick = function () {
         if (parseInt(qty.innerText) <= 0) return;
@@ -91,14 +79,7 @@ if (packageOptActivity !== "") {
         changeQty(elAllTicket, qtyNewDec, elDataBookingTicket, attIdTicketType);
 
         qty.innerText = qtyNewDec;
-        updatePrice(
-          document.getElementById(totalPrice),
-          priceType,
-          "dec",
-          btnSubmitPackage,
-          elementDatePackageAct ? elementDatePackageAct.value : "-",
-          elementMsgError.innerText
-        );
+        updatePrice(document.getElementById(totalPrice), priceType, "dec", btnSubmitPackage, elementDatePackageAct ? elementDatePackageAct.value : "-", elementMsgError.innerText);
       };
 
       const btnIncrement = element.getAttribute("data-qty-act-inc");
@@ -109,14 +90,7 @@ if (packageOptActivity !== "") {
         changeQty(elAllTicket, qtyNewInc, elDataBookingTicket, attIdTicketType);
         // console.log(elementQtyPackage.value);
 
-        updatePrice(
-          document.getElementById(totalPrice),
-          priceType,
-          "increment",
-          btnSubmitPackage,
-          elementDatePackageAct ? elementDatePackageAct.value : "-",
-          elementMsgError.innerText
-        );
+        updatePrice(document.getElementById(totalPrice), priceType, "increment", btnSubmitPackage, elementDatePackageAct ? elementDatePackageAct.value : "-", elementMsgError.innerText);
       };
 
       const attrModal = element.getAttribute("data-modal-quest");
@@ -127,9 +101,7 @@ if (packageOptActivity !== "") {
       const attidTicket = element.getAttribute("data-id-ticket");
       const attNameTicket = element.getAttribute("data-name-ticket");
       const attDefinedDuration = element.getAttribute("data-defined-duration");
-      const attRequiredTimeSlot = element.getAttribute(
-        "data-required-time-slot"
-      );
+      const attRequiredTimeSlot = element.getAttribute("data-required-time-slot");
       const attRequiredDate = element.getAttribute("data-required-date");
 
       btnSubmitPackage.onclick = function () {
@@ -152,12 +124,8 @@ if (packageOptActivity !== "") {
         if (!attrData) return createSession(data);
         modalQuestion.style.display = "grid";
         const attrTimeSlot = element.getAttribute("data-time-slot");
-        const dataresTimeSlot = JSON.parse(
-          document.getElementById(attrTimeSlot).value
-        );
-        const dataQuestions = JSON.parse(
-          element.getAttribute("data-questions")
-        );
+        const dataresTimeSlot = JSON.parse(document.getElementById(attrTimeSlot).value);
+        const dataQuestions = JSON.parse(element.getAttribute("data-questions")) ?? [];
         // console.log(dataQuestions);
         const attrFormQuest = element.getAttribute("data-form-quest");
         const elementFormQuest = document.getElementById(attrFormQuest);
@@ -174,9 +142,7 @@ if (packageOptActivity !== "") {
               <select name="time-slot" id="" class="px-2"
                   style="border: solid 1px black !important; min-width: 30%">
                   <option value="">---</option>
-                  ${dataresTimeSlot.map(
-                    (item) => `<option value=${item}>${item}</option>`
-                  )}
+                  ${dataresTimeSlot.map((item) => `<option value=${item}>${item}</option>`)}
               </select>
           </div>
         `
@@ -186,17 +152,13 @@ if (packageOptActivity !== "") {
 
         templateForm += data.ticketType
           .map((type) => {
-            console.log(data);
+            // console.log(data);
 
             return `
             ${Array.from({ length: type.ticketQty })
               .map((_, idx) => {
                 return `
-                  ${
-                    idx > 0
-                      ? `<hr style="margin-top: 20px !important; margin-bottom: 10px !important;">`
-                      : ""
-                  }
+                  ${idx > 0 ? `<hr style="margin-top: 20px !important; margin-bottom: 10px !important;">` : ""}
                   <p class="font-bold">${type.ticketName} - ${idx + 1}</p>
                   ${dataQuestions
                     .map((quest) => {
@@ -205,12 +167,7 @@ if (packageOptActivity !== "") {
                         <div>
                             <p>${quest.question} :</p>
                             <input type="date"
-                              name="${type.ticketId}:${
-                          quest.id
-                        }:${quest.question.replaceAll(
-                          " ",
-                          "_"
-                        )}:${type.ticketName.toLowerCase()}-${idx + 1}"
+                              name="${type.ticketId}:${quest.id}:${quest.question.replaceAll(" ", "_")}:${type.ticketName.toLowerCase()}-${idx + 1}"
                               class="w-full mb-2 px-2" style="border: solid 1px black !important;" required>
                         </div>
                         `;
@@ -219,18 +176,10 @@ if (packageOptActivity !== "") {
                         <div>
                             <p>${quest.question} :</p>
                             <select
-                                name="${type.ticketId}:${
-                          quest.id
-                        }:${quest.question.replaceAll(
-                          " ",
-                          "_"
-                        )}:${type.ticketName.toLowerCase()}-${idx + 1}"
+                                name="${type.ticketId}:${quest.id}:${quest.question.replaceAll(" ", "_")}:${type.ticketName.toLowerCase()}-${idx + 1}"
                                 id="" class="w-full mb-2 px-2" style="border: solid 1px black !important;" required>
                                 <option value="">---</option>
-                                ${quest.options.map(
-                                  (item) =>
-                                    `<option value=${item}>${item}</option>`
-                                )}
+                                ${quest.options.map((item) => `<option value=${item}>${item}</option>`)}
                             </select>
                         </div>
                         `;
@@ -239,12 +188,7 @@ if (packageOptActivity !== "") {
                           <div class="">
                           <p>${quest.question} :</p>
                               <input type="text"
-                                  name="${type.ticketId}:${
-                          quest.id
-                        }:${quest.question.replaceAll(
-                          " ",
-                          "_"
-                        )}:${type.ticketName.toLowerCase()}-${idx + 1}"
+                                  name="${type.ticketId}:${quest.id}:${quest.question.replaceAll(" ", "_")}:${type.ticketName.toLowerCase()}-${idx + 1}"
                                   class="w-full mb-2 px-2" style="border: solid 1px black !important;" required>
                           </div>
                         `;
@@ -317,10 +261,7 @@ if (packageOptActivity !== "") {
 }
 
 function changeQty(elAllTicket, qty, elDataBookingTicket, attIdTicketType) {
-  let ticketTypeSelected =
-    elDataBookingTicket.value == ""
-      ? []
-      : JSON.parse(elDataBookingTicket.value);
+  let ticketTypeSelected = elDataBookingTicket.value == "" ? [] : JSON.parse(elDataBookingTicket.value);
   elAllTicket.filter((data, idx) => {
     if (data.id == attIdTicketType) {
       let indexOld = null;
@@ -384,9 +325,7 @@ if (btnFindPakcage) {
 async function getAvailDate(data, elMsg, elementQtyPackages, btnSubmitPackage) {
   // console.log(data, elMsg);
   elMsg.innerText = "checking date...";
-  const loader = document.getElementById(
-    btnSubmitPackage.getAttribute("data-spinner")
-  );
+  const loader = document.getElementById(btnSubmitPackage.getAttribute("data-spinner"));
   loader.classList.add("spinner-654");
   loader.innerText = "";
 
@@ -406,8 +345,7 @@ async function getAvailDate(data, elMsg, elementQtyPackages, btnSubmitPackage) {
       loader.classList.remove("spinner-654");
       loader.innerText = "Select Package";
       elMsg.innerText = "";
-      if (parseInt(elementQtyPackages.value) > 0)
-        return (btnSubmitPackage.disabled = false);
+      if (parseInt(elementQtyPackages.value) > 0) return (btnSubmitPackage.disabled = false);
     }
     if (res.result === "no") {
       const arrMsg = res.message.date ? res.message.date[0] : res.message;
@@ -474,8 +412,7 @@ async function createSession(params) {
   }
 }
 
-const formBookActivity =
-  document.getElementById("checkout-form-activity") || "";
+const formBookActivity = document.getElementById("checkout-form-activity") || "";
 if (formBookActivity) {
   formBookActivity.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -562,9 +499,7 @@ function checkSession(isFromFetching = false) {
 const elDataExpiredAct = document.getElementById("data-expired-activity");
 function checkActivityExpiration() {
   if (elDataExpiredAct) {
-    const dateExpiredString = elDataExpiredAct.getAttribute(
-      "data-expired-activity"
-    );
+    const dateExpiredString = elDataExpiredAct.getAttribute("data-expired-activity");
     const dateExpired = new Date(dateExpiredString);
     checkExpirationAct(dateExpired);
   }

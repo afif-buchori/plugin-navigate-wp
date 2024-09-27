@@ -87,11 +87,13 @@ function enx_post_booking_act()
             unset($dataSession[$keySession]['ticketType']);
         }
         $url = API_ACTIVITY_URL . "/post/booking";
+
         $req = json_decode(file_get_contents("php://input"), true);
         $req['currency'] = DEFAULT_CURRENCY;
         $req['url_payment_info'] = 'https://' . $_SERVER['HTTP_HOST'] . '/' . ACTIVITY_LINK . '/payment-info';
         $dataSession = ['cart_activity' => $dataSession];
-        $req = json_decode(json_encode([...$req, ...$dataSession]));
+        $req = json_decode(json_encode(array_merge($req, $dataSession)));
+        // $req = json_decode(json_encode([...$req, ...$dataSession]));
         $data = fetchPost($url, $req);
         unset($_SESSION['CART_ACTIVITY']);
         return $data;
