@@ -43,7 +43,7 @@ function enx_get_page_content($data)
     <script>
         const itin = <?php echo json_encode($contents->itinerary) ?>;
     </script>
-    <div style="z-index: -1; position: relative;" class="enx-container site-wrapper">
+    <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="">
 
@@ -52,8 +52,8 @@ function enx_get_page_content($data)
                         <div class="pb-5 xl:pb-20">
                             <!-- SLIDER -->
 
-                            <div style="z-index: 0; flex-shrink: 1;" class="px-7 flex relative">
-                                <div style="z-index: 0; width: 100vw; left: 50%; transform: translateX(-50%);"
+                            <div style="z-index: 0; flex-shrink: 1; overflow-y: clip;" class="px-7 flex relative">
+                                <div style="z-index: -1; width: 100vw; left: 50%; transform: translateX(-50%);"
                                     class="absolute bottom-0">
                                     <img data-imgs='<?php echo json_encode([$data_res->image, ...$data_res->images]) ?>'
                                         id="img-bg-blur-detail" src="<?php echo $data_res->image ?>" alt=""
