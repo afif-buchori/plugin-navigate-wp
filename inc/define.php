@@ -7,12 +7,15 @@ define("ACTIVITY_LINK", "activity");
 define("TOUR_PACKAGE_LINK", "tour");
 define("COUNTRY_ACTIVITY", "indonesia");
 define("COUNTRY_TOUR_PACKAGE", "bali");
+define("OPENTRIP_LINK", "opentrip");
+define("COUNTRY_OPENTRIP", "japan");
+define("COMPANY_ID", "9c2da21c-73ec-4575-a600-cc51c478971c");
 // define("API_URL", "https://portal.navigate.com");
 
 // define("API_URL", "https://dd11-59-153-131-75.ngrok-free.app");
 // define("API_URL", "https://indigo-fern-3sxv44dajhcf.vapor-farm-f1.com");
 // define("API_URL", "https://snowy-desert-qioyjsoygqwg.vapor-farm-g1.com"); //STAGING PAYMENT
-// define("API_URL", "https://4718-182-253-51-98.ngrok-free.app"); //ngrok
+// define("API_URL", "https://5c66-182-253-52-253.ngrok-free.app"); //ngrok
 // define("API_URL", "https://fancy-cliff-3uhjbxauhri2.vapor-farm-b1.com"); //STAGING
 define("API_URL", "https://tondest.com"); //PRODUCTION
 
@@ -24,11 +27,14 @@ define("API_URL_ACTIVITY", "https://tondest.com");
 define("API_URL_TOUR_PACKAGE", "https://tondest.com"); //PRODUCTION
 // define("API_URL_TOUR_PACKAGE", "https://e3dc-182-253-51-52.ngrok-free.app"); //ngrok
 
+define("API_URL_OPENTRIP", "https://9220-59-153-131-249.ngrok-free.app"); //STAGING
+
 // define("API_URL", "https://apiclient.enixindo.com");
 // define("API_URL", "https://5ce4-103-89-78-133.ngrok-free.app");
 define("API_FASTTRACK_URL", API_URL . "/api/fasttrack");
 define("API_ACTIVITY_URL", API_URL_ACTIVITY . "/api/activity");
 define("API_TOUR_PACKAGE_URL", API_URL_TOUR_PACKAGE . "/api/tour-package");
+define("API_OPENTRIP_URL", API_URL_OPENTRIP . "/api/opentrip");
 define("NAVIGATE_CART", "navigate-cart");
 define("CURRENCY_COOKIE", "currency-navigate");
 define("DEFAULT_CURRENCY", "USD");

@@ -5,7 +5,8 @@ function enx_get_list_data_tour_package()
     $query = array_values(array_filter(explode("/", $_SERVER['REQUEST_URI'])));
     $country = strtolower($_GET['slug'] ?? COUNTRY_TOUR_PACKAGE);
     $country = str_replace(' ', '%20', $country);
-    if (isset($query[1]) && !str_contains($query[1], 'slug')) $country = $query[1];
+    if (isset($query[1]) && !str_contains($query[1], 'slug'))
+        $country = $query[1];
     $url = API_TOUR_PACKAGE_URL . "/get/data-list" . CreateParams() . "&slug_country=$country";
     try {
         return fetchGet($url);
@@ -20,7 +21,8 @@ function enx_get_detail_data_tour_package()
     // $country = strtolower($_GET['slug'] ?? COUNTRY_TOUR_PACKAGE);
     $country = str_replace(' ', '%20', $country);
     $query = array_values(array_filter(explode("/", $_SERVER['REQUEST_URI'])));
-    if (isset($query[2])) $country = $query[1];
+    if (isset($query[2]))
+        $country = $query[1];
     $url = API_TOUR_PACKAGE_URL . "/get/data-detail" . CreateParams() . "&slug_country=" . $country . "&slug=" . ($query[2] ?? $query[1]);
     try {
         return fetchGet($url);
@@ -46,7 +48,7 @@ function enx_create_list_tour_package($items)
     foreach ($items as $item) {
         $url_to_detail = "/" . TOUR_PACKAGE_LINK . "/" . $item->country->slug . "/" . $item->slug;
         // if (isset($_GET['slug'])) $url_to_detail .= "?slug=" . $_GET['slug'];
-?>
+        ?>
         <div data-x-data data-x-ref="losAngeles"
             data-x-intersect="anime({ targets: $refs.losAngeles, translateY: [100, 0], opacity: [0, 1], duration: 500 ,easing: 'easeOutQuad' })"
             style="flex: 1 1 0">
@@ -79,7 +81,7 @@ function enx_create_list_tour_package($items)
                             class="flex font-bold rounded-full bg-white text-white text-xs overflow-hidden">
                             <?php
                             $bgColor = "#1F4172"; // Default color
-
+                    
                             if ($item->service_sub_type == "FULL DAY") {
                                 $bgColor = "#00712D";
                             } elseif ($item->service_sub_type == "HALF DAY") {
@@ -119,7 +121,7 @@ function enx_create_list_tour_package($items)
                                     $hour = $duration->hour ?? 0;
                                     $minute = $duration->minute ?? 0;
 
-                                ?>
+                                    ?>
                                     <?php if ($day > 0)
                                         echo ($hour > 0 ? $day + 1 : $day) . ($day > 1 || $hour > 0 ? " Days" : " Day") ?>
                                     <?php if ($day <= 0 && $hour > 0)
@@ -143,6 +145,6 @@ function enx_create_list_tour_package($items)
             </a>
         </div>
 
-<?php
+        <?php
     }
 }

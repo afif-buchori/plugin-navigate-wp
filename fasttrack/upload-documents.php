@@ -12,17 +12,20 @@ function enx_get_page_content($data)
     // var_dump(json_encode($order));
     
     $isVoa = strpos($order->order_type, "VISA");
+    // dd($order->order_type);
     // $isVoa = false;
     // foreach ($order->details as $detail) {
     //     if (strpos($detail->title, "VOA") !== false) $isVoa = true;
     // }
     function hasSimAddon($details) {
+        // dd($details);
         foreach ($details as $detail) {
             if (isset($detail->addons)) {
                 foreach ($detail->addons as $addon) {
                     if (strpos(strtolower($addon->title), 'sim') !== false) {
                         return true;
-                    }
+                    } 
+                    // else return false;
                 }
             }
         }
@@ -68,7 +71,12 @@ function enx_get_page_content($data)
                                                                 <?php if ($item->addons) { ?>
                                                                     <ul class="style-1">
                                                                         <?php foreach ($item->addons as $addon) { ?>
-                                                                            <li><?php echo $addon->title ?></li>
+                                                                            <li>
+                                                                                <?php if ($addon->qty > 0): ?>
+                                                                                    <?php echo $addon->qty ?>&#215; -
+                                                                                <?php endif; ?>
+                                                                                <?php echo $addon->title; ?>
+                                                                            </li>
                                                                         <?php } ?>
                                                                     </ul>
                                                                 <?php } ?>
@@ -294,6 +302,7 @@ function enx_get_page_content($data)
                                             <!-- <div class="w-full grid grid-cols-4 px-7 py-5 gap-4 mb-10"> -->
                                             <?php foreach ($order->details as $item) {
                                                 foreach ($item->addons as $addon) {
+                                                    if($addon->item_type === "SIMCARD") {
                                                     foreach($addon->images as $key=>$img) {
                                                     // for ($i = 0; $i < $addon->qty; $i++) { 
                                                         $idView = $key + 1; 
@@ -324,7 +333,7 @@ function enx_get_page_content($data)
                                                         <p class="w-full text-center bg-primary text-white font-bold py-10">Uploaded</p>
                                                         <?php } ?>
                                                     </div>
-                                            <?php } } } ?>
+                                            <?php } }  } } ?>
                                             </div>
                                         <?php } ?>
                                     </div>

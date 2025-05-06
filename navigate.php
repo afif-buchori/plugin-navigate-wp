@@ -251,7 +251,7 @@ function change_template_tripgo($original_template)
         header('Location: /');
     }
     exit();
-  } else if ($url[0] === TRIPGO_LINK || $url[0] === AIRPORT_SERVICE_LINK || $url[0] === ACTIVITY_LINK || $url[0] === TOUR_PACKAGE_LINK) {
+  } else if ($url[0] === TRIPGO_LINK || $url[0] === AIRPORT_SERVICE_LINK || $url[0] === ACTIVITY_LINK || $url[0] === TOUR_PACKAGE_LINK || $url[0] === OPENTRIP_LINK) {
 
     add_filter('wp_enqueue_scripts', 'enx_load_style_and_script', 99);
 
@@ -294,6 +294,19 @@ function change_template_tripgo($original_template)
     header("Content-Type: application/json");
     echo json_encode($data);
     exit();
+  } else if ($url[0] == 'api' && $url[1] == 'opentrip') {
+    $wp_query->is_404 = false;
+    $wp_query->is_page = true;
+    status_header(200);
+
+    require_once(dirname(__FILE__) . '/inc/function.php');
+    require_once(dirname(__FILE__) . '/open_trip/api.php');
+    $data = enx_get_data_api();
+    // var_dump("TESDS");
+
+    header("Content-Type: application/json");
+    echo json_encode($data);
+    exit();
   } else {
     return $original_template;
   }
@@ -316,6 +329,7 @@ function enx_load_style_and_script()
   wp_enqueue_script('tripgo-fasttrack', plugins_url('/assets/js/fasttrack.js', __FILE__), array(), VERSION, true);
   wp_enqueue_script('activity-js', plugins_url('/assets/js/activity.js', __FILE__), array(), VERSION, true);
   wp_enqueue_script('tourpackage-js', plugins_url('/assets/js/tour_package.js', __FILE__), array(), VERSION, true);
+  wp_enqueue_script('opentrip-js', plugins_url('/assets/js/opentrip.js', __FILE__), array(), VERSION, true);
 
   wp_enqueue_style('select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css');
   wp_enqueue_script('jquery');
@@ -324,7 +338,7 @@ function enx_load_style_and_script()
 
 function myplugin_add_css_to_head()
 {
-?>
+  ?>
   <style type="text/css" media="screen">
     :root {
       --color-text-primary: 52, 78, 65 !important;
@@ -553,13 +567,13 @@ function myplugin_add_css_to_head()
       border: 2px solid rgb(var(--color-primary)) !important;
     }
   </style>
-<?php
+  <?php
 }
 add_action('wp_head', 'myplugin_add_css_to_head');
 
 function initialize_654_select2()
 {
-?>
+  ?>
   <script>
     // jQuery(document).ready(function($) {
     //   $('#phone_code_select2').select2();
@@ -634,7 +648,7 @@ function initialize_654_select2()
 
     // });
   </script>
-<?php
+  <?php
 }
 add_action('wp_footer', 'initialize_654_select2');
 

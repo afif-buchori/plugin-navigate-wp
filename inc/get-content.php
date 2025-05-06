@@ -192,6 +192,35 @@ function enx_get_global_page()
             }
             $data_meta = $data->meta ?? null;
         }
+    } elseif ($url[0] == OPENTRIP_LINK) {
+        require_once(dirname(__FILE__) . '/../open_trip/get-data.php');
+        $pages = ['addons', 'booking', 'payment'];
+        if ($url[1] == null) {
+            require_once(dirname(__FILE__) . '/../open_trip/index.php');
+            $data = enx_get_list_country_opentrip();
+            if ($data && isset($data->result) && $data->result == "ok")
+                $data = $data->data;
+            $head_title = $data->meta->title;
+            $data_meta = $data->meta ?? null;
+        } elseif ($url[1]) {
+            if ($url[2] == null) {
+                require_once(dirname(__FILE__) . '/../open_trip/opentrip-list.php');
+                $data = enx_get_list_data_opentrip();
+                if ($data && isset($data->result) && $data->result == "ok")
+                    $data = $data->data;
+                $head_title = $data->meta->title;
+                $data_meta = $data->meta ?? null;
+            } else {
+                require_once(dirname(__FILE__) . '/../open_trip/opentrip-detail.php');
+                $data = enx_get_detail_opentrip();
+                // if ($data && isset($data->result) && $data->result == "ok") {
+                //     $data = $data->data;
+                // } else {
+                //     return;
+                // }
+                $data_meta = $data->meta ?? null;
+            }
+        }
     }
     $content = enx_get_page_content($data ?? null);
     enx_get_content($head_title ?? $data_meta->title, $content, $data_meta ?? null);
@@ -242,7 +271,7 @@ function enx_get_content($header_title, $content, $meta = null)
     // }
 
     enx_header($header_title . " – " . get_bloginfo('name'), $meta->keyword ?? "", $meta->description ?? "", $meta->image_url ?? "");
-?>
+    ?>
     <main id="primary" class="site-main">
         <article id="tripgo-list" <?php post_class(); ?>>
             <header class="entry-header">
@@ -257,6 +286,6 @@ function enx_get_content($header_title, $content, $meta = null)
             </footer><!-- .entry-footer -->
         </article>
     </main>
-<?php
+    <?php
     get_footer();
 }
