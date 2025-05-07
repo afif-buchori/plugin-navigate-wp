@@ -21,6 +21,9 @@ function enx_get_data_api_post()
     $data = [];
     if ($url[2] == "updateprice") {
         $data = enx_updateprice();
+    } elseif ($url[2] == "createsession") {
+        session_start();
+        $data = enx_generate_op_session();
     }
 
     return $data;
@@ -34,5 +37,12 @@ function enx_updateprice()
     $req->companyId = COMPANY_ID;
     $data = fetchPost($url, $req);
     return $data;
+}
+
+function enx_generate_op_session()
+{
+    session_start();
+    $_SESSION['SESSION_OPEN_TRIP'] = json_decode(file_get_contents("php://input"));
+    return true;
 }
 

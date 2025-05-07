@@ -203,7 +203,13 @@ function enx_get_global_page()
             $head_title = $data->meta->title;
             $data_meta = $data->meta ?? null;
         } elseif ($url[1]) {
-            if ($url[2] == null) {
+            if ($url[1] == "addons") {
+                session_start();
+                require_once(dirname(__FILE__) . '/../open_trip/addon.php');
+                // $data = $_SESSION['SESSION_OPEN_TRIP'] ?? [];
+                $data = enx_get_data_addonot()->data;
+                dd($data);
+            } elseif ($url[2] == null) {
                 require_once(dirname(__FILE__) . '/../open_trip/opentrip-list.php');
                 $data = enx_get_list_data_opentrip();
                 if ($data && isset($data->result) && $data->result == "ok")

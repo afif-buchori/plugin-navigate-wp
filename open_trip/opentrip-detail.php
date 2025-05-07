@@ -159,7 +159,8 @@ function enx_get_page_content($data)
                                     </div> -->
 
                                     <!-- ITINERARY -->
-                                    <p class="mt-10 mb-2">What To Expect</p>
+                                    <p id="title-itin-ot" class="mt-10 mb-2 text-primary font-bold text-lg">Itinerary</p>
+                                    <i data-lucide="plane" style="width: 20px; height: 20px;"></i>
                                     <div id="itinerary-ot" class="p-4 bg-white rounded-xl"></div>
                                     <!-- END ITINERARY -->
 
@@ -201,7 +202,7 @@ function enx_get_page_content($data)
                                     </div>
                                     <!-- INCLUDE EXCLUDE -->
 
-                                    <div id="btn-open-modal-tc-detail"
+                                    <div id="btn-open-modal-tc-detail-ot"
                                         style="border: solid 2px #FFDE4D !important; background-color: #45474B; padding: 1rem 40px 1rem 1rem;"
                                         class="relative rounded-lg mt-10 shadow-lg cursor-pointer">
                                         <div style="color: #FFDE4D;" class="flex gap-2">
@@ -217,7 +218,7 @@ function enx_get_page_content($data)
                                             class="iconify mt-1 inline animate-pulse absolute text-white"
                                             data-icon="typcn:chevron-right" data-width="32" data-height="32"></span>
                                     </div>
-                                    <!-- <php include_once plugin_dir_path(__FILE__) . 'contents/modal-termcondition.php'; ?> -->
+                                    <?php include_once plugin_dir_path(__FILE__) . 'contents/modal-termcondition.php'; ?>
                                 </div>
 
                                 <div
@@ -301,8 +302,6 @@ function enx_get_page_content($data)
                                     </form>
                                 </div>
                             </div>
-
-                            <!-- <php include_once plugin_dir_path(__FILE__) . 'contents/list-package.php'; ?> -->
 
                         </div>
                     </div>

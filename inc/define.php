@@ -27,7 +27,7 @@ define("API_URL_ACTIVITY", "https://tondest.com");
 define("API_URL_TOUR_PACKAGE", "https://tondest.com"); //PRODUCTION
 // define("API_URL_TOUR_PACKAGE", "https://e3dc-182-253-51-52.ngrok-free.app"); //ngrok
 
-define("API_URL_OPENTRIP", "https://9220-59-153-131-249.ngrok-free.app"); //STAGING
+define("API_URL_OPENTRIP", "https://0455-59-153-131-249.ngrok-free.app"); //STAGING
 
 // define("API_URL", "https://apiclient.enixindo.com");
 // define("API_URL", "https://5ce4-103-89-78-133.ngrok-free.app");

@@ -1,6 +1,32 @@
 if (url_name[0] == "opentrip") {
     // console.log("url", url_name);
     const API_OT_URL = "/api/opentrip";
+    function formatPeriodRange(fromStr, toStr) {
+        const from = new Date(fromStr);
+        const to = new Date(toStr);
+
+        const fromDay = from.getDate();
+        const fromMonth = from.toLocaleString("en-US", { month: "long" });
+        const fromYear = from.getFullYear();
+
+        const toDay = to.getDate();
+        const toMonth = to.toLocaleString("en-US", { month: "long" });
+        const toYear = to.getFullYear();
+
+        const sameYear = fromYear === toYear;
+        const sameMonth = fromMonth === toMonth && sameYear;
+
+        if (sameMonth) {
+            // 12 - 15 January 2023
+            return `${fromDay} - ${toDay} ${fromMonth} ${fromYear}`;
+        } else if (sameYear) {
+            // 12 January - 15 February 2023
+            return `${fromDay} ${fromMonth} - ${toDay} ${toMonth} ${fromYear}`;
+        } else {
+            // 12 January 2023 - 15 February 2024
+            return `${fromDay} ${fromMonth} ${fromYear} - ${toDay} ${toMonth} ${toYear}`;
+        }
+    }
 
     // DETAIL PAGE
     if (url_name[2]) {
@@ -10,51 +36,72 @@ if (url_name[0] == "opentrip") {
         console.log(serviceId, dataPeriod);
 
         // DESC
+        const modalTCdetail = document.getElementById("modal-term-condition-opentrip");
+        const btnTerms = document.getElementById("btn-open-modal-tc-detail-ot");
+        btnTerms.addEventListener("click", () => {
+            const btnClose = document.getElementById("close-modal-term-condition-opentrip");
+            modalTCdetail.style.display = "grid";
+            btnClose.addEventListener("click", () => (modalTCdetail.style.display = "none"));
+        });
+
         const elDayDuration = document.getElementById("period-day-duration");
-        elDayDuration.innerHTML = dataPeriod.duration + " Days";
         const elCitiesVisit = document.getElementById("period-cities-visited");
-        elCitiesVisit.innerHTML = dataPeriod.citiesVisited + " Cities Visited";
         const elAirline = document.getElementById("period-airline");
-        elAirline.innerHTML = dataPeriod.airline;
         const elDepartureFrom = document.getElementById("period-departure-from");
-        elDepartureFrom.innerHTML = "Keberangkatan dari " + dataPeriod.departureFrom;
+        const elTitleItin = document.getElementById("title-itin-ot");
 
         const container = document.getElementById("itinerary-ot");
 
-        container.innerHTML = dataPeriod.itinerary
-            .map((item, idx) => {
-                const infoHTML =
-                    item.with_add_info === "true"
-                        ? `<div class="flex flex-wrap gap-2 mt-2">
-                        ${item.add_info
-                            .map(
-                                (info) => `
-                        <div class="flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-full text-sm">
-                            <i class="fa-solid fa-${info.icon}"></i>
-                            <span>${info.description}</span>
-                        </div>
-                        `
-                            )
-                            .join("")}
-                    </div>`
-                        : "";
+        const dataIcon = {
+            plane: `<span class="iconify inline" data-icon="mdi:airplane" data-width="20" data-height="20"></span>`,
+            utensils: `<span class="iconify inline" data-icon="mdi:utensils-fork-knife" data-width="20" data-height="20"></span>`,
+        };
 
-                return `
-                <div class="py-4 flex flex-col relative">
-                    <div class="flex items-center gap-1">
-                        <p class="text-base font-medium">Day ${idx + 1}</p>
-                        <span style="width: 14px; height: 14px; border-radius: 14px; background-color: #309898; display: flex;"></span>
-                        <h3 class="flex-1 text-base font-bold pl-2 mb-1">${item.title}</h3>
+        changeViewPeriod = (dataSelected) => {
+            elDayDuration.innerHTML = dataSelected.duration + " Days";
+            elCitiesVisit.innerHTML = dataSelected.citiesVisited + " Cities Visited";
+            elAirline.innerHTML = dataSelected.airline;
+            elDepartureFrom.innerHTML = "Keberangkatan dari " + dataSelected.departureFrom;
+            elTitleItin.innerHTML = "Itinerary " + formatPeriodRange(dataSelected.periodFrom, dataSelected.periodTo);
+            // ITINERARY
+            container.innerHTML = dataSelected.itinerary
+                .map((item, idx) => {
+                    const infoHTML =
+                        item.with_add_info === "true"
+                            ? `<div class="flex flex-wrap gap-2 mt-2">
+                            ${item.add_info
+                                .map(
+                                    (info) => `
+                            <div class="flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-full text-sm">
+                            ${dataIcon[info.icon]}
+                                <span>${info.description}</span>
+                            </div>
+                            `
+                                )
+                                .join("")}
+                        </div>`
+                            : "";
+
+                    return `
+                    <div class="pt-2 ${idx + 1 === dataPeriod.itinerary.length ? "" : "border-b pb-4"} flex flex-col relative">
+                        <div class="flex items-center gap-1">
+                            <p style="width: 52px;" class="text-base font-medium">Day ${idx + 1}</p>
+                            <span style="width: 14px; height: 14px; border-radius: 14px; background-color: #309898; display: flex;"></span>
+                            <h3 class="flex-1 text-base font-bold pl-2 mb-1">${item.title}</h3>
+                        </div>
+                        <div style="padding-left: 76px">
+                            <div class="text-sm text-gray-600">${item.description}</div>
+                            ${infoHTML}
+                        </div>
+                        <span style="width: 2px; background-color: #30989860; left: 62px; top: ${idx === 0 ? "16px" : "0px"}; height: ${
+                        dataPeriod.itinerary.length === idx + 1 ? "18px" : idx === 0 ? "calc(100% - 16px)" : "100%"
+                    };" class="absolute flex"></span>
                     </div>
-                    <div style="padding-left: 70px">
-                        <div class="text-sm text-gray-600">${item.description}</div>
-                        ${infoHTML}
-                    </div>
-                    <span style="width: 2px; background-color: #30989860; left: 12px" class="absolute top-0 h-full flex"></span>
-                </div>
-                `;
-            })
-            .join("");
+                    `;
+                })
+                .join("");
+        };
+        changeViewPeriod(dataPeriod);
 
         // FORM SELECT PERIOD
         const elDataPeriods = document.getElementById("data-travel-periods");
@@ -100,14 +147,41 @@ if (url_name[0] == "opentrip") {
 
         let bodyPassenger = { adult: 1, child: 0, infant: 0 };
         const updatePrice = async (id, pass) => {
+            if (controller) {
+                controller.abort();
+            }
+            controller = new AbortController();
+            const signal = controller.signal;
             const { adult, child, infant } = pass;
             elMsgError.classList.add("hidden");
             elLoader.classList.remove("hidden");
             btnBook.classList.add("hidden");
             elLoadTotalPrice.classList.remove("hidden");
             elTotalPrice.classList.add("hidden");
-            const res = await fetchingPost(API_OT_URL + "/updateprice", { serviceId, periodId: id, adult, child, infant });
-
+            try {
+                const result = await fetch(API_OT_URL + "/updateprice", {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ serviceId, periodId: id, adult, child, infant }),
+                    signal: signal,
+                });
+                const res = await result.json();
+                afterFetching(res);
+                return res;
+            } catch (error) {
+                if (error.name === "AbortError") {
+                    console.log("Fetch dibatalkan");
+                } else {
+                    console.log("Err fetch", error);
+                    afterFetching(error);
+                }
+                return error;
+            }
+        };
+        function afterFetching(res) {
             if (res.error) return null;
             elLoader.classList.add("hidden");
             btnBook.classList.remove("hidden");
@@ -121,14 +195,13 @@ if (url_name[0] == "opentrip") {
             } else {
                 btnBook.disabled = false;
             }
-
-            return res;
-        };
+        }
 
         elSelectPeriod.addEventListener("change", async (e) => {
             const val = e.target.value;
             const periodSelected = listTravelPeriod.find((p) => p.id === val) ?? null;
             elMinPrice.innerText = "IDR " + numberFormat(periodSelected.price.after);
+            changeViewPeriod(periodSelected);
             const res = await updatePrice(periodSelected.id, bodyPassenger);
             console.log(res);
         });
@@ -147,6 +220,26 @@ if (url_name[0] == "opentrip") {
             };
             incBtn.addEventListener("click", onUpdatePrice);
             decBtn.addEventListener("click", onUpdatePrice);
+        });
+
+        // PERIOD BOOKING
+        formPeriod.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const body = {
+                serviceId,
+                periodId: elSelectPeriod.value,
+                adult: bodyPassenger.adult,
+                child: bodyPassenger.child,
+                infant: bodyPassenger.infant,
+            };
+            console.log(body);
+            modalTCdetail.style.display = "grid";
+            const btnConfirm = document.getElementById("confirm-button-modal-tc");
+            btnConfirm.classList.remove("hidden");
+            btnConfirm.addEventListener("click", async () => {
+                const res = await fetchingPost(API_OT_URL + "/createsession", body);
+                if (res) window.location.href = "/opentrip/addons";
+            });
         });
     }
 }
