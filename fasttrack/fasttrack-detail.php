@@ -4,10 +4,10 @@ function enx_get_page_content($data)
     // $data = enx_get_detail_data();
     $item = $data->item;
     $suggestions = $data->suggestions;
-    $locations = $data->locations;
+    $locations = $data?->locations ?? [];
     ob_start();
 
-    ?>
+?>
     <div class="enx-container site-wrapper">
         <div class="site-content">
             <div class="bg-gray-light3">
@@ -220,7 +220,7 @@ function enx_get_page_content($data)
             </div>
         </div>
     </div>
-    <?php
+<?php
     $contents = ob_get_clean();
     return $contents;
 }

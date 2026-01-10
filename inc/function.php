@@ -101,7 +101,7 @@ function fetchGet($url)
     $response_code = substr($http_response_header[0], 9, 3);
 
     if ($response_code != 200) {
-        return json_decode(json_encode(['error' => true, 'code' => $response_code, ...$response]));
+        return json_decode(json_encode(['error' => true, 'code' => $response_code, ...[$response ?? []]]));
     }
     return json_decode(json_encode($response));
 }

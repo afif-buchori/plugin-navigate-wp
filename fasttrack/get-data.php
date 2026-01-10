@@ -108,3 +108,14 @@ function enx_create_list($items)
 <?php
     }
 }
+
+function enx_get_sitemap_as()
+{
+    try {
+        $url = API_URL . "/en/airport-services/sitemap.xml";
+        $xml = simplexml_load_file($url);
+        return $xml;
+    } catch (\Throwable $th) {
+        return null;
+    }
+}

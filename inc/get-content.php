@@ -118,9 +118,15 @@ function enx_get_global_page()
             $head_title = "Upload Documents";
             require_once(dirname(__FILE__) . '/../fasttrack/upload-documents.php');
         } else {
-            require_once(dirname(__FILE__) . '/../fasttrack/fasttrack-detail.php');
-            $data = enx_get_detail_data();
-            $data_meta = $data->meta;
+            if (($url[1] ?? null) == "sitemap.xml") {
+                require_once(dirname(__FILE__) . '/../fasttrack/sitemap.php');
+                $data = enx_get_sitemap_as();
+                $head_title = "sitemap.xml";
+            } else {
+                require_once(dirname(__FILE__) . '/../fasttrack/fasttrack-detail.php');
+                $data = enx_get_detail_data();
+                $data_meta = $data->meta;
+            }
         }
     } elseif ($url[0] == ACTIVITY_LINK) {
         require_once(dirname(__FILE__) . '/../activity/get-data.php');
@@ -277,7 +283,7 @@ function enx_get_content($header_title, $content, $meta = null)
     // }
 
     enx_header($header_title . " – " . get_bloginfo('name'), $meta->keyword ?? "", $meta->description ?? "", $meta->image_url ?? "");
-    ?>
+?>
     <main id="primary" class="site-main">
         <article id="tripgo-list" <?php post_class(); ?>>
             <header class="entry-header">
@@ -292,6 +298,6 @@ function enx_get_content($header_title, $content, $meta = null)
             </footer><!-- .entry-footer -->
         </article>
     </main>
-    <?php
+<?php
     get_footer();
 }

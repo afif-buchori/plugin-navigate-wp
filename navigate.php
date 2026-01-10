@@ -42,7 +42,7 @@ if (!class_exists('navigateIdUpdate')) {
 
       if (false === $remote || !$this->cache_allowed) {
         $remote = wp_remote_get(
-          'https://tondest.oladimhospitality.com/wp-content/uploads/updater/info.json', // Ganti dengan URL info.json
+          'https://ithore.tourjepang.id/wp-content/uploads/updater/navigate/info.json', // Ganti dengan URL info.json
           array(
             'timeout' => 10,
             'headers' => array('Accept' => 'application/json')
@@ -338,7 +338,7 @@ function enx_load_style_and_script()
 
 function myplugin_add_css_to_head()
 {
-  ?>
+?>
   <style type="text/css" media="screen">
     :root {
       --color-text-primary: 52, 78, 65 !important;
@@ -567,13 +567,13 @@ function myplugin_add_css_to_head()
       border: 2px solid rgb(var(--color-primary)) !important;
     }
   </style>
-  <?php
+<?php
 }
 add_action('wp_head', 'myplugin_add_css_to_head');
 
 function initialize_654_select2()
 {
-  ?>
+?>
   <script>
     // jQuery(document).ready(function($) {
     //   $('#phone_code_select2').select2();
@@ -648,7 +648,7 @@ function initialize_654_select2()
 
     // });
   </script>
-  <?php
+<?php
 }
 add_action('wp_footer', 'initialize_654_select2');
 
