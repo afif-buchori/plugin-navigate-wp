@@ -167,12 +167,17 @@ function enx_get_global_page()
         require_once(dirname(__FILE__) . '/../tour_package/get-data.php');
         $pages = ['addons', 'booking', 'payment'];
         if ($url[1] == null || ($url[2] == (null || "") && !in_array($url[1], $pages))) {
-            require_once(dirname(__FILE__) . '/../tour_package/tourpackage-list.php');
-            $data = enx_get_list_data_tour_package();
-            if ($data && isset($data->result) && $data->result == "ok")
-                $data = $data->data;
-            $head_title = $data->meta->title;
-            $data_meta = $data->meta ?? null;
+            if (($url[1] ?? null) == "sitemap.xml") {
+                require_once(dirname(__FILE__) . '/../tour_package/sitemap.php');
+                $data = enx_get_sitemap_tourpackage();
+                $head_title = "sitemap.xml";
+            } else {
+                require_once(dirname(__FILE__) . '/../tour_package/tourpackage-list.php');
+                $data = enx_get_list_data_tour_package();
+                if ($data && isset($data->result) && $data->result == "ok") $data = $data->data;
+                $head_title = $data->meta->title;
+                $data_meta = $data->meta ?? null;
+            }
         } elseif ($url[1] == 'addons') {
             session_start();
             require_once(dirname(__FILE__) . '/../tour_package/addon.php');
